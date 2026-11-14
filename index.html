@@ -376,6 +376,19 @@
       margin: 0;
     }
 
+    .takes-count-short {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .takes-count-short {
+        display: inline;
+      }
+      .takes-count-full {
+        display: none;
+      }
+    }
+
     .btn-edit-square {
       width: 44px;
       height: 44px;
@@ -1923,10 +1936,11 @@
     }
 
     .summary-top-row {
-      display: flex;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       align-items: center;
-      justify-content: space-between;
-      padding: 6px 0;
+      gap: 12px;
+      padding: 7px 0;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       font-size: 13.5px;
     }
@@ -1934,6 +1948,23 @@
     .summary-top-row:last-child {
       border-bottom: none;
       padding-bottom: 0;
+    }
+
+    .summary-row-label {
+      color: var(--text-muted);
+      font-weight: 700;
+      text-align: left;
+      line-height: 1.25;
+      min-width: 0;
+      word-break: break-word;
+    }
+
+    .summary-row-value {
+      font-weight: 800;
+      text-align: right;
+      line-height: 1.25;
+      min-width: 0;
+      word-break: break-word;
     }
 
     #scenes-modal .modal-body,
@@ -2659,7 +2690,7 @@
         <div class="search-box">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
           <input type="text" id="search-projects-input" class="search-input" placeholder="Buscar proyecto o productora..." data-i18n-placeholder="search_projects_placeholder">
-          <h2 id="projects-title-counter" class="search-inline-counter">PROYECTOS (0)</h2>
+          <h2 id="projects-title-counter" class="search-inline-counter hidden">PROYECTOS (0)</h2>
         </div>
         <button type="button" id="btn-reset-project-search" class="btn-icon btn-reset-search-sm hidden" title="Limpiar búsqueda" data-i18n-title="search_clean_title">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.3"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
@@ -2774,11 +2805,11 @@
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
           <span data-i18n="menu_export_pdf">Exportar Reporte PDF</span>
         </button>
-        <button type="button" class="dropdown-item highlight" id="project-menu-opt-cloud-sync">
+        <button type="button" class="dropdown-item" id="project-menu-opt-cloud-sync">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
           <div style="display:flex; justify-content:space-between; align-items:center; flex:1; gap:8px;">
             <span data-i18n="menu_cloud_sync">Subir a la nube</span>
-            <span id="menu-dirty-backup-badge" class="project-dirty-badge hidden" data-i18n="menu_dirty_backup_badge">SIN SUBIR</span>
+            <span id="menu-dirty-backup-badge" class="project-dirty-badge"></span>
           </div>
         </button>
         <button type="button" class="dropdown-item" id="menu-opt-export-json">
@@ -2813,7 +2844,7 @@
         <div class="search-box">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
           <input type="text" id="search-input" class="search-input" placeholder="Buscar escena, personaje o nota..." data-i18n-placeholder="search_takes_placeholder">
-          <span id="badge-total-items" class="search-inline-counter">0 continuidades</span>
+          <span id="badge-total-items" class="search-inline-counter hidden">0 continuidades</span>
         </div>
         <button type="button" id="btn-reset-filters" class="btn-icon btn-reset-search-sm hidden" title="Limpiar búsqueda" data-i18n-title="search_clean_title">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.3"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
@@ -2979,16 +3010,16 @@
         <div class="summary-section-card" style="margin-bottom:0;">
           <h3 class="summary-section-title" data-i18n="summary_status_title">Estado y respaldo</h3>
           <div class="summary-top-row">
-            <span style="color:var(--text-muted); font-weight:700;" data-i18n="summary_local_backup_label">Respaldo en dispositivo</span>
-            <span id="summary-backup-status" style="font-weight:800;"></span>
+            <span class="summary-row-label" data-i18n="summary_local_backup_label">Respaldo en dispositivo</span>
+            <span id="summary-backup-status" class="summary-row-value"></span>
           </div>
           <div class="summary-top-row">
-            <span style="color:var(--text-muted); font-weight:700;" data-i18n="summary_cloud_sync_label">Sincronización en la nube</span>
-            <span id="summary-cloud-status" style="font-weight:800;"></span>
+            <span class="summary-row-label" data-i18n="summary_cloud_sync_label">Sincronización en la nube</span>
+            <span id="summary-cloud-status" class="summary-row-value"></span>
           </div>
-          <div class="summary-top-row" style="gap:10px;">
-            <span style="color:var(--text-muted); font-weight:700; min-width:0;" data-i18n="summary_updated_label">Última modificación</span>
-            <span id="summary-updated-at" style="font-weight:700; color:#e5e7eb; white-space:nowrap; flex-shrink:0; font-size:12.5px;">-</span>
+          <div class="summary-top-row">
+            <span class="summary-row-label" data-i18n="summary_updated_label">Última modificación</span>
+            <span id="summary-updated-at" class="summary-row-value" style="font-weight:700; color:#e5e7eb; font-size:12.5px;">-</span>
           </div>
         </div>
       </div>
@@ -3046,9 +3077,14 @@
           <span data-i18n="menu_characters_upper">PERSONAJES</span>
           <span id="modal-count-characters" style="color:var(--amber); font-size:13px; font-weight:900; background:rgba(245,158,11,0.15); padding:2px 8px; border-radius:8px;">0</span>
         </h2>
-        <button type="button" id="btn-close-characters-modal" class="btn-close-touch" title="Cerrar" data-i18n-title="close_title">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
+        <div style="display:flex; align-items:center; gap:6px;">
+          <button type="button" id="btn-open-batch-pin-characters" class="btn-action-small" title="Fijar personajes" data-i18n-title="batch_title_pin_chars" style="min-width:36px; min-height:36px; color:var(--amber);">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg>
+          </button>
+          <button type="button" id="btn-close-characters-modal" class="btn-close-touch" title="Cerrar" data-i18n-title="close_title">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
       </div>
       <div class="modal-body">
         <div id="characters-list" style="overflow-y:auto; margin-bottom:8px;"></div>
@@ -3537,6 +3573,30 @@
   </div>
 
   <!-- ========================================== -->
+  <!-- MODAL: FIJAR PERSONAJES                    -->
+  <!-- ========================================== -->
+  <div id="batch-characters-pin-modal" class="modal-backdrop hidden" style="z-index: 75;">
+    <div class="modal-card" style="max-width:460px;">
+      <div class="modal-header">
+        <h2 class="modal-title" style="color:var(--amber);" data-i18n="batch_title_pin_chars">FIJAR PERSONAJES</h2>
+        <button type="button" id="btn-close-batch-pin-chars" class="btn-close-touch" title="Cerrar" data-i18n-title="close_title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; gap:8px;">
+          <span class="form-label" style="margin:0; text-transform:none;" data-i18n="batch_sub_pin_chars">Marca los personajes que quieres ver primero</span>
+        </div>
+        <div id="batch-characters-pin-checklist" style="max-height:300px; overflow-y:auto;"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btn-cancel-batch-pin-chars" class="btn-secondary" data-i18n="btn_cancel">Cancelar</button>
+        <button type="button" id="btn-confirm-batch-pin-chars" class="btn-submit" data-i18n="batch_btn_pin">Guardar Fijados</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
   <!-- ========================================== -->
   <!-- MODAL: CUENTA EN LA NUBE Y PERFIL          -->
   <!-- ========================================== -->
@@ -3680,7 +3740,7 @@
         <div style="width:100%; border-top:1px solid var(--border-700); padding-top:14px; display:flex; flex-direction:column; gap:6px; font-size:13px; color:var(--text-muted);">
           <div>
             <span data-i18n="app_info_version_label">Versión</span>:
-            <strong id="app-info-version-val" style="color:#fff;">0.117</strong>
+            <strong id="app-info-version-val" style="color:#fff;">0.120</strong>
           </div>
           <div>
             <span data-i18n="app_info_created_by">Creado por</span>:
@@ -4125,6 +4185,11 @@
         duplicate_take_no_entries: 'Esta continuidad no tiene entradas de personajes (se copiarán las notas generales).',
         btn_duplicate: 'Duplicar',
         toast_take_duplicated: 'Continuidad duplicada en Escena {scene}',
+        no_entries_paren: '(sin entradas)',
+        batch_title_pin_chars: 'FIJAR PERSONAJES',
+        batch_sub_pin_chars: 'Marca los personajes que quieres ver primero',
+        toast_pinned_chars_updated: 'Personajes fijados actualizados',
+        toast_scene_num_exists: 'La Escena {num} ya existe',
         app_info_version_label: 'Versión',
         app_info_created_by: 'Creado por',
         pdf_include_profile: 'Incluir nombre y departamento',
@@ -4496,6 +4561,11 @@
         duplicate_take_no_entries: 'This continuity has no character entries (general notes will be copied).',
         btn_duplicate: 'Duplicate',
         toast_take_duplicated: 'Continuity duplicated to Scene {scene}',
+        no_entries_paren: '(no entries)',
+        batch_title_pin_chars: 'PIN CHARACTERS',
+        batch_sub_pin_chars: 'Check the characters you want to see first',
+        toast_pinned_chars_updated: 'Pinned characters updated',
+        toast_scene_num_exists: 'Scene {num} already exists',
         app_info_version_label: 'Version',
         app_info_created_by: 'Created by',
         pdf_include_profile: 'Include name & department',
@@ -4881,6 +4951,11 @@
         duplicate_take_no_entries: 'Esta continuidade não tem entradas de personagens (as notas gerais serão copiadas).',
         btn_duplicate: 'Duplicar',
         toast_take_duplicated: 'Continuidade duplicada na Cena {scene}',
+        no_entries_paren: '(sem entradas)',
+        batch_title_pin_chars: 'FIXAR PERSONAGENS',
+        batch_sub_pin_chars: 'Marque os personagens que você quer ver primeiro',
+        toast_pinned_chars_updated: 'Personagens fixados atualizados',
+        toast_scene_num_exists: 'A Cena {num} já existe',
         app_info_version_label: 'Versão',
         app_info_created_by: 'Criado por',
         pdf_include_profile: 'Incluir nome e departamento',
@@ -5252,6 +5327,11 @@
         duplicate_take_no_entries: 'Questa continuità non ha voci di personaggi (verranno copiate le note generali).',
         btn_duplicate: 'Duplica',
         toast_take_duplicated: 'Continuità duplicata nella Scena {scene}',
+        no_entries_paren: '(nessuna voce)',
+        batch_title_pin_chars: 'FISSA PERSONAGGI',
+        batch_sub_pin_chars: 'Seleziona i personaggi che vuoi vedere per primi',
+        toast_pinned_chars_updated: 'Personaggi fissati aggiornati',
+        toast_scene_num_exists: 'La Scena {num} esiste già',
         app_info_version_label: 'Versione',
         app_info_created_by: 'Creato da',
         pdf_include_profile: 'Includi nome e reparto',
@@ -5623,6 +5703,11 @@
         duplicate_take_no_entries: 'Diese Kontinuität hat keine Figuren-Einträge (allgemeine Notizen werden kopiert).',
         btn_duplicate: 'Duplizieren',
         toast_take_duplicated: 'Kontinuität in Szene {scene} dupliziert',
+        no_entries_paren: '(keine Einträge)',
+        batch_title_pin_chars: 'FIGUREN ANHEFTEN',
+        batch_sub_pin_chars: 'Markiere die Figuren, die du zuerst sehen möchtest',
+        toast_pinned_chars_updated: 'Angeheftete Figuren aktualisiert',
+        toast_scene_num_exists: 'Szene {num} existiert bereits',
         app_info_version_label: 'Version',
         app_info_created_by: 'Erstellt von',
         pdf_include_profile: 'Name & Abteilung einschließen',
@@ -5994,6 +6079,11 @@
         duplicate_take_no_entries: 'Cette continuité n\'a pas d\'entrées de personnage (les notes générales seront copiées).',
         btn_duplicate: 'Dupliquer',
         toast_take_duplicated: 'Continuité dupliquée dans la Scène {scene}',
+        no_entries_paren: '(aucune entrée)',
+        batch_title_pin_chars: 'ÉPINGLER DES PERSONNAGES',
+        batch_sub_pin_chars: 'Cochez les personnages que vous voulez voir en premier',
+        toast_pinned_chars_updated: 'Personnages épinglés mis à jour',
+        toast_scene_num_exists: 'La Scène {num} existe déjà',
         app_info_version_label: 'Version',
         app_info_created_by: 'Créé par',
         pdf_include_profile: 'Inclure nom et département',
@@ -6373,9 +6463,34 @@
     function refreshProjectMenuBackupIndicator() {
       const dot = document.getElementById('project-menu-dirty-dot');
       const badge = document.getElementById('menu-dirty-backup-badge');
-      const showDirty = shouldShowDirtyCloudIndicators() && Boolean(activeProjectId && isProjectModifiedSinceBackup({ id: activeProjectId }));
-      if (dot) dot.classList.toggle('hidden', !showDirty);
-      if (badge) badge.classList.toggle('hidden', !showDirty);
+      const isDirty = Boolean(activeProjectId && isProjectModifiedSinceBackup({ id: activeProjectId }));
+      const showDirtyDot = shouldShowDirtyCloudIndicators() && isDirty;
+      if (dot) dot.classList.toggle('hidden', !showDirtyDot);
+
+      if (badge) {
+        badge.classList.remove('hidden');
+        if (typeof currentCloudUser !== 'undefined' && !currentCloudUser) {
+          badge.textContent = t('cloud_status_offline_short');
+          badge.style.color = '#9ca3af';
+          badge.style.background = 'rgba(156, 163, 175, 0.12)';
+          badge.style.borderColor = 'rgba(156, 163, 175, 0.35)';
+        } else if ((typeof isCloudSyncing !== 'undefined' && isCloudSyncing) || (typeof isCloudSyncPending !== 'undefined' && isCloudSyncPending)) {
+          badge.textContent = t('cloud_syncing_status');
+          badge.style.color = '#fbbf24';
+          badge.style.background = 'rgba(245, 158, 11, 0.14)';
+          badge.style.borderColor = 'rgba(245, 158, 11, 0.4)';
+        } else if (isDirty) {
+          badge.textContent = t('menu_dirty_backup_badge');
+          badge.style.color = '#fb923c';
+          badge.style.background = 'rgba(249, 115, 22, 0.15)';
+          badge.style.borderColor = 'rgba(249, 115, 22, 0.45)';
+        } else {
+          badge.textContent = t('summary_cloud_synced');
+          badge.style.color = '#34d399';
+          badge.style.background = 'rgba(16, 185, 129, 0.14)';
+          badge.style.borderColor = 'rgba(16, 185, 129, 0.4)';
+        }
+      }
     }
 
     function markProjectModified(projId) {
@@ -6905,7 +7020,12 @@
         return p.name.toLowerCase().includes(q) || prod.toLowerCase().includes(q);
       });
 
-      projectsTitleCounter.textContent = `${t('projects_title')} (${filteredProjects.length})`;
+      if (q) {
+        projectsTitleCounter.textContent = `${t('projects_title')} (${filteredProjects.length})`;
+        projectsTitleCounter.classList.remove('hidden');
+      } else {
+        projectsTitleCounter.classList.add('hidden');
+      }
 
       if (filteredProjects.length === 0) {
         projectsList.innerHTML = '';
@@ -6915,10 +7035,19 @@
 
       emptyProjects.classList.add('hidden');
 
+      const allTakes = await getAllLocalEntities(STORE_TAKES);
+      const takesCountMap = new Map();
+      for (const tk of allTakes) {
+        if (!tk || !tk.projectId) continue;
+        takesCountMap.set(tk.projectId, (takesCountMap.get(tk.projectId) || 0) + 1);
+      }
+
       const showCustomOrderControls = (projectsSortMode === 'custom' && !q && filteredProjects.length > 1);
 
       projectsList.innerHTML = filteredProjects.map((proj) => {
         const prodValue = proj.producer || proj.director || '';
+        const takesCount = takesCountMap.get(proj.id) || 0;
+        const takesLabel = `${takesCount} ${takesCount === 1 ? t('unit_continuity_singular') : t('unit_continuity_plural')}`;
         const classes = ['project-card'];
         if (proj.pinned) classes.push('is-pinned');
         if (proj.completed) classes.push('is-completed');
@@ -6938,7 +7067,7 @@
                 ${shouldShowDirtyCloudIndicators() && isProjectModifiedSinceBackup(proj) ? `<span class="project-dirty-badge" title="${t('dirty_project_title')}">${t('menu_dirty_backup_badge')}</span>` : ''}
               </div>
               <p class="project-card-meta">
-                ${prodValue ? escapeHtml(prodValue) + ' • ' : ''}${t('created_label')}: ${new Date(proj.createdAt).toLocaleDateString(currentAppLang === 'es' ? 'es-ES' : currentAppLang)}
+                ${prodValue ? escapeHtml(prodValue) + ' • ' : ''}${t('created_label')}: ${new Date(proj.createdAt).toLocaleDateString(currentAppLang === 'es' ? 'es-ES' : currentAppLang)} • <span style="color:var(--amber); font-weight:700; font-size:12.5px; white-space:nowrap;"><span class="takes-count-short">${takesCount} cont.</span><span class="takes-count-full">${takesLabel}</span></span>
               </p>
             </div>
             <button type="button" class="btn-edit-square" data-action="edit-project" data-id="${proj.id}" title="${t('edit_project_title')}">
@@ -8696,6 +8825,16 @@
       if (!num) return;
 
       const existingId = editSceneId.value;
+      const existingScenes = await getEntitiesForProject(STORE_SCENES, activeProjectId);
+      const duplicateScene = existingScenes.find(s =>
+        String(s.sceneNum || '').trim().toUpperCase() === num.toUpperCase() &&
+        s.id !== existingId
+      );
+      if (duplicateScene) {
+        showToast(t('toast_scene_num_exists', { num }));
+        document.getElementById('new-scene-num').focus();
+        return;
+      }
 
       await saveEntityToDB(STORE_SCENES, {
         id: existingId || ('sc_' + Date.now()),
@@ -8915,6 +9054,66 @@
         setCharacterEditingLock(true, editCharacterId.value);
       }
     }
+
+    const batchCharactersPinModal = document.getElementById('batch-characters-pin-modal');
+    const batchCharactersPinChecklist = document.getElementById('batch-characters-pin-checklist');
+    const btnOpenBatchPinCharacters = document.getElementById('btn-open-batch-pin-characters');
+    const btnCloseBatchPinChars = document.getElementById('btn-close-batch-pin-chars');
+    const btnCancelBatchPinChars = document.getElementById('btn-cancel-batch-pin-chars');
+    const btnConfirmBatchPinChars = document.getElementById('btn-confirm-batch-pin-chars');
+
+    async function openBatchCharactersPinModal() {
+      if (!activeProjectId || !batchCharactersPinModal || !batchCharactersPinChecklist) return;
+      const chars = await getEntitiesForProject(STORE_CHARACTERS, activeProjectId);
+      if (chars.length === 0) {
+        showToast(t('empty_chars_msg'));
+        return;
+      }
+      sortCharactersWithPinnedFirst(chars);
+      batchCharactersPinChecklist.innerHTML = chars.map(c => `
+        <label class="pdf-scene-check-item">
+          <input type="checkbox" class="batch-char-pin-checkbox" value="${c.id}" ${c.pinned ? 'checked' : ''}>
+          ${c.photo
+            ? `<img src="${c.photo}" alt="${escapeHtml(c.name)}" style="width:36px; height:36px; border-radius:8px; object-fit:cover; flex-shrink:0;">`
+            : `<div style="width:36px; height:36px; border-radius:8px; background:var(--bg-850); border:1px solid var(--border-700); display:flex; align-items:center; justify-content:center; flex-shrink:0;">${ICON_USER_SVG}</div>`
+          }
+          <div style="min-width:0; flex:1;">
+            <strong style="color:#fff; font-size:15px; display:flex; align-items:center; gap:6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+              ${c.pinned ? `<span class="project-pin-icon">${ICON_PIN_SVG}</span>` : ''}
+              <span style="overflow:hidden; text-overflow:ellipsis;">${escapeHtml(c.name)}</span>
+            </strong>
+            ${c.actor ? `<span style="color:var(--text-muted); font-size:12.5px; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(c.actor)}</span>` : ''}
+          </div>
+        </label>
+      `).join('');
+      batchCharactersPinModal.classList.remove('hidden');
+    }
+
+    btnOpenBatchPinCharacters?.addEventListener('click', openBatchCharactersPinModal);
+    btnCloseBatchPinChars?.addEventListener('click', () => batchCharactersPinModal?.classList.add('hidden'));
+    btnCancelBatchPinChars?.addEventListener('click', () => batchCharactersPinModal?.classList.add('hidden'));
+    batchCharactersPinModal?.addEventListener('click', (e) => {
+      if (e.target === batchCharactersPinModal) batchCharactersPinModal.classList.add('hidden');
+    });
+
+    btnConfirmBatchPinChars?.addEventListener('click', async () => {
+      if (!activeProjectId) return;
+      const selectedIds = new Set(
+        Array.from(document.querySelectorAll('.batch-char-pin-checkbox:checked')).map(cb => cb.value)
+      );
+      const chars = await getEntitiesForProject(STORE_CHARACTERS, activeProjectId);
+      for (const c of chars) {
+        const nextPinned = selectedIds.has(c.id);
+        if (Boolean(c.pinned) !== nextPinned) {
+          c.pinned = nextPinned;
+          await saveEntityToDB(STORE_CHARACTERS, c);
+        }
+      }
+      batchCharactersPinModal?.classList.add('hidden');
+      await renderCharactersList();
+      await updateCatalogCaches();
+      showToast(t('toast_pinned_chars_updated'));
+    });
 
     charactersForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -10253,8 +10452,13 @@
         return matchScene || matchNotes || matchEntries;
       });
 
-      const unit = filtered.length === 1 ? t('unit_continuity_singular') : t('unit_continuity_plural');
-      badgeTotalItems.textContent = `${filtered.length} ${unit}`;
+      if (q) {
+        const unit = filtered.length === 1 ? t('unit_continuity_singular') : t('unit_continuity_plural');
+        badgeTotalItems.textContent = `${filtered.length} ${unit}`;
+        badgeTotalItems.classList.remove('hidden');
+      } else {
+        badgeTotalItems.classList.add('hidden');
+      }
 
       if (filtered.length === 0) {
         recordsGrid.innerHTML = '';
@@ -10267,16 +10471,26 @@
       recordsGrid.innerHTML = filtered.map(take => {
         const entries = getNormalizedPhotos(take);
 
-        const entriesHtml = entries.map(p => `
-          <div class="raccord-char-row">
-            <div class="raccord-char-top">
-              <div class="raccord-char-name">
-                <span>${escapeHtml(p.character || t('no_char'))}</span>
+        const entriesHtml = entries.length > 0
+          ? entries.map(p => `
+              <div class="raccord-char-row">
+                <div class="raccord-char-top">
+                  <div class="raccord-char-name">
+                    <span>${escapeHtml(p.character || t('no_char'))}</span>
+                  </div>
+                  ${p.photo ? `<span class="raccord-photo-chip">${ICON_PHOTO_SVG}<span>1</span></span>` : ''}
+                </div>
               </div>
-              ${p.photo ? `<span class="raccord-photo-chip">${ICON_PHOTO_SVG}<span>1</span></span>` : ''}
-            </div>
-          </div>
-        `).join('');
+            `).join('')
+          : `
+              <div class="raccord-char-row">
+                <div class="raccord-char-top">
+                  <div class="raccord-char-name" style="font-style:italic; color:var(--text-muted); font-weight:600;">
+                    <span>${t('no_entries_paren')}</span>
+                  </div>
+                </div>
+              </div>
+            `;
 
         return `
           <div class="raccord-card" data-action="open-viewer" data-id="${take.id}">
@@ -10290,7 +10504,7 @@
                 </div>
                 ${take.sceneDesc ? `<p class="raccord-scene-desc">${escapeHtml(take.sceneDesc)}</p>` : ''}
               </div>
-              ${entriesHtml ? `<div class="raccord-card-body">${entriesHtml}</div>` : ''}
+              <div class="raccord-card-body">${entriesHtml}</div>
             </div>
           </div>
         `;
@@ -11058,6 +11272,7 @@
     function updateCloudAccountUI() {
       updateOfflineBanner();
       updateCloudSyncingPill();
+      refreshProjectMenuBackupIndicator();
       const profile = getLocalUserProfile();
       if (currentCloudUser) {
         authLoggedOutView?.classList.add('hidden');
