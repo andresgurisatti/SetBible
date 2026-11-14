@@ -3893,7 +3893,7 @@
         <div style="width:100%; border-top:1px solid var(--border-700); padding-top:14px; display:flex; flex-direction:column; gap:6px; font-size:13px; color:var(--text-muted);">
           <div>
             <span data-i18n="app_info_version_label">Versión</span>:
-            <strong id="app-info-version-val" style="color:#fff;">0.127</strong>
+            <strong id="app-info-version-val" style="color:#fff;">1.0</strong>
           </div>
           <div>
             <span data-i18n="app_info_created_by">Creado por</span>:
@@ -4354,6 +4354,7 @@
         batch_sub_pin_chars: 'Marca los personajes que quieres ver primero',
         toast_pinned_chars_updated: 'Personajes fijados actualizados',
         toast_scene_num_exists: 'La Escena {num} ya existe',
+        toast_char_name_exists: 'El personaje "{name}" ya existe',
         unit_continuity_abbr: 'cont.',
         app_info_version_label: 'Versión',
         app_info_created_by: 'Creado por',
@@ -4742,6 +4743,7 @@
         batch_sub_pin_chars: 'Check the characters you want to see first',
         toast_pinned_chars_updated: 'Pinned characters updated',
         toast_scene_num_exists: 'Scene {num} already exists',
+        toast_char_name_exists: 'Character "{name}" already exists',
         unit_continuity_abbr: 'cont.',
         app_info_version_label: 'Version',
         app_info_created_by: 'Created by',
@@ -5144,6 +5146,7 @@
         batch_sub_pin_chars: 'Marque os personagens que você quer ver primeiro',
         toast_pinned_chars_updated: 'Personagens fixados atualizados',
         toast_scene_num_exists: 'A Cena {num} já existe',
+        toast_char_name_exists: 'O personagem "{name}" já existe',
         unit_continuity_abbr: 'cont.',
         app_info_version_label: 'Versão',
         app_info_created_by: 'Criado por',
@@ -5532,6 +5535,7 @@
         batch_sub_pin_chars: 'Seleziona i personaggi che vuoi vedere per primi',
         toast_pinned_chars_updated: 'Personaggi fissati aggiornati',
         toast_scene_num_exists: 'La Scena {num} esiste già',
+        toast_char_name_exists: 'Il personaggio "{name}" esiste già',
         unit_continuity_abbr: 'cont.',
         app_info_version_label: 'Versione',
         app_info_created_by: 'Creato da',
@@ -5920,6 +5924,7 @@
         batch_sub_pin_chars: 'Markiere die Figuren, die du zuerst sehen möchtest',
         toast_pinned_chars_updated: 'Angeheftete Figuren aktualisiert',
         toast_scene_num_exists: 'Szene {num} existiert bereits',
+        toast_char_name_exists: 'Die Figur „{name}“ existiert bereits',
         unit_continuity_abbr: 'Kont.',
         app_info_version_label: 'Version',
         app_info_created_by: 'Erstellt von',
@@ -6308,6 +6313,7 @@
         batch_sub_pin_chars: 'Cochez les personnages que vous voulez voir en premier',
         toast_pinned_chars_updated: 'Personnages épinglés mis à jour',
         toast_scene_num_exists: 'La Scène {num} existe déjà',
+        toast_char_name_exists: 'Le personnage « {name} » existe déjà',
         unit_continuity_abbr: 'cont.',
         app_info_version_label: 'Version',
         app_info_created_by: 'Créé par',
@@ -6411,6 +6417,9 @@
       renderPdfLangSelectorUI();
       if (typeof refreshBackupFolderLabel === 'function') refreshBackupFolderLabel();
       if (typeof updateCloudAccountUI === 'function') updateCloudAccountUI();
+      if (typeof renderHelpTourStep === 'function' && typeof helpTourModal !== 'undefined' && helpTourModal && !helpTourModal.classList.contains('hidden')) {
+        renderHelpTourStep(helpTourIndex);
+      }
 
       if (activeProjectId) {
         if (typeof renderTakes === 'function') renderTakes();
@@ -9416,9 +9425,23 @@
         updatedAt: Math.max(nowScene, (Number(existingSceneObj?.updatedAt) || 0) + 1)
       });
 
+      if (existingSceneObj && (String(existingSceneObj.sceneNum || '').trim() !== num || String(existingSceneObj.desc || '') !== desc)) {
+        const oldNumUpper = String(existingSceneObj.sceneNum || '').trim().toUpperCase();
+        const projectTakes = await getAllTakesForProject(activeProjectId);
+        for (const tk of projectTakes) {
+          if (String(tk.scene || '').trim().toUpperCase() === oldNumUpper) {
+            tk.scene = num;
+            tk.sceneDesc = desc;
+            tk.updatedAt = Math.max(nowScene, (Number(tk.updatedAt) || 0) + 1);
+            await saveTakeToDB(tk);
+          }
+        }
+      }
+
       resetSceneForm();
       await renderScenesList();
       await updateCatalogCaches();
+      await renderTakes();
       showToast(existingId ? t('toast_scene_updated', { num }) : t('toast_scene_saved', { num }));
     });
 
@@ -9698,7 +9721,16 @@
 
       const existingId = editCharacterId.value;
       const isPinned = charPinnedCheck ? Boolean(charPinnedCheck.checked) : Boolean(editingCharacterPinned);
-      const existingChars = existingId ? await getEntitiesForProject(STORE_CHARACTERS, activeProjectId) : [];
+      const existingChars = await getEntitiesForProject(STORE_CHARACTERS, activeProjectId);
+      const duplicateChar = existingChars.find(c =>
+        c.id !== existingId &&
+        String(c.name || '').trim().toLowerCase() === name.toLowerCase()
+      );
+      if (duplicateChar) {
+        showToast(t('toast_char_name_exists', { name }));
+        document.getElementById('new-character-name').focus();
+        return;
+      }
       const existingCharObj = existingId ? existingChars.find(c => c.id === existingId) : null;
       const nowChar = Date.now();
 
@@ -9713,6 +9745,28 @@
         createdAt: existingCharObj?.createdAt || nowChar,
         updatedAt: Math.max(nowChar, (Number(existingCharObj?.updatedAt) || 0) + 1)
       });
+
+      if (existingCharObj && String(existingCharObj.name || '').trim() !== name) {
+        const oldNameLower = String(existingCharObj.name || '').trim().toLowerCase();
+        const projectTakes = await getAllTakesForProject(activeProjectId);
+        for (const tk of projectTakes) {
+          const entries = getNormalizedPhotos(tk);
+          let changed = false;
+          const nextEntries = entries.map(p => {
+            if (p && String(p.character || '').trim().toLowerCase() === oldNameLower) {
+              changed = true;
+              return { ...p, character: name, updatedAt: nowChar };
+            }
+            return p;
+          });
+          if (changed) {
+            tk.photos = nextEntries;
+            delete tk.photo;
+            tk.updatedAt = Math.max(nowChar, (Number(tk.updatedAt) || 0) + 1);
+            await saveTakeToDB(tk);
+          }
+        }
+      }
 
       resetCharacterForm();
       await renderCharactersList();

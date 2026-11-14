@@ -1,4 +1,4 @@
-const CACHE_NAME = 'setbible-v127';
+const CACHE_NAME = 'setbible-v1.0';
 const LOCAL_ASSETS = [
   './',
   './index.html',
@@ -44,6 +44,14 @@ self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
   const url = new URL(event.request.url);
+  if (
+    url.hostname.includes('googleapis.com') ||
+    url.hostname.includes('firebaseio.com') ||
+    url.hostname.includes('firebaseapp.com') ||
+    url.hostname.includes('google.com')
+  ) {
+    return;
+  }
   const isHTMLNavigation =
     event.request.mode === 'navigate' ||
     (url.origin === self.location.origin && (url.pathname.endsWith('/') || url.pathname.endsWith('/index.html')));
