@@ -729,9 +729,13 @@
       border: 1px solid var(--border-700);
       color: #fff;
       font-size: 15px;
-      padding: 8px 120px 8px 38px;
+      padding: 8px 14px 8px 38px;
       border-radius: var(--btn-radius);
       outline: none;
+    }
+
+    .search-input.has-counter {
+      padding-right: 120px;
     }
 
     .search-inline-counter {
@@ -3740,7 +3744,7 @@
         <div style="width:100%; border-top:1px solid var(--border-700); padding-top:14px; display:flex; flex-direction:column; gap:6px; font-size:13px; color:var(--text-muted);">
           <div>
             <span data-i18n="app_info_version_label">Versión</span>:
-            <strong id="app-info-version-val" style="color:#fff;">0.120</strong>
+            <strong id="app-info-version-val" style="color:#fff;">0.122</strong>
           </div>
           <div>
             <span data-i18n="app_info_created_by">Creado por</span>:
@@ -4190,6 +4194,7 @@
         batch_sub_pin_chars: 'Marca los personajes que quieres ver primero',
         toast_pinned_chars_updated: 'Personajes fijados actualizados',
         toast_scene_num_exists: 'La Escena {num} ya existe',
+        unit_continuity_abbr: 'cont.',
         app_info_version_label: 'Versión',
         app_info_created_by: 'Creado por',
         pdf_include_profile: 'Incluir nombre y departamento',
@@ -4566,6 +4571,7 @@
         batch_sub_pin_chars: 'Check the characters you want to see first',
         toast_pinned_chars_updated: 'Pinned characters updated',
         toast_scene_num_exists: 'Scene {num} already exists',
+        unit_continuity_abbr: 'cont.',
         app_info_version_label: 'Version',
         app_info_created_by: 'Created by',
         pdf_include_profile: 'Include name & department',
@@ -4956,6 +4962,7 @@
         batch_sub_pin_chars: 'Marque os personagens que você quer ver primeiro',
         toast_pinned_chars_updated: 'Personagens fixados atualizados',
         toast_scene_num_exists: 'A Cena {num} já existe',
+        unit_continuity_abbr: 'cont.',
         app_info_version_label: 'Versão',
         app_info_created_by: 'Criado por',
         pdf_include_profile: 'Incluir nome e departamento',
@@ -5332,6 +5339,7 @@
         batch_sub_pin_chars: 'Seleziona i personaggi che vuoi vedere per primi',
         toast_pinned_chars_updated: 'Personaggi fissati aggiornati',
         toast_scene_num_exists: 'La Scena {num} esiste già',
+        unit_continuity_abbr: 'cont.',
         app_info_version_label: 'Versione',
         app_info_created_by: 'Creato da',
         pdf_include_profile: 'Includi nome e reparto',
@@ -5708,6 +5716,7 @@
         batch_sub_pin_chars: 'Markiere die Figuren, die du zuerst sehen möchtest',
         toast_pinned_chars_updated: 'Angeheftete Figuren aktualisiert',
         toast_scene_num_exists: 'Szene {num} existiert bereits',
+        unit_continuity_abbr: 'Kont.',
         app_info_version_label: 'Version',
         app_info_created_by: 'Erstellt von',
         pdf_include_profile: 'Name & Abteilung einschließen',
@@ -6084,6 +6093,7 @@
         batch_sub_pin_chars: 'Cochez les personnages que vous voulez voir en premier',
         toast_pinned_chars_updated: 'Personnages épinglés mis à jour',
         toast_scene_num_exists: 'La Scène {num} existe déjà',
+        unit_continuity_abbr: 'cont.',
         app_info_version_label: 'Version',
         app_info_created_by: 'Créé par',
         pdf_include_profile: 'Inclure nom et département',
@@ -7023,8 +7033,10 @@
       if (q) {
         projectsTitleCounter.textContent = `${t('projects_title')} (${filteredProjects.length})`;
         projectsTitleCounter.classList.remove('hidden');
+        searchProjectsInput?.classList.add('has-counter');
       } else {
         projectsTitleCounter.classList.add('hidden');
+        searchProjectsInput?.classList.remove('has-counter');
       }
 
       if (filteredProjects.length === 0) {
@@ -7067,7 +7079,7 @@
                 ${shouldShowDirtyCloudIndicators() && isProjectModifiedSinceBackup(proj) ? `<span class="project-dirty-badge" title="${t('dirty_project_title')}">${t('menu_dirty_backup_badge')}</span>` : ''}
               </div>
               <p class="project-card-meta">
-                ${prodValue ? escapeHtml(prodValue) + ' • ' : ''}${t('created_label')}: ${new Date(proj.createdAt).toLocaleDateString(currentAppLang === 'es' ? 'es-ES' : currentAppLang)} • <span style="color:var(--amber); font-weight:700; font-size:12.5px; white-space:nowrap;"><span class="takes-count-short">${takesCount} cont.</span><span class="takes-count-full">${takesLabel}</span></span>
+                ${prodValue ? escapeHtml(prodValue) + ' • ' : ''}${t('created_label')}: ${new Date(proj.createdAt).toLocaleDateString(currentAppLang === 'es' ? 'es-ES' : currentAppLang)} • <span style="color:var(--amber); font-weight:700; font-size:12.5px; white-space:nowrap;"><span class="takes-count-short">${takesCount} ${t('unit_continuity_abbr')}</span><span class="takes-count-full">${takesLabel}</span></span>
               </p>
             </div>
             <button type="button" class="btn-edit-square" data-action="edit-project" data-id="${proj.id}" title="${t('edit_project_title')}">
@@ -10456,8 +10468,10 @@
         const unit = filtered.length === 1 ? t('unit_continuity_singular') : t('unit_continuity_plural');
         badgeTotalItems.textContent = `${filtered.length} ${unit}`;
         badgeTotalItems.classList.remove('hidden');
+        searchInput?.classList.add('has-counter');
       } else {
         badgeTotalItems.classList.add('hidden');
+        searchInput?.classList.remove('has-counter');
       }
 
       if (filtered.length === 0) {
@@ -11087,7 +11101,7 @@
       if (item.notes) {
         htmlContent += `
           <div style="background:var(--bg-800); border:1px solid var(--border-700); padding:10px 12px; border-radius:10px; margin-bottom:10px;">
-            <strong style="color:var(--amber); font-size:11px; text-transform:uppercase; display:block; margin-bottom:4px;">Notas Generales de la Escena:</strong>
+            <strong style="color:var(--amber); font-size:11px; text-transform:uppercase; display:block; margin-bottom:4px;">${t('form_general_notes')}:</strong>
             <div style="color:#f9fafb; font-size:14px; line-height:1.4; white-space:pre-wrap;">${escapeHtml(item.notes)}</div>
           </div>
         `;
@@ -11099,16 +11113,16 @@
             <div class="viewer-entry-top">
               <div class="viewer-entry-char">
                 ${getCharacterAvatarHtml(p.character, true)}
-                <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(p.character || 'Sin personaje')}</span>
+                <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(p.character || t('no_char'))}</span>
               </div>
-              <button type="button" class="btn-action-small edit" data-action="edit-viewer-subentry" data-id="${p.id}" title="Editar entrada">
+              <button type="button" class="btn-action-small edit" data-action="edit-viewer-subentry" data-id="${p.id}" title="${t('btn_edit_title')}">
                 ${ICON_EDIT_SVG}
               </button>
             </div>
             <div class="viewer-entry-body">
               ${p.photo ? `
-                <div class="viewer-square-mask" data-action="view-full-photo" data-idx="${idx}" title="Ver foto en tamaño original">
-                  <img src="${p.photo}" alt="${escapeHtml(p.character || 'Entrada')}">
+                <div class="viewer-square-mask" data-action="view-full-photo" data-idx="${idx}" title="${t('view_word')}">
+                  <img src="${p.photo}" alt="${escapeHtml(p.character || t('no_char'))}">
                   <button type="button" class="btn-view-photo-eye" data-action="view-full-photo" data-idx="${idx}">
                     ${ICON_EYE_SVG}
                     <span>${t('view_word')}</span>
