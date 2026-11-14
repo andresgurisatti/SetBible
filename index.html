@@ -2052,80 +2052,220 @@
       pointer-events: none;
     }
 
-    .help-tour-visual {
-      background: #0b0d10;
-      border: 1px solid var(--border-700);
-      border-radius: 14px;
-      padding: 16px;
-      min-height: 185px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 14px;
+    #help-tour-modal {
+      padding: 0;
+      background: rgba(4, 6, 10, 0.92);
+    }
+
+    .tour-fullscreen-stage {
+      width: 100%;
+      max-width: 480px;
+      height: 100%;
+      max-height: 100%;
       position: relative;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-900);
+      box-shadow: 0 0 60px rgba(0, 0, 0, 0.9);
+      user-select: none;
+    }
+
+    .tour-bg-screen {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      opacity: 0.32;
+      filter: saturate(0.75);
+    }
+
+    .tour-dim-mask {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: rgba(6, 8, 13, 0.62);
+      pointer-events: none;
+    }
+
+    .tour-foreground-layer {
+      position: relative;
+      z-index: 3;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: calc(14px + env(safe-area-inset-top, 0px)) 14px calc(16px + env(safe-area-inset-bottom, 0px)) 14px;
+      overflow-y: auto;
+    }
+
+    .tour-foreground-layer.align-top {
+      justify-content: flex-start;
+    }
+
+    .tour-foreground-layer.align-center {
+      justify-content: center;
+    }
+
+    .tour-foreground-layer.align-bottom {
+      justify-content: flex-end;
+    }
+
+    .tour-spotlight-box {
+      background: var(--bg-850);
+      border: 2px solid var(--amber);
+      border-radius: 16px;
+      padding: 10px 12px;
+      box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.18), 0 18px 42px rgba(0, 0, 0, 0.85);
+      pointer-events: none;
+      width: 100%;
+    }
+
+    .tour-popover-card {
+      background: #151a22;
+      border: 1.5px solid rgba(245, 158, 11, 0.5);
+      border-radius: 18px;
+      padding: 18px 18px 16px;
+      box-shadow: 0 22px 48px rgba(0, 0, 0, 0.9);
+      position: relative;
+      width: 100%;
+    }
+
+    .tour-popover-card.below-target {
+      margin-top: 15px;
+    }
+
+    .tour-popover-card.above-target {
+      margin-bottom: 15px;
+    }
+
+    .tour-caret {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background: #151a22;
+      transform: rotate(45deg);
+    }
+
+    .tour-caret.caret-up {
+      top: -9px;
+      border-top: 1.5px solid rgba(245, 158, 11, 0.5);
+      border-left: 1.5px solid rgba(245, 158, 11, 0.5);
+    }
+
+    .tour-caret.caret-down {
+      bottom: -9px;
+      border-bottom: 1.5px solid rgba(245, 158, 11, 0.5);
+      border-right: 1.5px solid rgba(245, 158, 11, 0.5);
+    }
+
+    .tour-caret.pos-left {
+      left: 34px;
+    }
+
+    .tour-caret.pos-center {
+      left: calc(50% - 8px);
+    }
+
+    .tour-caret.pos-right {
+      right: 28px;
+    }
+
+    .tour-popover-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
     }
 
     .help-tour-title {
-      font-size: 17px;
+      font-size: 18px;
       font-weight: 900;
       color: var(--amber);
-      margin-bottom: 6px;
+      margin: 0;
+      line-height: 1.25;
       letter-spacing: 0.01em;
     }
 
-    .help-tour-desc {
-      font-size: 13.5px;
-      line-height: 1.5;
+    .tour-btn-close {
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      min-height: 32px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       color: #d1d5db;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .tour-btn-close:active {
+      transform: scale(0.92);
+    }
+
+    .help-tour-desc {
+      font-size: 14.5px;
+      line-height: 1.48;
+      color: #e5e7eb;
+      margin: 0 0 16px 0;
     }
 
     .help-tour-desc strong {
-      color: #fff;
+      color: var(--amber);
+      font-weight: 800;
     }
 
-    .help-tour-dots {
+    .tour-nav-row {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 7px;
-      margin-top: 14px;
+      gap: 10px;
     }
 
-    .help-tour-dot {
-      width: 8px;
-      height: 8px;
+    .tour-nav-circle {
+      width: 38px;
+      height: 38px;
+      min-width: 38px;
+      min-height: 38px;
       border-radius: 999px;
-      background: var(--border-600);
-      transition: width 0.2s ease, background 0.2s ease;
-    }
-
-    .help-tour-dot.active {
-      width: 22px;
-      background: var(--amber);
-    }
-
-    .help-mock-card {
-      width: 100%;
-      max-width: 310px;
       background: var(--bg-800);
-      border: 1px solid var(--border-700);
-      border-radius: 11px;
-      padding: 10px 12px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
-    }
-
-    .help-mock-pill {
+      border: 1.5px solid rgba(245, 158, 11, 0.45);
+      color: var(--amber);
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      font-size: 11px;
-      font-weight: 800;
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: rgba(245, 158, 11, 0.14);
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      transition: transform 0.12s, opacity 0.15s, background 0.15s;
+    }
+
+    .tour-nav-circle:active:not(:disabled) {
+      transform: scale(0.92);
+      background: rgba(245, 158, 11, 0.18);
+    }
+
+    .tour-nav-circle:disabled {
+      opacity: 0.35;
+      border-color: var(--border-700);
+      color: var(--text-muted);
+      cursor: default;
+    }
+
+    .tour-step-pill {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.38);
       color: var(--amber);
-      border: 1px solid rgba(245, 158, 11, 0.35);
+      font-size: 13px;
+      font-weight: 900;
+      padding: 6px 13px;
+      border-radius: 9px;
+      letter-spacing: 0.02em;
     }
 
     .unsaved-backups-banner {
@@ -2840,6 +2980,10 @@
             <span id="project-lang-current-label" style="color:var(--amber); font-size:12px; font-weight:900;">Español</span>
           </div>
         </button>
+        <button type="button" class="dropdown-item" id="project-menu-opt-help">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span data-i18n="menu_help">Ayuda</span>
+        </button>
       </div>
     </header>
 
@@ -2871,7 +3015,7 @@
     <div class="bottom-bar-center">
       <div class="bottom-bar-center-inner">
         <button type="button" id="btn-add-entry" class="btn-bottom-action-center" style="width:100%;">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
           <span data-i18n="btn_new_continuity">NUEVA CONTINUIDAD</span>
         </button>
       </div>
@@ -3524,26 +3668,31 @@
   <!-- ========================================== -->
   <!-- MODAL: GUÍA VISUAL / AYUDA DE SETBIBLE     -->
   <!-- ========================================== -->
-  <div id="help-tour-modal" class="modal-backdrop hidden" style="z-index: 80;">
-    <div class="modal-card" style="max-width:480px;">
-      <div class="modal-header">
-        <div style="display:flex; align-items:center; gap:8px;">
-          <h2 class="modal-title" style="color:var(--amber);" data-i18n="modal_help_title">GUÍA DE SETBIBLE</h2>
-          <span id="help-tour-step-badge" style="color:var(--amber); font-size:12px; font-weight:900; background:rgba(245,158,11,0.15); padding:2px 8px; border-radius:8px;">1 / 6</span>
+  <div id="help-tour-modal" class="modal-backdrop hidden" style="z-index: 95;">
+    <div id="help-tour-swipe-area" class="tour-fullscreen-stage">
+      <div id="help-tour-bg-screen" class="tour-bg-screen"></div>
+      <div class="tour-dim-mask"></div>
+      <div id="help-tour-foreground" class="tour-foreground-layer align-top">
+        <div id="help-tour-spotlight-host" style="display:flex; width:100%;"></div>
+        <div id="help-tour-popover" class="tour-popover-card below-target">
+          <div id="help-tour-caret" class="tour-caret caret-up pos-right"></div>
+          <div class="tour-popover-header">
+            <h3 id="help-tour-title" class="help-tour-title"></h3>
+            <button type="button" id="btn-close-help-tour" class="tour-btn-close" title="Cerrar" data-i18n-title="close_title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+          </div>
+          <p id="help-tour-desc" class="help-tour-desc"></p>
+          <div class="tour-nav-row">
+            <button type="button" id="btn-help-prev" class="tour-nav-circle" title="Anterior" data-i18n-title="btn_prev">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <span id="help-tour-step-badge" class="tour-step-pill">1 de 9</span>
+            <button type="button" id="btn-help-next" class="tour-nav-circle" title="Siguiente" data-i18n-title="btn_next">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
         </div>
-        <button type="button" id="btn-close-help-tour" class="btn-close-touch" title="Cerrar" data-i18n-title="close_title">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
-      </div>
-      <div class="modal-body" id="help-tour-swipe-area">
-        <div id="help-tour-visual" class="help-tour-visual"></div>
-        <h3 id="help-tour-title" class="help-tour-title"></h3>
-        <p id="help-tour-desc" class="help-tour-desc"></p>
-        <div id="help-tour-dots" class="help-tour-dots"></div>
-      </div>
-      <div class="modal-footer" style="gap:10px;">
-        <button type="button" id="btn-help-prev" class="btn-secondary" style="flex:1;" data-i18n="btn_prev">Anterior</button>
-        <button type="button" id="btn-help-next" class="btn-primary" style="flex:1.3;" data-i18n="btn_next">Siguiente</button>
       </div>
     </div>
   </div>
@@ -3744,7 +3893,7 @@
         <div style="width:100%; border-top:1px solid var(--border-700); padding-top:14px; display:flex; flex-direction:column; gap:6px; font-size:13px; color:var(--text-muted);">
           <div>
             <span data-i18n="app_info_version_label">Versión</span>:
-            <strong id="app-info-version-val" style="color:#fff;">0.122</strong>
+            <strong id="app-info-version-val" style="color:#fff;">0.127</strong>
           </div>
           <div>
             <span data-i18n="app_info_created_by">Creado por</span>:
@@ -3908,18 +4057,29 @@
         btn_prev: 'Anterior',
         btn_next: 'Siguiente',
         btn_understood: '¡Entendido!',
-        help_step_1_title: '1. Organiza tus Proyectos',
-        help_step_1_desc: 'Crea producciones con el botón <strong>+</strong>. Desde el menú principal puedes <strong>Fijar</strong> tus proyectos activos arriba, marcarlos como <strong>Terminado</strong> u <strong>Ordenar</strong> (incluso arrastrando en modo <em>Personalizado</em>).',
-        help_step_2_title: '2. Catálogo de Escenas y Personajes',
-        help_step_2_desc: 'Dentro de un proyecto, abre el menú superior derecho para registrar <strong>Escenas</strong> y <strong>Personajes</strong> (con foto del actor). Así los seleccionas con un toque al capturar continuidad.',
-        help_step_3_title: '3. Continuidades, Fotos y Zoom',
-        help_step_3_desc: 'Toca <strong>+</strong> para registrar una escena con notas generales y múltiples <strong>entradas</strong> (vestuario, utilería, maquillaje). Toca cualquier foto para abrirla en grande con zoom.',
-        help_step_4_title: '4. Buscador Rápido en Set',
-        help_step_4_desc: 'Encuentra cualquier detalle al instante usando la barra de búsqueda y los filtros de <strong>Escena</strong> o <strong>Personaje</strong> sin perder tiempo durante el rodaje.',
-        help_step_5_title: '5. Reporte PDF en Directo',
-        help_step_5_desc: 'Elige <strong>Exportar Reporte PDF</strong> en el menú del proyecto. Verás un mosaico en vivo donde ajustas idioma, escenas, tamaño de fuentes/fotos y si separar cada continuidad por página.',
-        help_step_6_title: '6. 100% Offline y Respaldos',
-        help_step_6_desc: 'SetBible funciona <strong>sin señal en set</strong> guardando todo en tu dispositivo. Usa <strong>Guardar Respaldos</strong> en el menú principal para exportar tus proyectos e importarlos cuando los necesites.',
+        help_step_counter: '{n} de {total}',
+        help_demo_proj_1: 'HORIZONTE ROJO',
+        help_demo_proj_2: 'NOCHE EN SUR',
+        help_demo_scene_desc: 'CAFETERÍA CENTRAL - MESAS JUNTO A VENTANAL',
+        help_demo_entry_note: 'Chaqueta de cuero marrón abotonada hasta arriba, reloj en muñeca izquierda.',
+        help_step_1_title: 'Inicio de sesión y sincronización',
+        help_step_1_desc: 'Inicia sesión con <strong>Continuar con Google</strong> o con tu correo para sincronizar tus proyectos en la nube (o elige <strong>Continuar sin cuenta</strong>). También puedes gestionarlo desde <strong>Nube / Cuenta</strong> y <strong>Subir a la nube</strong>.',
+        help_step_2_title: 'Creación de proyectos',
+        help_step_2_desc: 'Pulsa el botón <strong>+ NUEVO PROYECTO</strong> en la barra inferior para crear un proyecto ingresando <strong>Nombre del Proyecto *</strong> y <strong>Productora (Opcional)</strong>, o usa <strong>Importar Proyectos</strong> debajo para cargar respaldos.',
+        help_step_3_title: 'Menú de proyectos',
+        help_step_3_desc: 'Toca el botón de herramientas (llave inglesa arriba a la derecha) para <strong>Ordenar proyectos</strong>, <strong>Fijar proyectos</strong>, <strong>Terminar proyectos</strong>, <strong>Guardar Respaldos</strong> o <strong>Borrar proyectos</strong>, o toca el lápiz en cada tarjeta para editarlo.',
+        help_step_4_title: '1. Importar guion (Escenas y Personajes)',
+        help_step_4_desc: 'Dentro del proyecto, abre el menú de herramientas arriba a la derecha y pulsa <strong>Importar Guion (PDF)</strong> para detectar automáticamente tus <strong>Escenas</strong> y <strong>Personajes</strong>, o adminístralos manualmente.',
+        help_step_5_title: '2. Creación de continuidades',
+        help_step_5_desc: 'Pulsa el botón <strong>+ NUEVA CONTINUIDAD</strong> en la barra inferior del proyecto, selecciona la <strong>Escena *</strong>, escribe las <strong>Notas Generales de la Escena</strong> y pulsa <strong>Guardar Continuidad</strong>.',
+        help_step_6_title: '3. Creación de entradas',
+        help_step_6_desc: 'Dentro de una continuidad, pulsa <strong>+ Añadir Entrada</strong>, elige el <strong>Personaje *</strong>, toca <strong>Seleccionar Foto</strong> para la foto de continuidad, escribe la <strong>Nota de Continuidad</strong> y pulsa <strong>Guardar Entrada</strong>.',
+        help_step_7_title: '4. Duplicar continuidades',
+        help_step_7_desc: 'En la esquina superior derecha de cada tarjeta de continuidad, toca el botón de <strong>Duplicar continuidad</strong>, elige la <strong>Escena de destino *</strong>, marca las <strong>Entradas a incluir</strong> y pulsa <strong>Duplicar</strong>.',
+        help_step_8_title: '5. Guardar respaldo',
+        help_step_8_desc: 'Desde el menú de herramientas del proyecto, pulsa <strong>Guardar Respaldo</strong> (o <strong>Guardar Respaldos</strong> en el menú de inicio) para descargar el archivo de respaldo con todas tus escenas, personajes y fotos.',
+        help_step_9_title: '6. Exportar PDF',
+        help_step_9_desc: 'Selecciona <strong>Exportar Reporte PDF</strong> en el menú del proyecto para ajustar idioma, escenas, tamaño de fuentes y fotos en la vista previa y pulsar <strong>Generar PDF</strong>.',
         batch_title_default: 'SELECCIONAR PROYECTOS',
         batch_title_pin: 'FIJAR PROYECTOS',
         batch_title_complete: 'TERMINAR PROYECTOS',
@@ -4285,18 +4445,29 @@
         btn_prev: 'Previous',
         btn_next: 'Next',
         btn_understood: 'Got it!',
-        help_step_1_title: '1. Organize your Projects',
-        help_step_1_desc: 'Create productions with the <strong>+</strong> button. From the main menu you can <strong>Pin</strong> active projects at the top, mark them as <strong>Completed</strong> or <strong>Sort</strong> (even dragging in <em>Custom</em> mode).',
-        help_step_2_title: '2. Scenes & Characters Catalog',
-        help_step_2_desc: 'Inside a project, open the top-right menu to register <strong>Scenes</strong> and <strong>Characters</strong> (with actor photo). Then select them with one tap when logging continuity.',
-        help_step_3_title: '3. Continuities, Photos & Zoom',
-        help_step_3_desc: 'Tap <strong>+</strong> to log a scene with general notes and multiple <strong>entries</strong> (wardrobe, props, makeup). Tap any photo to open it full-screen with zoom.',
-        help_step_4_title: '4. Fast On-Set Search',
-        help_step_4_desc: 'Find any detail instantly using the search bar and <strong>Scene</strong> or <strong>Character</strong> filters without wasting time during filming.',
-        help_step_5_title: '5. Live PDF Report',
-        help_step_5_desc: 'Choose <strong>Export PDF Report</strong> in the project menu. Preview a live layout where you adjust language, scenes, font/photo sizes, and page breaks.',
-        help_step_6_title: '6. 100% Offline & Backups',
-        help_step_6_desc: 'SetBible works <strong>offline on set</strong> saving everything on your device. Use <strong>Save Backups</strong> in the main menu to export your projects and import them anytime.',
+        help_step_counter: '{n} of {total}',
+        help_demo_proj_1: 'RED HORIZON',
+        help_demo_proj_2: 'SOUTHERN NIGHT',
+        help_demo_scene_desc: 'CENTRAL DINER - TABLES BY THE WINDOW',
+        help_demo_entry_note: 'Brown leather jacket buttoned all the way up, watch on left wrist.',
+        help_step_1_title: 'Sign-In & Cloud Sync',
+        help_step_1_desc: 'Sign in with <strong>Continue with Google</strong> or email to sync your projects in the cloud (or choose <strong>Continue without account</strong>). You can also manage it via <strong>Cloud / Account</strong> and <strong>Upload to cloud</strong>.',
+        help_step_2_title: 'Creating Projects',
+        help_step_2_desc: 'Tap the <strong>+ NEW PROJECT</strong> button on the bottom bar to create a project with its <strong>Project Name *</strong> and <strong>Production Company (Optional)</strong>, or use <strong>Import Projects</strong> below it to load backups.',
+        help_step_3_title: 'Projects Menu',
+        help_step_3_desc: 'Tap the tools button (wrench icon at the top right) to <strong>Sort projects</strong>, <strong>Pin projects</strong>, <strong>Complete projects</strong>, <strong>Save Backups</strong>, or <strong>Delete projects</strong>, or tap the pencil button on a card to edit it.',
+        help_step_4_title: '1. Import Script (Scenes & Characters)',
+        help_step_4_desc: 'Inside your project, open the top-right tools menu and tap <strong>Import Script (PDF)</strong> to automatically detect your <strong>Scenes</strong> and <strong>Characters</strong>, or manage them manually.',
+        help_step_5_title: '2. Creating Continuities',
+        help_step_5_desc: 'Tap the <strong>+ NEW CONTINUITY</strong> button on the project bottom bar, select the <strong>Scene *</strong>, enter <strong>General Scene Notes</strong>, and tap <strong>Save Continuity</strong>.',
+        help_step_6_title: '3. Creating Entries',
+        help_step_6_desc: 'Inside a continuity, tap <strong>+ Add Entry</strong>, choose the <strong>Character *</strong>, tap <strong>Select Photo</strong> for the continuity photo, write the <strong>Continuity Note</strong>, and tap <strong>Save Entry</strong>.',
+        help_step_7_title: '4. Duplicating Continuities',
+        help_step_7_desc: 'At the top-right corner of any continuity card, tap the <strong>Duplicate continuity</strong> button, choose the <strong>Target scene *</strong>, check the <strong>Entries to include</strong>, and tap <strong>Duplicate</strong>.',
+        help_step_8_title: '5. Saving a Backup',
+        help_step_8_desc: 'From the project tools menu, tap <strong>Save Backup</strong> (or <strong>Save Backups</strong> in the home menu) to download a backup file containing all your scenes, characters, and photos.',
+        help_step_9_title: '6. Exporting PDF',
+        help_step_9_desc: 'Select <strong>Export PDF Report</strong> in the project menu to adjust language, scenes, font size, and photo size in the live preview, then tap <strong>Generate PDF</strong>.',
         batch_title_default: 'SELECT PROJECTS',
         batch_title_pin: 'PIN PROJECTS',
         batch_title_complete: 'COMPLETE PROJECTS',
@@ -4662,18 +4833,29 @@
         btn_prev: 'Anterior',
         btn_next: 'Próximo',
         btn_understood: 'Entendi!',
-        help_step_1_title: '1. Organize seus Projetos',
-        help_step_1_desc: 'Crie produções com o botão <strong>+</strong>. No menu principal você pode <strong>Fixar</strong> projetos ativos no topo, marcá-los como <strong>Concluído</strong> ou <strong>Ordenar</strong> (arrastando no modo <em>Personalizado</em>).',
-        help_step_2_title: '2. Catálogo de Cenas e Personagens',
-        help_step_2_desc: 'Dentro de um projeto, abra o menu superior direito para cadastrar <strong>Cenas</strong> e <strong>Personagens</strong> (com foto do ator) para selecioná-los com um toque.',
-        help_step_3_title: '3. Continuidades, Fotos e Zoom',
-        help_step_3_desc: 'Toque em <strong>+</strong> para registrar uma cena com notas gerais e múltiplas <strong>entradas</strong> (figurino, objetos, maquiagem). Toque na foto para ampliar com zoom.',
-        help_step_4_title: '4. Busca Rápida no Set',
-        help_step_4_desc: 'Encontre qualquer detalhe instantaneamente usando a barra de busca e os filtros de <strong>Cena</strong> ou <strong>Personagem</strong> durante a filmagem.',
-        help_step_5_title: '5. Relatório PDF ao Vivo',
-        help_step_5_desc: 'Escolha <strong>Exportar Relatório PDF</strong> no menu do projeto. Ajuste idioma, cenas, tamanho de fontes/fotos e quebra de páginas ao vivo.',
-        help_step_6_title: '6. 100% Offline e Backups',
-        help_step_6_desc: 'O SetBible funciona <strong>sem internet no set</strong> salvando tudo no seu aparelho. Use <strong>Salvar Backups</strong> no menu principal para exportar e importar projetos.',
+        help_step_counter: '{n} de {total}',
+        help_demo_proj_1: 'HORIZONTE VERMELHO',
+        help_demo_proj_2: 'NOITE NO SUL',
+        help_demo_scene_desc: 'CAFETERIA CENTRAL - MESAS JUNTO À JANELA',
+        help_demo_entry_note: 'Jaqueta de couro marrom abotoada até o topo, relógio no pulso esquerdo.',
+        help_step_1_title: 'Login e sincronização',
+        help_step_1_desc: 'Entre com <strong>Continuar com Google</strong> ou e-mail para sincronizar seus projetos na nuvem (ou escolha <strong>Continuar sem conta</strong>). Você também pode gerenciar isso em <strong>Nuvem / Conta</strong> e <strong>Enviar para a nuvem</strong>.',
+        help_step_2_title: 'Criação de projetos',
+        help_step_2_desc: 'Toque no botão <strong>+ NOVO PROJETO</strong> na barra inferior para criar um projeto informando <strong>Nome do Projeto *</strong> e <strong>Produtora (Opcional)</strong>, ou use <strong>Importar Projetos</strong> abaixo para carregar backups.',
+        help_step_3_title: 'Menu de projetos',
+        help_step_3_desc: 'Toque no botão de ferramentas (chave inglesa no canto superior direito) para <strong>Ordenar projetos</strong>, <strong>Fixar projetos</strong>, <strong>Concluir projetos</strong>, <strong>Salvar Backups</strong> ou <strong>Excluir projetos</strong>, ou toque no lápis de cada cartão para editá-lo.',
+        help_step_4_title: '1. Importar roteiro (Cenas e Personagens)',
+        help_step_4_desc: 'Dentro do projeto, abra o menu de ferramentas no canto superior direito e toque em <strong>Importar Roteiro (PDF)</strong> para detectar automaticamente suas <strong>Cenas</strong> e <strong>Personagens</strong>, ou gerencie-os manualmente.',
+        help_step_5_title: '2. Criação de continuidades',
+        help_step_5_desc: 'Toque no botão <strong>+ NOVA CONTINUIDADE</strong> na barra inferior do projeto, selecione a <strong>Cena *</strong>, escreva as <strong>Notas Gerais da Cena</strong> e toque em <strong>Salvar Continuidade</strong>.',
+        help_step_6_title: '3. Criação de entradas',
+        help_step_6_desc: 'Dentro de uma continuidade, toque em <strong>+ Adicionar Entrada</strong>, escolha o <strong>Personagem *</strong>, toque em <strong>Selecionar Foto</strong>, escreva a <strong>Nota de Continuidade</strong> e toque em <strong>Salvar Entrada</strong>.',
+        help_step_7_title: '4. Duplicar continuidades',
+        help_step_7_desc: 'No canto superior direito de cada cartão de continuidade, toque no botão <strong>Duplicar continuidade</strong>, escolha a <strong>Cena de destino *</strong>, marque as <strong>Entradas para incluir</strong> e toque em <strong>Duplicar</strong>.',
+        help_step_8_title: '5. Salvar backup',
+        help_step_8_desc: 'No menu de ferramentas do projeto, toque em <strong>Salvar Backup</strong> (ou <strong>Salvar Backups</strong> no menu inicial) para baixar o arquivo de backup com todas as suas cenas, personagens e fotos.',
+        help_step_9_title: '6. Exportar PDF',
+        help_step_9_desc: 'Selecione <strong>Exportar Relatório PDF</strong> no menu do projeto para ajustar idioma, cenas, tamanho de fontes e fotos na pré-visualização e tocar em <strong>Gerar PDF</strong>.',
         batch_title_default: 'SELECIONAR PROJETOS',
         batch_title_pin: 'FIXAR PROJETOS',
         batch_title_complete: 'CONCLUIR PROJETOS',
@@ -5039,18 +5221,29 @@
         btn_prev: 'Precedente',
         btn_next: 'Avanti',
         btn_understood: 'Capito!',
-        help_step_1_title: '1. Organizza i Progetti',
-        help_step_1_desc: 'Crea produzioni con il pulsante <strong>+</strong>. Dal menu principale puoi <strong>Fissare</strong> i progetti attivi in alto, segnarli come <strong>Completati</strong> o <strong>Ordinare</strong> (trascinando in modalità <em>Personalizzata</em>).',
-        help_step_2_title: '2. Catalogo Scene e Personaggi',
-        help_step_2_desc: 'Dentro un progetto, apri il menu in alto a destra per registrare <strong>Scene</strong> e <strong>Personaggi</strong> (con foto attore) e selezionarli con un tocco.',
-        help_step_3_title: '3. Continuità, Foto e Zoom',
-        help_step_3_desc: 'Tocca <strong>+</strong> per registrare una scena con note generali e più <strong>voci</strong> (costumi, oggetti, trucco). Tocca una foto per ingrandirla con lo zoom.',
-        help_step_4_title: '4. Ricerca Rapida sul Set',
-        help_step_4_desc: 'Trova qualsiasi dettaglio all\'istante usando la barra di ricerca e i filtri di <strong>Scena</strong> o <strong>Personaggio</strong> durante le riprese.',
-        help_step_5_title: '5. Report PDF dal Vivo',
-        help_step_5_desc: 'Scegli <strong>Esporta Report PDF</strong> nel menu del progetto. Regola lingua, scene, dimensioni di font/foto e interruzioni di pagina in tempo reale.',
-        help_step_6_title: '6. 100% Offline e Backup',
-        help_step_6_desc: 'SetBible funziona <strong>offline sul set</strong> salvando tutto sul dispositivo. Usa <strong>Salva Backup</strong> nel menu principale per esportare e importare i progetti.',
+        help_step_counter: '{n} di {total}',
+        help_demo_proj_1: 'ORIZZONTE ROSSO',
+        help_demo_proj_2: 'NOTTE AL SUD',
+        help_demo_scene_desc: 'CAFFETTERIA CENTRALE - TAVOLI VICINO ALLA VETRATA',
+        help_demo_entry_note: 'Giacca di pelle marrone abbottonata fino in cima, orologio al polso sinistro.',
+        help_step_1_title: 'Accesso e sincronizzazione',
+        help_step_1_desc: 'Accedi con <strong>Continua con Google</strong> o con la tua email per sincronizzare i progetti nel cloud (oppure scegli <strong>Continua senza account</strong>). Puoi gestirlo anche da <strong>Cloud / Account</strong> e <strong>Carica nel cloud</strong>.',
+        help_step_2_title: 'Creazione di progetti',
+        help_step_2_desc: 'Tocca il pulsante <strong>+ NUOVO PROGETTO</strong> nella barra inferiore per creare un progetto inserendo <strong>Nome del Progetto *</strong> e <strong>Produzione (Opzionale)</strong>, oppure usa <strong>Importa Progetti</strong> sotto per caricare backup.',
+        help_step_3_title: 'Menu dei progetti',
+        help_step_3_desc: 'Tocca il pulsante strumenti (chiave inglese in alto a destra) per <strong>Ordina progetti</strong>, <strong>Fissa progetti</strong>, <strong>Completa progetti</strong>, <strong>Salva Backup</strong> o <strong>Elimina progetti</strong>, o tocca la matita su ogni scheda per modificarla.',
+        help_step_4_title: '1. Importa sceneggiatura (Scene e Personaggi)',
+        help_step_4_desc: 'Dentro il progetto, apri il menu strumenti in alto a destra e tocca <strong>Importa Sceneggiatura (PDF)</strong> per rilevare automaticamente <strong>Scene</strong> e <strong>Personaggi</strong>, o gestiscili manualmente.',
+        help_step_5_title: '2. Creazione di continuità',
+        help_step_5_desc: 'Tocca il pulsante <strong>+ NUOVA CONTINUITÀ</strong> nella barra inferiore del progetto, seleziona la <strong>Scena *</strong>, inserisci le <strong>Note Generali della Scena</strong> e tocca <strong>Salva Continuità</strong>.',
+        help_step_6_title: '3. Creazione di voci',
+        help_step_6_desc: 'Dentro una continuità, tocca <strong>+ Aggiungi Voce</strong>, scegli il <strong>Personaggio *</strong>, tocca <strong>Seleziona Foto</strong> per la foto di continuità, scrivi la <strong>Nota di Continuità</strong> e tocca <strong>Salva Voce</strong>.',
+        help_step_7_title: '4. Duplicare continuità',
+        help_step_7_desc: 'Nell\'angolo in alto a destra di ogni scheda di continuità, tocca il pulsante <strong>Duplica continuità</strong>, scegli la <strong>Scena di destinazione *</strong>, spunta le <strong>Voci da includere</strong> e tocca <strong>Duplica</strong>.',
+        help_step_8_title: '5. Salvare backup',
+        help_step_8_desc: 'Dal menu strumenti del progetto, tocca <strong>Salva Backup</strong> (o <strong>Salva Backup</strong> nel menu iniziale) per scaricare il file di backup con tutte le scene, i personaggi e le foto.',
+        help_step_9_title: '6. Esportare PDF',
+        help_step_9_desc: 'Seleziona <strong>Esporta Report PDF</strong> nel menu del progetto per regolare lingua, scene, dimensione font e foto nell\'anteprima e toccare <strong>Genera PDF</strong>.',
         batch_title_default: 'SELEZIONA PROGETTI',
         batch_title_pin: 'FISSA PROGETTI',
         batch_title_complete: 'COMPLETA PROGETTI',
@@ -5416,18 +5609,29 @@
         btn_prev: 'Zurück',
         btn_next: 'Weiter',
         btn_understood: 'Verstanden!',
-        help_step_1_title: '1. Projekte organisieren',
-        help_step_1_desc: 'Erstelle Produktionen mit <strong>+</strong>. Im Hauptmenü kannst du aktive Projekte oben <strong>anheften</strong>, als <strong>abgeschlossen</strong> markieren oder <strong>sortieren</strong> (auch per Drag & Drop im <em>Benutzerdefiniert</em>-Modus).',
-        help_step_2_title: '2. Szenen- & Figurenkatalog',
-        help_step_2_desc: 'Öffne im Projekt das Menü oben rechts, um <strong>Szenen</strong> und <strong>Figuren</strong> (mit Foto) zu erfassen und beim Dokumentieren direkt auszuwählen.',
-        help_step_3_title: '3. Kontinuität, Fotos & Zoom',
-        help_step_3_desc: 'Tippe auf <strong>+</strong> für eine Szene mit allgemeinen Notizen und mehreren <strong>Einträgen</strong> (Kostüm, Requisite, Maske). Tippe auf jedes Foto für Vollbild-Zoom.',
-        help_step_4_title: '4. Schnellsuche am Set',
-        help_step_4_desc: 'Finde jedes Detail sofort über die Suchleiste und die Filter für <strong>Szene</strong> oder <strong>Figur</strong>, ohne Zeit beim Dreh zu verlieren.',
-        help_step_5_title: '5. Live-PDF-Bericht',
-        help_step_5_desc: 'Wähle <strong>PDF-Bericht exportieren</strong> im Projektmenü. Passe Sprache, Szenen, Schrift-/Fotogrößen und Seitenumbrüche live an.',
-        help_step_6_title: '6. 100% Offline & Backups',
-        help_step_6_desc: 'SetBible funktioniert <strong>offline am Set</strong> und speichert alles lokal. Nutze <strong>Backups speichern</strong> im Hauptmenü zum Exportieren und Importieren.',
+        help_step_counter: '{n} von {total}',
+        help_demo_proj_1: 'ROTER HORIZONT',
+        help_demo_proj_2: 'NACHT IM SÜDEN',
+        help_demo_scene_desc: 'ZENTRALES CAFÉ - TISCHE AM FENSTER',
+        help_demo_entry_note: 'Braune Lederjacke bis oben zugeknöpft, Uhr am linken Handgelenk.',
+        help_step_1_title: 'Anmeldung & Synchronisierung',
+        help_step_1_desc: 'Melde dich über <strong>Mit Google fortfahren</strong> oder per E-Mail an, um deine Projekte in der Cloud zu synchronisieren (oder wähle <strong>Ohne Konto fortfahren</strong>). Du kannst dies auch unter <strong>Cloud / Konto</strong> und <strong>In die Cloud hochladen</strong> verwalten.',
+        help_step_2_title: 'Projekte erstellen',
+        help_step_2_desc: 'Tippe in der unteren Leiste auf <strong>+ NEUES PROJEKT</strong>, um ein Projekt mit <strong>Projektname *</strong> und <strong>Produktionsfirma (Optional)</strong> zu erstellen, oder nutze darunter <strong>Projekte importieren</strong>, um Backups zu laden.',
+        help_step_3_title: 'Projektmenü',
+        help_step_3_desc: 'Tippe oben rechts auf das Werkzeug-Symbol (Schraubenschlüssel), um <strong>Projekte sortieren</strong>, <strong>Projekte anheften</strong>, <strong>Projekte abschließen</strong>, <strong>Backups speichern</strong> oder <strong>Projekte löschen</strong> zu nutzen, oder tippe auf das Stiftsymbol einer Karte.',
+        help_step_4_title: '1. Drehbuch importieren (Szenen & Figuren)',
+        help_step_4_desc: 'Öffne im Projekt oben rechts das Werkzeugmenü und tippe auf <strong>Drehbuch importieren (PDF)</strong>, um deine <strong>Szenen</strong> und <strong>Figuren</strong> automatisch zu erkennen oder manuell zu verwalten.',
+        help_step_5_title: '2. Kontinuitäten erstellen',
+        help_step_5_desc: 'Tippe in der unteren Projektleiste auf <strong>+ NEUE KONTINUITÄT</strong>, wähle die <strong>Szene *</strong>, gib <strong>Allgemeine Szenennotizen</strong> ein und tippe auf <strong>Kontinuität speichern</strong>.',
+        help_step_6_title: '3. Einträge erstellen',
+        help_step_6_desc: 'Tippe innerhalb einer Kontinuität auf <strong>+ Eintrag hinzufügen</strong>, wähle die <strong>Figur *</strong>, tippe auf <strong>Foto auswählen</strong>, schreibe die <strong>Kontinuitätsnotiz</strong> und tippe auf <strong>Eintrag speichern</strong>.',
+        help_step_7_title: '4. Kontinuitäten duplizieren',
+        help_step_7_desc: 'Tippe oben rechts auf einer Kontinuitätskarte auf die Schaltfläche <strong>Kontinuität duplizieren</strong>, wähle die <strong>Zielszene *</strong>, markiere <strong>Einzuschließende Einträge</strong> und tippe auf <strong>Duplizieren</strong>.',
+        help_step_8_title: '5. Backup speichern',
+        help_step_8_desc: 'Tippe im Werkzeugmenü des Projekts auf <strong>Backup speichern</strong> (oder im Startmenü auf <strong>Backups speichern</strong>), um die Sicherungsdatei mit allen Szenen, Figuren und Fotos herunterzuladen.',
+        help_step_9_title: '6. PDF exportieren',
+        help_step_9_desc: 'Wähle im Projektmenü <strong>PDF-Bericht exportieren</strong>, um Sprache, Szenen, Schrift- und Fotogröße in der Live-Vorschau anzupassen, und tippe auf <strong>PDF erstellen</strong>.',
         batch_title_default: 'PROJEKTE WÄHLEN',
         batch_title_pin: 'PROJEKTE ANHEFTEN',
         batch_title_complete: 'PROJEKTE ABSCHLIESSEN',
@@ -5793,18 +5997,29 @@
         btn_prev: 'Précédent',
         btn_next: 'Suivant',
         btn_understood: 'Compris !',
-        help_step_1_title: '1. Organisez vos projets',
-        help_step_1_desc: 'Créez des productions avec <strong>+</strong>. Depuis le menu principal, vous pouvez <strong>Épingler</strong> vos projets actifs en haut, les marquer comme <strong>Terminés</strong> ou les <strong>Trier</strong> (y compris par glisser-déposer en mode <em>Personnalisé</em>).',
-        help_step_2_title: '2. Catalogue de scènes et personnages',
-        help_step_2_desc: 'Dans un projet, ouvrez le menu en haut à droite pour enregistrer <strong>Scènes</strong> et <strong>Personnages</strong> (avec photo de l\'acteur) et les sélectionner en un clic.',
-        help_step_3_title: '3. Continuités, photos et zoom',
-        help_step_3_desc: 'Appuyez sur <strong>+</strong> pour enregistrer une scène avec des notes générales et plusieurs <strong>entrées</strong> (costume, accessoires, maquillage). Touchez une photo pour l\'agrandir.',
-        help_step_4_title: '4. Recherche rapide sur le plateau',
-        help_step_4_desc: 'Trouvez n\'importe quel détail instantanément grâce à la barre de recherche et aux filtres de <strong>Scène</strong> ou <strong>Personnage</strong>.',
-        help_step_5_title: '5. Rapport PDF en direct',
-        help_step_5_desc: 'Choisissez <strong>Exporter rapport PDF</strong> dans le menu du projet. Ajustez langue, scènes, tailles des polices/photos et sauts de page en direct.',
-        help_step_6_title: '6. 100% Hors-ligne et sauvegardes',
-        help_step_6_desc: 'SetBible fonctionne <strong>sans réseau sur le plateau</strong> en enregistrant tout sur votre appareil. Utilisez <strong>Enregistrer sauvegardes</strong> pour exporter et importer vos projets.',
+        help_step_counter: '{n} sur {total}',
+        help_demo_proj_1: 'HORIZON ROUGE',
+        help_demo_proj_2: 'NUIT DU SUD',
+        help_demo_scene_desc: 'CAFÉTÉRIA CENTRALE - TABLES PRÈS DE LA VITRINE',
+        help_demo_entry_note: 'Veste en cuir marron boutonnée jusqu\'en haut, montre au poignet gauche.',
+        help_step_1_title: 'Connexion et synchronisation',
+        help_step_1_desc: 'Connectez-vous avec <strong>Continuer avec Google</strong> ou par e-mail pour synchroniser vos projets dans le cloud (ou choisissez <strong>Continuer sans compte</strong>). Vous pouvez aussi le gérer depuis <strong>Cloud / Compte</strong> et <strong>Envoyer vers le cloud</strong>.',
+        help_step_2_title: 'Création de projets',
+        help_step_2_desc: 'Appuyez sur le bouton <strong>+ NOUVEAU PROJET</strong> dans la barre inférieure pour créer un projet en saisissant le <strong>Nom du Projet *</strong> et la <strong>Société de Production (Optionnel)</strong>, ou utilisez <strong>Importer des projets</strong> juste en dessous.',
+        help_step_3_title: 'Menu des projets',
+        help_step_3_desc: 'Appuyez sur le bouton d\'outils (clé à molette en haut à droite) pour <strong>Trier les projets</strong>, <strong>Épingler les projets</strong>, <strong>Terminer les projets</strong>, <strong>Enregistrer sauvegardes</strong> ou <strong>Supprimer des projets</strong>, ou sur le crayon d\'une carte.',
+        help_step_4_title: '1. Importer le scénario (Scènes et Personnages)',
+        help_step_4_desc: 'Dans le projet, ouvrez le menu d\'outils en haut à droite et appuyez sur <strong>Importer le scénario (PDF)</strong> pour détecter automatiquement vos <strong>Scènes</strong> et <strong>Personnages</strong>, ou gérez-les manuellement.',
+        help_step_5_title: '2. Création de continuités',
+        help_step_5_desc: 'Appuyez sur le bouton <strong>+ NOUVELLE CONTINUITÉ</strong> dans la barre inférieure du projet, sélectionnez la <strong>Scène *</strong>, saisissez les <strong>Notes Générales de la Scène</strong> et appuyez sur <strong>Enregistrer la continuité</strong>.',
+        help_step_6_title: '3. Création d\'entrées',
+        help_step_6_desc: 'Dans une continuité, appuyez sur <strong>+ Ajouter une entrée</strong>, choisissez le <strong>Personnage *</strong>, appuyez sur <strong>Choisir une photo</strong>, rédigez la <strong>Note de continuité</strong> et appuyez sur <strong>Enregistrer l\'entrée</strong>.',
+        help_step_7_title: '4. Dupliquer des continuités',
+        help_step_7_desc: 'Dans le coin supérieur droit de chaque carte de continuité, appuyez sur le bouton <strong>Dupliquer la continuité</strong>, choisissez la <strong>Scène de destination *</strong>, cochez les <strong>Entrées à inclure</strong> et appuyez sur <strong>Dupliquer</strong>.',
+        help_step_8_title: '5. Enregistrer une sauvegarde',
+        help_step_8_desc: 'Depuis le menu d\'outils du projet, appuyez sur <strong>Enregistrer sauvegarde</strong> (ou <strong>Enregistrer sauvegardes</strong> dans le menu d\'accueil) pour télécharger le fichier de sauvegarde complet.',
+        help_step_9_title: '6. Exporter en PDF',
+        help_step_9_desc: 'Sélectionnez <strong>Exporter rapport PDF</strong> dans le menu du projet pour ajuster la langue, les scènes, la taille des polices et des photos dans l\'aperçu, puis appuyez sur <strong>Générer le PDF</strong>.',
         batch_title_default: 'CHOISIR LES PROJETS',
         batch_title_pin: 'ÉPINGLER LES PROJETS',
         batch_title_complete: 'TERMINER LES PROJETS',
@@ -6589,8 +6804,19 @@
       });
     }
 
+    function pickNewerEntity(a, b) {
+      if (!a) return b;
+      if (!b) return a;
+      const tsA = Number(a.updatedAt || a.createdAt || 0);
+      const tsB = Number(b.updatedAt || b.createdAt || 0);
+      return tsA > tsB ? a : b;
+    }
+
     function saveEntityToDB(storeName, item, options = {}) {
       if (options.markDirty !== false) {
+        const now = Date.now();
+        if (!item.createdAt) item.createdAt = now;
+        item.updatedAt = Math.max(now, (Number(item.updatedAt) || 0) + 1);
         const targetProjId = (storeName === STORE_PROJECTS) ? item.id : item.projectId;
         markProjectModified(targetProjId);
       }
@@ -6641,7 +6867,7 @@
             const dbItems = (req.result || []).filter(x => x.projectId === projId);
             const map = new Map();
             fallbackItems.forEach(item => map.set(item.id, item));
-            dbItems.forEach(item => map.set(item.id, item));
+            dbItems.forEach(item => map.set(item.id, pickNewerEntity(map.get(item.id), item)));
             resolve(Array.from(map.values()));
           };
           req.onerror = () => resolve(fallbackItems);
@@ -6744,7 +6970,7 @@
             const dbItems = req.result || [];
             const map = new Map();
             fallbackProjects.forEach(p => map.set(p.id, p));
-            dbItems.forEach(p => map.set(p.id, p));
+            dbItems.forEach(p => map.set(p.id, pickNewerEntity(map.get(p.id), p)));
             resolve(Array.from(map.values()));
           };
           req.onerror = () => resolve(fallbackProjects);
@@ -7170,19 +7396,22 @@
       const orderedIds = Array.from(projectsList.querySelectorAll('.project-card')).map(el => el.getAttribute('data-id'));
       const allProjects = await getAllProjectsFromDB();
       const map = new Map(allProjects.map(p => [p.id, p]));
+      const now = Date.now();
 
       suppressBackupDirtyTracking = true;
       try {
         for (let i = 0; i < orderedIds.length; i++) {
           const p = map.get(orderedIds[i]);
-          if (p) {
+          if (p && p.customOrder !== i) {
             p.customOrder = i;
+            p.updatedAt = Math.max(now, (Number(p.updatedAt) || 0) + 1);
             await saveProjectToDB(p, { markDirty: false });
           }
         }
       } finally {
         suppressBackupDirtyTracking = false;
       }
+      if (typeof scheduleCloudSync === 'function') scheduleCloudSync();
 
       await renderProjects();
       setTimeout(() => { suppressNextProjectClick = false; }, 80);
@@ -7262,27 +7491,34 @@
       if (existingId) {
         const projects = await getAllProjectsFromDB();
         const existingProj = projects.find(p => p.id === existingId);
+        const now = Date.now();
         const updatedProj = {
           ...(existingProj || {}),
           id: existingId,
           name,
           producer,
-          pinned: projPinnedCheck.checked,
-          completed: projCompletedCheck.checked,
-          createdAt: existingProj ? existingProj.createdAt : Date.now()
+          pinned: Boolean(projPinnedCheck.checked),
+          completed: Boolean(projCompletedCheck.checked),
+          createdAt: existingProj ? existingProj.createdAt : now,
+          updatedAt: Math.max(now, (Number(existingProj?.updatedAt) || 0) + 1)
         };
         await saveProjectToDB(updatedProj);
+        if (activeProjectId === existingId) {
+          activeProjectData = updatedProj;
+        }
         projectModal.classList.add('hidden');
         await renderProjects();
         showToast(t('toast_project_updated'));
       } else {
+        const now = Date.now();
         const newProj = {
-          id: 'proj_' + Date.now(),
+          id: 'proj_' + now,
           name,
           producer,
           pinned: false,
           completed: false,
-          createdAt: Date.now()
+          createdAt: now,
+          updatedAt: now
         };
         await saveProjectToDB(newProj);
         projectModal.classList.add('hidden');
@@ -7657,21 +7893,22 @@
 
         suppressBackupDirtyTracking = true;
         try {
+          const importTs = Date.now();
           for (const file of files) {
             const data = await parseBackupFile(file);
 
             if (data.multiProjectBackup && Array.isArray(data.projects)) {
               for (const bundle of data.projects) {
                 if (bundle && bundle.project && bundle.project.id) {
-                  await saveProjectToDB(bundle.project);
+                  await saveProjectToDB({ ...bundle.project, updatedAt: importTs });
                   if (Array.isArray(bundle.takes)) {
-                    for (const take of bundle.takes) await saveTakeToDB(take);
+                    for (const take of bundle.takes) await saveTakeToDB({ ...take, updatedAt: importTs });
                   }
                   if (Array.isArray(bundle.scenes)) {
-                    for (const s of bundle.scenes) await saveEntityToDB(STORE_SCENES, s);
+                    for (const s of bundle.scenes) await saveEntityToDB(STORE_SCENES, { ...s, updatedAt: importTs });
                   }
                   if (Array.isArray(bundle.characters)) {
-                    for (const c of bundle.characters) await saveEntityToDB(STORE_CHARACTERS, c);
+                    for (const c of bundle.characters) await saveEntityToDB(STORE_CHARACTERS, { ...c, updatedAt: importTs });
                   }
                   markProjectBackedUp(bundle.project.id);
                   importedProjectsCount++;
@@ -7679,26 +7916,27 @@
                 }
               }
             } else if (data.project && data.project.id) {
-              await saveProjectToDB(data.project);
+              await saveProjectToDB({ ...data.project, updatedAt: importTs });
               if (Array.isArray(data.takes)) {
-                for (const take of data.takes) await saveTakeToDB(take);
+                for (const take of data.takes) await saveTakeToDB({ ...take, updatedAt: importTs });
               }
               if (Array.isArray(data.scenes)) {
-                for (const s of data.scenes) await saveEntityToDB(STORE_SCENES, s);
+                for (const s of data.scenes) await saveEntityToDB(STORE_SCENES, { ...s, updatedAt: importTs });
               }
               if (Array.isArray(data.characters)) {
-                for (const c of data.characters) await saveEntityToDB(STORE_CHARACTERS, c);
+                for (const c of data.characters) await saveEntityToDB(STORE_CHARACTERS, { ...c, updatedAt: importTs });
               }
               markProjectBackedUp(data.project.id);
               importedProjectsCount++;
               lastImportedProjectName = data.project.name || '';
             } else if (Array.isArray(data) && data.length > 0 && data[0].projectId) {
-              for (const take of data) await saveTakeToDB(take);
+              for (const take of data) await saveTakeToDB({ ...take, updatedAt: importTs });
               importedLegacyRecords = true;
             }
           }
 
           await renderProjects();
+          if (typeof scheduleCloudSync === 'function') scheduleCloudSync();
 
           if (importedProjectsCount === 1) {
             showToast(t('toast_project_restored', { name: lastImportedProjectName }));
@@ -7893,188 +8131,496 @@
     });
 
     /* ==========================================================================
-       TOUR GUIADO / AYUDA VISUAL DE SETBIBLE
+       TOUR GUIADO / AYUDA VISUAL DE SETBIBLE (ESTILO SPOTLIGHT SURA 9 PASOS)
        ========================================================================== */
     const helpTourModal = document.getElementById('help-tour-modal');
-    const helpTourVisual = document.getElementById('help-tour-visual');
+    const helpTourBgScreen = document.getElementById('help-tour-bg-screen');
+    const helpTourForeground = document.getElementById('help-tour-foreground');
+    const helpTourSpotlightHost = document.getElementById('help-tour-spotlight-host');
+    const helpTourPopover = document.getElementById('help-tour-popover');
+    const helpTourCaret = document.getElementById('help-tour-caret');
     const helpTourTitle = document.getElementById('help-tour-title');
     const helpTourDesc = document.getElementById('help-tour-desc');
-    const helpTourDots = document.getElementById('help-tour-dots');
     const helpTourStepBadge = document.getElementById('help-tour-step-badge');
     const btnHelpPrev = document.getElementById('btn-help-prev');
     const btnHelpNext = document.getElementById('btn-help-next');
 
-    const HELP_TOUR_STEPS = [
-      {
-        title: '1. Organiza tus Proyectos',
-        desc: 'Crea producciones con el botón <strong>+</strong>. Desde el menú principal puedes <strong>Fijar</strong> tus proyectos activos arriba, marcarlos como <strong>Terminado</strong> u <strong>Ordenar</strong> (incluso arrastrando en modo <em>Personalizado</em>).',
-        visual: `
-          <div style="display:flex; flex-direction:column; gap:8px; width:100%; max-width:300px;">
-            <div class="help-mock-card help-anim-swap" style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
-              <div style="display:flex; align-items:center; gap:8px;">
-                <span style="color:var(--amber); font-weight:900; font-size:14px; letter-spacing:1px;">⋮⋮</span>
-                <div>
-                  <div style="font-size:13px; font-weight:900; color:#fff;">SERIE NOCTURNA T1</div>
-                  <div style="font-size:11px; color:#9ca3af;">18 continuidades · Fijado</div>
-                </div>
+    function buildTourHomeBg() {
+      return `
+        <div class="app-view" style="display:flex; flex-direction:column; height:100%;">
+          <header class="app-header">
+            <div class="brand-box">
+              <div class="brand-icon">
+                <svg width="34" height="34" viewBox="88 86 336 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="114" y="112" width="284" height="284" rx="44" ry="44" fill="none" stroke="#f59e0b" stroke-width="21"/>
+                  <rect x="167" y="112" width="21" height="284" fill="#f59e0b"/>
+                  <circle cx="145.5" cy="175" r="10.5" fill="#f59e0b"/>
+                  <circle cx="145.5" cy="254" r="10.5" fill="#f59e0b"/>
+                  <circle cx="145.5" cy="333" r="10.5" fill="#f59e0b"/>
+                  <polygon points="289,101.5 351,101.5 351,197 320,164 289,197" fill="#ffffff"/>
+                  <rect x="222" y="228" width="95" height="21" rx="10.5" fill="#f59e0b"/>
+                  <rect x="222" y="275" width="127" height="21" rx="10.5" fill="#f59e0b"/>
+                  <rect x="222" y="322" width="50" height="21" rx="10.5" fill="#f59e0b"/>
+                  <rect x="288" y="322" width="36" height="21" rx="10.5" fill="#f59e0b"/>
+                </svg>
               </div>
-              <span class="help-mock-pill">Fijado</span>
-            </div>
-            <div class="help-mock-card help-anim-complete" style="display:flex; align-items:center; justify-content:space-between;">
               <div>
-                <div style="font-size:13px; font-weight:900; color:#d1d5db;">CORTOMETRAJE SOL</div>
-                <div style="font-size:11px; color:#9ca3af;">12 continuidades · Terminado</div>
+                <h1 class="brand-title">Set<span>Bible</span></h1>
               </div>
-              <span class="help-mock-pill" style="background:rgba(16,185,129,0.15); color:#34d399; border-color:rgba(16,185,129,0.35);">✓ Listo</span>
+            </div>
+            <div style="display:flex; align-items:center;">
+              <button type="button" class="btn-icon">
+                <span class="menu-icon-stage">
+                  <svg class="icon-wrench" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                  </svg>
+                </span>
+              </button>
+            </div>
+          </header>
+
+          <section class="toolbar">
+            <div class="toolbar-clean-row">
+              <div class="search-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <input type="text" class="search-input" placeholder="${t('search_projects_placeholder')}" readonly>
+              </div>
+            </div>
+          </section>
+
+          <main class="scroll-area" style="flex:1; padding-bottom:16px;">
+            <div class="container-narrow">
+              <div class="project-card is-pinned">
+                <div class="project-card-info">
+                  <div class="project-card-title">
+                    <span class="project-pin-icon">${ICON_PIN_SVG}</span>
+                    <span>${t('help_demo_proj_1')}</span>
+                  </div>
+                  <p class="project-card-meta">
+                    TIS Producciones • ${t('created_label')}: 14/11/2026 • <span style="color:var(--amber); font-weight:700; font-size:12.5px; white-space:nowrap;"><span class="takes-count-short">18 ${t('unit_continuity_abbr')}</span><span class="takes-count-full">18 ${t('unit_continuity_plural')}</span></span>
+                  </p>
+                </div>
+                <button type="button" class="btn-edit-square">${ICON_EDIT_SVG}</button>
+              </div>
+
+              <div class="project-card is-completed">
+                <div class="project-card-info">
+                  <div class="project-card-title">
+                    <span>${t('help_demo_proj_2')}</span>
+                    <span class="project-completed-badge">${ICON_COMPLETED_SVG}<span>${t('badge_completed')}</span></span>
+                  </div>
+                  <p class="project-card-meta">
+                    Sur Films • ${t('created_label')}: 02/10/2026 • <span style="color:var(--amber); font-weight:700; font-size:12.5px; white-space:nowrap;"><span class="takes-count-short">9 ${t('unit_continuity_abbr')}</span><span class="takes-count-full">9 ${t('unit_continuity_plural')}</span></span>
+                  </p>
+                </div>
+                <button type="button" class="btn-edit-square">${ICON_EDIT_SVG}</button>
+              </div>
+            </div>
+          </main>
+
+          <div class="bottom-bar-center" style="position:relative; bottom:auto;">
+            <div class="bottom-bar-center-inner">
+              <button type="button" class="btn-bottom-action-center" style="width:100%; margin:0;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                <span>${t('btn_new_project')}</span>
+              </button>
+              <div class="bottom-buttons-row">
+                <button type="button" class="btn-secondary" style="width:100%; margin:0; display:flex; gap:8px;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4H7a4 4 0 0 0-4 4v8a4 4 0 0 0 4 4h9"/><line x1="21" y1="12" x2="10" y2="12"/><polyline points="14 8 10 12 14 16"/></svg>
+                  <span>${t('btn_import_project')}</span>
+                </button>
+              </div>
             </div>
           </div>
-        `
-      },
-      {
-        title: '2. Catálogo de Escenas y Personajes',
-        desc: 'Dentro de un proyecto, abre el menú superior derecho para registrar <strong>Escenas</strong> y <strong>Personajes</strong> (con foto del actor). Así los seleccionas con un toque al capturar continuidad.',
-        visual: `
-          <div class="help-mock-card" style="display:flex; flex-direction:column; gap:9px;">
-            <div style="display:flex; align-items:center; justify-content:space-between;">
-              <span class="help-mock-pill help-anim-pdf-chip">ESCENA 12A</span>
-              <span style="font-size:11px; color:#9ca3af; font-weight:700;">INT. CAFÉ — DÍA</span>
+        </div>
+      `;
+    }
+
+    function buildTourProjectBg() {
+      return `
+        <div class="app-view" style="display:flex; flex-direction:column; height:100%;">
+          <header class="app-header">
+            <div class="brand-box">
+              <button type="button" class="btn-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+              </button>
+              <button type="button" class="header-title-clickable">
+                <div class="header-title-row">
+                  <h1 class="brand-title">${t('help_demo_proj_1')}</h1>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; opacity:0.85;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                </div>
+                <p class="brand-subtitle">TIS Producciones</p>
+              </button>
             </div>
-            <div style="display:flex; align-items:center; gap:8px; padding-top:6px; border-top:1px solid var(--border-700);">
-              <div class="help-anim-avatar-1" style="display:flex; align-items:center; gap:6px; flex:1;">
-                <div style="width:30px; height:30px; border-radius:50%; background:rgba(245,158,11,0.2); border:1.5px solid var(--amber); display:flex; align-items:center; justify-content:center; color:var(--amber); font-weight:900; font-size:12px; flex-shrink:0;">EL</div>
+            <div style="display:flex; align-items:center;">
+              <button type="button" class="btn-icon">
+                <span class="menu-icon-stage">
+                  <svg class="icon-wrench" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                  </svg>
+                </span>
+              </button>
+            </div>
+          </header>
+
+          <section class="toolbar">
+            <div class="toolbar-clean-row">
+              <div class="search-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <input type="text" class="search-input" placeholder="${t('search_takes_placeholder')}" readonly>
+              </div>
+            </div>
+          </section>
+
+          <main class="scroll-area" style="flex:1; padding-bottom:16px;">
+            <div class="takes-grid">
+              <div class="raccord-card">
                 <div>
-                  <div style="font-size:12px; font-weight:800; color:#fff;">ELENA</div>
-                  <div style="font-size:10.5px; color:#9ca3af;">Sofía M.</div>
+                  <div class="raccord-scene-header">
+                    <div class="raccord-scene-top-row">
+                      <span class="raccord-scene-badge">${t('scene_prefix')} 12</span>
+                      <button type="button" class="btn-duplicate-take">${ICON_DUPLICATE_SVG}</button>
+                    </div>
+                    <p class="raccord-scene-desc">${t('help_demo_scene_desc')}</p>
+                  </div>
+                  <div class="raccord-card-body">
+                    <div class="raccord-char-row">
+                      <div class="raccord-char-top">
+                        <div class="raccord-char-name"><span>ELENA</span></div>
+                        <span class="raccord-photo-chip">${ICON_PHOTO_SVG}<span>1</span></span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="help-anim-avatar-2" style="display:flex; align-items:center; gap:6px; flex:1;">
-                <div style="width:30px; height:30px; border-radius:50%; background:rgba(245,158,11,0.2); border:1.5px solid var(--amber); display:flex; align-items:center; justify-content:center; color:var(--amber); font-weight:900; font-size:12px; flex-shrink:0;">MC</div>
-                <div>
-                  <div style="font-size:12px; font-weight:800; color:#fff;">MARCOS</div>
-                  <div style="font-size:10.5px; color:#9ca3af;">Luis R.</div>
+            </div>
+          </main>
+
+          <div class="bottom-bar-center" style="position:relative; bottom:auto;">
+            <div class="bottom-bar-center-inner">
+              <button type="button" class="btn-bottom-action-center" style="width:100%; margin:0;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                <span>${t('btn_new_continuity')}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function getHelpTourSteps() {
+      return [
+        // 1. Inicio de sesión y sincronización de proyectos
+        {
+          bg: buildTourHomeBg(),
+          vAlign: 'flex-start',
+          padTop: '14px',
+          popoverPos: 'below-target',
+          caretDir: 'caret-up',
+          caretAlign: 'pos-center',
+          spotAlign: 'center',
+          spotHtml: `
+            <div class="tour-spotlight-box" style="width:100%; max-width:360px; padding:12px; display:flex; flex-direction:column; gap:8px;">
+              <button type="button" class="btn-secondary" style="width:100%; display:flex; align-items:center; justify-content:center; gap:10px; padding:11px 14px; min-height:44px; font-weight:800; margin:0;">
+                <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 10.2v3.9h5.5c-.2 1.3-1.5 3.8-5.5 3.8-3.3 0-6-2.7-6-6s2.7-6 6-6c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.7 3.3 14.6 2.4 12 2.4 6.7 2.4 2.4 6.7 2.4 12s4.3 9.6 9.6 9.6c5.5 0 9.2-3.9 9.2-9.4 0-.6-.1-1.1-.2-1.6H12z"/></svg>
+                <span>${t('auth_btn_google')}</span>
+              </button>
+              <button type="button" class="dropdown-item highlight" style="width:100%; min-height:46px; padding:10px 14px;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+                <div style="display:flex; justify-content:space-between; align-items:center; flex:1; gap:8px; min-width:0;">
+                  <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${t('menu_cloud_account')}</span>
+                  <span class="project-dirty-badge" style="color:#34d399; background:rgba(16,185,129,0.14); border-color:rgba(16,185,129,0.4);">${t('summary_cloud_synced')}</span>
+                </div>
+              </button>
+              <button type="button" class="dropdown-item" style="width:100%; min-height:46px; padding:10px 14px;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+                <div style="display:flex; justify-content:space-between; align-items:center; flex:1; gap:8px;">
+                  <span>${t('menu_cloud_sync')}</span>
+                  <span class="project-dirty-badge" style="color:#34d399; background:rgba(16,185,129,0.14); border-color:rgba(16,185,129,0.4);">${t('summary_cloud_synced')}</span>
+                </div>
+              </button>
+            </div>
+          `
+        },
+        // 2. Creación de proyectos
+        {
+          bg: buildTourHomeBg(),
+          vAlign: 'flex-end',
+          padBottom: '12px',
+          popoverPos: 'above-target',
+          caretDir: 'caret-down',
+          caretAlign: 'pos-center',
+          spotAlign: 'center',
+          spotHtml: `
+            <div class="tour-spotlight-box" style="width:100%; max-width:380px; padding:12px;">
+              <div class="bottom-bar-center-inner" style="max-width:100%;">
+                <button type="button" class="btn-bottom-action-center" style="width:100%; margin:0;">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                  <span>${t('btn_new_project')}</span>
+                </button>
+                <div class="bottom-buttons-row">
+                  <button type="button" class="btn-secondary" style="width:100%; margin:0; display:flex; gap:8px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4H7a4 4 0 0 0-4 4v8a4 4 0 0 0 4 4h9"/><line x1="21" y1="12" x2="10" y2="12"/><polyline points="14 8 10 12 14 16"/></svg>
+                    <span>${t('btn_import_project')}</span>
+                  </button>
                 </div>
               </div>
             </div>
-          </div>
-        `
-      },
-      {
-        title: '3. Continuidades, Fotos y Zoom',
-        desc: 'Toca <strong>+</strong> para registrar una escena con notas generales y múltiples <strong>entradas</strong> (vestuario, utilería, maquillaje). Toca cualquier foto para abrirla en grande con zoom.',
-        visual: `
-          <div class="help-mock-card" style="display:flex; flex-direction:column; gap:8px;">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span style="font-size:13px; font-weight:900; color:var(--amber);">ESCENA 4</span>
-              <span style="font-size:10.5px; color:#9ca3af; font-weight:700;">2 entradas</span>
-            </div>
-            <div style="background:var(--bg-850); border:1px solid var(--border-700); border-radius:7px; padding:5px 8px; font-size:11px; color:#d1d5db;">
-              Chaqueta abierta, taza en mano izquierda.
-            </div>
-            <div style="display:flex; gap:10px; align-items:center;">
-              <div class="help-anim-photo-zoom" style="width:48px; height:48px; border-radius:7px; background:linear-gradient(135deg,#2e261a,#13171d); border:1.5px solid rgba(245,158,11,0.65); display:flex; align-items:center; justify-content:center; color:var(--amber); flex-shrink:0;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+          `
+        },
+        // 3. Menú de proyectos (manejo de proyectos)
+        {
+          bg: buildTourHomeBg(),
+          vAlign: 'flex-start',
+          padTop: '10px',
+          popoverPos: 'below-target',
+          caretDir: 'caret-up',
+          caretAlign: 'pos-right',
+          spotAlign: 'flex-end',
+          spotHtml: `
+            <div class="tour-spotlight-box" style="width:310px; padding:8px; display:flex; flex-direction:column; gap:6px;">
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:2px 4px 4px;">
+                <h1 class="brand-title" style="font-size:18px;">Set<span>Bible</span></h1>
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <button type="button" class="btn-edit-square" style="width:38px; height:38px; min-width:38px; min-height:38px;">${ICON_EDIT_SVG}</button>
+                  <button type="button" class="btn-icon" style="min-width:38px; min-height:38px; padding:8px; border-color:var(--amber); background:rgba(245,158,11,0.18);">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                  </button>
+                </div>
               </div>
-              <div style="flex:1;">
-                <div style="font-size:11.5px; font-weight:800; color:#fff;">ELENA · Vestuario</div>
-                <div style="font-size:10.5px; color:#9ca3af;">Reloj dorado en muñeca izq.</div>
+              <button type="button" class="dropdown-item" style="min-height:42px; padding:9px 12px; font-size:13.5px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 16 4 4 4-4"/><path d="M7 20V4"/><path d="m21 8-4-4-4 4"/><path d="M17 4v16"/></svg>
+                <div style="display:flex; justify-content:space-between; align-items:center; flex:1;">
+                  <span>${t('menu_sort')}</span>
+                  <span style="color:var(--amber); font-size:11px; font-weight:900;">▼</span>
+                </div>
+              </button>
+              <button type="button" class="dropdown-item" style="min-height:42px; padding:9px 12px; font-size:13.5px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg>
+                <span>${t('menu_pin')}</span>
+              </button>
+              <button type="button" class="dropdown-item" style="min-height:42px; padding:9px 12px; font-size:13.5px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span>${t('menu_complete')}</span>
+              </button>
+              <button type="button" class="dropdown-item" style="min-height:42px; padding:9px 12px; font-size:13.5px; color:#f87171; border-color:rgba(239,68,68,0.35);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                <span>${t('menu_delete_projects')}</span>
+              </button>
+            </div>
+          `
+        },
+        // 4. Dentro de proyecto: 1. Importar guion (creación de escenas y personajes)
+        {
+          bg: buildTourProjectBg(),
+          vAlign: 'flex-start',
+          padTop: '10px',
+          popoverPos: 'below-target',
+          caretDir: 'caret-up',
+          caretAlign: 'pos-right',
+          spotAlign: 'flex-end',
+          spotHtml: `
+            <div class="tour-spotlight-box" style="width:310px; padding:8px; display:flex; flex-direction:column; gap:6px;">
+              <button type="button" class="dropdown-item highlight" style="min-height:44px; padding:10px 12px; font-size:14px;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <span>${t('menu_import_script')}</span>
+              </button>
+              <button type="button" class="dropdown-item" style="min-height:44px; padding:10px 12px; font-size:14px;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9"/><path d="m12.4 3.4 3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>
+                <div style="display:flex; justify-content:space-between; align-items:center; flex:1;">
+                  <span>${t('menu_scenes')}</span>
+                  <span style="color:var(--amber); font-size:13px; font-weight:900; background:rgba(245,158,11,0.15); padding:2px 8px; border-radius:8px;">24</span>
+                </div>
+              </button>
+              <button type="button" class="dropdown-item" style="min-height:44px; padding:10px 12px; font-size:14px;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <div style="display:flex; justify-content:space-between; align-items:center; flex:1;">
+                  <span>${t('menu_characters')}</span>
+                  <span style="color:var(--amber); font-size:13px; font-weight:900; background:rgba(245,158,11,0.15); padding:2px 8px; border-radius:8px;">8</span>
+                </div>
+              </button>
+            </div>
+          `
+        },
+        // 5. Dentro de proyecto: 2. Creación de continuidades
+        {
+          bg: buildTourProjectBg(),
+          vAlign: 'flex-end',
+          padBottom: '12px',
+          popoverPos: 'above-target',
+          caretDir: 'caret-down',
+          caretAlign: 'pos-center',
+          spotAlign: 'center',
+          spotHtml: `
+            <div class="tour-spotlight-box" style="width:100%; max-width:380px; padding:12px;">
+              <button type="button" class="btn-bottom-action-center" style="width:100%; margin:0;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                <span>${t('btn_new_continuity')}</span>
+              </button>
+            </div>
+          `
+        },
+        // 6. Dentro de proyecto: 3. Creación de entradas
+        {
+          bg: buildTourProjectBg(),
+          vAlign: 'flex-start',
+          padTop: '20px',
+          popoverPos: 'below-target',
+          caretDir: 'caret-up',
+          caretAlign: 'pos-center',
+          spotAlign: 'center',
+          spotHtml: `
+            <div class="tour-spotlight-box" style="width:100%; max-width:360px; padding:12px; display:flex; flex-direction:column; gap:8px;">
+              <label class="form-label" style="margin:0;">${t('form_entries_label')}</label>
+              <button type="button" class="btn-primary" style="width:100%;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                <span>${t('btn_add_entry')}</span>
+              </button>
+              <div class="subentry-compact-card" style="margin:0;">
+                <div class="subentry-no-thumb">${ICON_USER_SVG}</div>
+                <div class="subentry-info">
+                  <h4 class="subentry-char-title">ELENA</h4>
+                  <p class="subentry-note-snippet">${t('help_demo_entry_note')}</p>
+                </div>
+                <div class="subentry-actions">
+                  <button type="button" class="btn-action-small edit">${ICON_EDIT_SVG}</button>
+                  <button type="button" class="btn-action-small delete">${ICON_DELETE_SVG}</button>
+                </div>
               </div>
             </div>
-          </div>
-        `
-      },
-      {
-        title: '4. Buscador Rápido en Set',
-        desc: 'Encuentra cualquier detalle al instante usando la barra de búsqueda y los filtros de <strong>Escena</strong> o <strong>Personaje</strong> sin perder tiempo durante el rodaje.',
-        visual: `
-          <div class="help-mock-card" style="display:flex; flex-direction:column; gap:8px;">
-            <div style="display:flex; align-items:center; gap:8px; background:var(--bg-850); border:1px solid var(--amber); border-radius:8px; padding:7px 10px;">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.4"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-              <span class="help-anim-type" style="font-size:12px; color:#fff; font-weight:800; font-family:monospace;">chaqueta</span>
-            </div>
-            <div style="display:flex; flex-direction:column; gap:5px;">
-              <div style="background:rgba(245,158,11,0.12); border:1px solid rgba(245,158,11,0.45); border-radius:7px; padding:5px 8px; font-size:11px; color:#fff; font-weight:700;">
-                ✓ Escena 4 · Chaqueta abierta
+          `
+        },
+        // 7. Dentro de proyecto: 4. Duplicar continuidades
+        {
+          bg: buildTourProjectBg(),
+          vAlign: 'flex-start',
+          padTop: '18px',
+          popoverPos: 'below-target',
+          caretDir: 'caret-up',
+          caretAlign: 'pos-right',
+          spotAlign: 'center',
+          spotHtml: `
+            <div class="tour-spotlight-box" style="width:100%; max-width:360px; padding:12px; display:flex; flex-direction:column; gap:8px;">
+              <div class="raccord-scene-header" style="margin:0; border:1px solid var(--border-700); border-radius:10px; padding:8px 10px; background:var(--bg-800);">
+                <div class="raccord-scene-top-row">
+                  <span class="raccord-scene-badge">${t('scene_prefix')} 12</span>
+                  <button type="button" class="btn-duplicate-take" style="border-color:var(--amber); background:rgba(245,158,11,0.18); color:var(--amber);">${ICON_DUPLICATE_SVG}</button>
+                </div>
+                <p class="raccord-scene-desc" style="margin-bottom:0;">${t('help_demo_scene_desc')}</p>
               </div>
-              <div class="help-anim-filter-dim" style="background:var(--bg-850); border:1px solid var(--border-700); border-radius:7px; padding:5px 8px; font-size:11px; color:#9ca3af;">
-                Escena 9 · Sombrero negro
+              <div style="display:flex; align-items:center; gap:8px;">
+                <select class="form-control" style="flex:1; min-height:42px; padding:8px 10px; font-size:13px; font-weight:800; color:var(--amber);">
+                  <option>${t('scene_prefix')} 15 — ${t('help_demo_scene_desc')}</option>
+                </select>
+                <button type="button" class="btn-submit" style="min-height:42px; padding:8px 14px; font-size:13.5px; flex:0 0 auto;">${t('btn_duplicate')}</button>
               </div>
             </div>
-          </div>
-        `
-      },
-      {
-        title: '5. Reporte PDF en Directo',
-        desc: 'Elige <strong>Exportar Reporte PDF</strong> en el menú del proyecto. Verás un mosaico en vivo donde ajustas idioma, escenas, tamaño de fuentes/fotos y si separar cada continuidad por página.',
-        visual: `
-          <div style="display:flex; gap:10px; align-items:center; justify-content:center; width:100%;">
-            <div style="width:62px; height:82px; background:#fff; border-radius:5px; padding:6px; box-shadow:0 6px 16px rgba(0,0,0,0.5); display:flex; flex-direction:column; gap:4px; overflow:hidden;">
-              <div style="height:8px; background:#111827; border-radius:2px; flex-shrink:0;"></div>
-              <div class="help-anim-pdf-block" style="background:#fef3c7; border:1px solid #f59e0b; border-radius:2px; flex-shrink:0;"></div>
-              <div style="height:18px; background:#e5e7eb; border-radius:2px; flex-shrink:0;"></div>
+          `
+        },
+        // 8. Dentro de proyecto: 5. Guardar respaldo
+        {
+          bg: buildTourProjectBg(),
+          vAlign: 'flex-start',
+          padTop: '14px',
+          popoverPos: 'below-target',
+          caretDir: 'caret-up',
+          caretAlign: 'pos-right',
+          spotAlign: 'flex-end',
+          spotHtml: `
+            <div class="tour-spotlight-box" style="width:310px; padding:8px; display:flex; flex-direction:column; gap:6px;">
+              <button type="button" class="dropdown-item" style="min-height:48px; padding:12px 14px; border-color:var(--amber); background:rgba(245,158,11,0.14);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                  <polyline points="17 21 17 13 7 13 7 21"/>
+                  <polyline points="7 3 7 8 15 8"/>
+                </svg>
+                <span>${t('menu_save_backup')}</span>
+              </button>
+              <button type="button" class="dropdown-item sub-option" style="min-height:42px; padding:9px 14px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>
+                <span>${t('menu_change_backup_folder')}</span>
+              </button>
             </div>
-            <div style="width:62px; height:82px; background:#fff; border-radius:5px; padding:6px; box-shadow:0 6px 16px rgba(0,0,0,0.5); display:flex; flex-direction:column; gap:4px; overflow:hidden;">
-              <div style="height:8px; background:#111827; border-radius:2px; flex-shrink:0;"></div>
-              <div style="height:18px; background:#e5e7eb; border-radius:2px; flex-shrink:0;"></div>
-              <div class="help-anim-pdf-block" style="background:#fef3c7; border:1px solid #f59e0b; border-radius:2px; flex-shrink:0;"></div>
+          `
+        },
+        // 9. Dentro de proyecto: 6. Exportar PDF
+        {
+          bg: buildTourProjectBg(),
+          vAlign: 'flex-start',
+          padTop: '14px',
+          popoverPos: 'below-target',
+          caretDir: 'caret-up',
+          caretAlign: 'pos-right',
+          spotAlign: 'flex-end',
+          spotHtml: `
+            <div class="tour-spotlight-box" style="width:310px; padding:8px; display:flex; flex-direction:column; gap:6px;">
+              <button type="button" class="dropdown-item" style="min-height:48px; padding:12px 14px;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                <span>${t('menu_export_pdf')}</span>
+              </button>
+              <button type="button" class="btn-primary" style="width:100%; min-height:46px; padding:11px 12px; font-size:15px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                <span>${t('btn_generate_pdf')}</span>
+              </button>
             </div>
-            <div style="display:flex; flex-direction:column; gap:5px;">
-              <span class="help-mock-pill">ES / EN</span>
-              <span class="help-mock-pill help-anim-pdf-chip">Fuentes ±</span>
-              <span class="help-mock-pill">Fotos ±</span>
-            </div>
-          </div>
-        `
-      },
-      {
-        title: '6. 100% Offline y Respaldos JSON',
-        desc: 'SetBible funciona <strong>sin señal en set</strong> guardando todo en tu dispositivo. Usa <strong>Guardar Respaldos</strong> en el menú principal para exportar tus proyectos en JSON e importarlos cuando los necesites.',
-        visual: `
-          <div class="help-mock-card" style="display:flex; align-items:center; justify-content:space-between; padding:14px 12px; position:relative;">
-            <div style="text-align:center; z-index:2;">
-              <div style="width:44px; height:44px; margin:0 auto 5px; border-radius:12px; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); display:flex; align-items:center; justify-content:center; color:#34d399;">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-              </div>
-              <div style="font-size:11px; font-weight:800; color:#e5e7eb;">Modo Offline</div>
-            </div>
-            <div style="position:relative; flex:1; display:flex; align-items:center; justify-content:center;">
-              <div style="width:100%; border-top:2px dashed rgba(245,158,11,0.35);"></div>
-              <span class="help-mock-pill help-anim-json-fly" style="position:absolute; background:#1f242c;">.JSON</span>
-            </div>
-            <div style="text-align:center; z-index:2;">
-              <div style="width:44px; height:44px; margin:0 auto 5px; border-radius:12px; background:rgba(245,158,11,0.15); border:1px solid rgba(245,158,11,0.4); display:flex; align-items:center; justify-content:center; color:var(--amber);">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              </div>
-              <div style="font-size:11px; font-weight:800; color:var(--amber);">Respaldo</div>
-            </div>
-          </div>
-        `
-      }
-    ];
+          `
+        }
+      ];
+    }
 
     let helpTourIndex = 0;
 
     function renderHelpTourStep(idx) {
-      helpTourIndex = Math.max(0, Math.min(HELP_TOUR_STEPS.length - 1, idx));
-      const step = HELP_TOUR_STEPS[helpTourIndex];
-      helpTourStepBadge.textContent = `${helpTourIndex + 1} / ${HELP_TOUR_STEPS.length}`;
-      helpTourVisual.innerHTML = step.visual;
+      const steps = getHelpTourSteps();
+      const total = steps.length;
+      helpTourIndex = Math.max(0, Math.min(total - 1, idx));
+      const step = steps[helpTourIndex];
+
+      helpTourBgScreen.innerHTML = step.bg;
+      helpTourSpotlightHost.style.justifyContent = step.spotAlign || 'center';
+      helpTourSpotlightHost.innerHTML = step.spotHtml;
+
+      helpTourForeground.style.justifyContent = step.vAlign || 'flex-start';
+      helpTourForeground.style.paddingTop = step.padTop || '16px';
+      helpTourForeground.style.paddingBottom = step.padBottom || '16px';
+
+      helpTourPopover.classList.remove('below-target', 'above-target');
+      helpTourPopover.classList.add(step.popoverPos || 'below-target');
+
+      if (step.popoverPos === 'above-target') {
+        helpTourForeground.insertBefore(helpTourPopover, helpTourSpotlightHost);
+      } else {
+        helpTourForeground.insertBefore(helpTourSpotlightHost, helpTourPopover);
+      }
+
+      helpTourCaret.className = `tour-caret ${step.caretDir || 'caret-up'} ${step.caretAlign || 'pos-center'}`;
+
       helpTourTitle.textContent = t(`help_step_${helpTourIndex + 1}_title`);
       helpTourDesc.innerHTML = t(`help_step_${helpTourIndex + 1}_desc`);
-
-      helpTourDots.innerHTML = HELP_TOUR_STEPS.map((_, i) =>
-        `<button type="button" class="help-tour-dot ${i === helpTourIndex ? 'active' : ''}" data-tour-idx="${i}" aria-label="Ir al paso ${i + 1}"></button>`
-      ).join('');
+      helpTourStepBadge.textContent = t('help_step_counter')
+        .replace('{n}', String(helpTourIndex + 1))
+        .replace('{total}', String(total));
 
       btnHelpPrev.disabled = (helpTourIndex === 0);
-      btnHelpPrev.style.opacity = (helpTourIndex === 0) ? '0.45' : '1';
-      btnHelpNext.textContent = (helpTourIndex === HELP_TOUR_STEPS.length - 1) ? t('btn_understood') : t('btn_next');
+    }
+
+    function openHelpTour(startIdx = 0) {
+      renderHelpTourStep(startIdx);
+      helpTourModal.classList.remove('hidden');
     }
 
     document.getElementById('home-menu-opt-help').addEventListener('click', () => {
       closeHomeMenu();
-      renderHelpTourStep(0);
-      helpTourModal.classList.remove('hidden');
+      openHelpTour(0);
     });
+
+    const projectMenuOptHelp = document.getElementById('project-menu-opt-help');
+    if (projectMenuOptHelp) {
+      projectMenuOptHelp.addEventListener('click', () => {
+        closeProjectMenu();
+        openHelpTour(3); // Abre directo en "1. Importar guion" dentro de proyecto, permitiendo ir atrás/adelante
+      });
+    }
 
     document.getElementById('btn-close-help-tour').addEventListener('click', () => {
       helpTourModal.classList.add('hidden');
@@ -8085,17 +8631,12 @@
     });
 
     btnHelpNext.addEventListener('click', () => {
-      if (helpTourIndex < HELP_TOUR_STEPS.length - 1) {
+      const total = getHelpTourSteps().length;
+      if (helpTourIndex < total - 1) {
         renderHelpTourStep(helpTourIndex + 1);
       } else {
         helpTourModal.classList.add('hidden');
       }
-    });
-
-    helpTourDots.addEventListener('click', (e) => {
-      const dot = e.target.closest('[data-tour-idx]');
-      if (!dot) return;
-      renderHelpTourStep(parseInt(dot.getAttribute('data-tour-idx'), 10));
     });
 
     let helpTouchStartX = 0;
@@ -8106,7 +8647,8 @@
     helpSwipeArea.addEventListener('touchend', (e) => {
       if (e.changedTouches.length !== 1) return;
       const dx = e.changedTouches[0].clientX - helpTouchStartX;
-      if (dx < -45 && helpTourIndex < HELP_TOUR_STEPS.length - 1) {
+      const total = getHelpTourSteps().length;
+      if (dx < -45 && helpTourIndex < total - 1) {
         renderHelpTourStep(helpTourIndex + 1);
       } else if (dx > 45 && helpTourIndex > 0) {
         renderHelpTourStep(helpTourIndex - 1);
@@ -8129,12 +8671,14 @@
       if (!mode) return;
 
       if (mode === 'custom') {
+        const now = Date.now();
         suppressBackupDirtyTracking = true;
         try {
           const currentOrdered = sortProjectsArray(await getAllProjectsFromDB());
           for (let i = 0; i < currentOrdered.length; i++) {
             if (typeof currentOrdered[i].customOrder !== 'number') {
               currentOrdered[i].customOrder = i;
+              currentOrdered[i].updatedAt = Math.max(now, (Number(currentOrdered[i].updatedAt) || 0) + 1);
               await saveProjectToDB(currentOrdered[i], { markDirty: false });
             }
           }
@@ -8145,6 +8689,8 @@
 
       projectsSortMode = mode;
       localStorage.setItem('rp_projects_sort', mode);
+      localStorage.setItem('rp_projects_sort_updated_at', String(Date.now()));
+      if (typeof scheduleCloudSync === 'function') scheduleCloudSync();
       updateSortButtonsUI();
       await renderProjects();
       closeHomeMenu();
@@ -8310,9 +8856,14 @@
 
       if (currentBatchProjectsMode === 'pin') {
         const allProjects = await getAllProjectsFromDB();
+        const now = Date.now();
         for (const proj of allProjects) {
-          proj.pinned = selectedSet.has(proj.id);
-          await saveProjectToDB(proj);
+          const nextPinned = selectedSet.has(proj.id);
+          if (Boolean(proj.pinned) !== nextPinned) {
+            proj.pinned = nextPinned;
+            proj.updatedAt = Math.max(now, (Number(proj.updatedAt) || 0) + 1);
+            await saveProjectToDB(proj);
+          }
         }
         batchProjectsModal.classList.add('hidden');
         await renderProjects();
@@ -8322,9 +8873,14 @@
 
       if (currentBatchProjectsMode === 'complete') {
         const allProjects = await getAllProjectsFromDB();
+        const now = Date.now();
         for (const proj of allProjects) {
-          proj.completed = selectedSet.has(proj.id);
-          await saveProjectToDB(proj);
+          const nextCompleted = selectedSet.has(proj.id);
+          if (Boolean(proj.completed) !== nextCompleted) {
+            proj.completed = nextCompleted;
+            proj.updatedAt = Math.max(now, (Number(proj.updatedAt) || 0) + 1);
+            await saveProjectToDB(proj);
+          }
         }
         batchProjectsModal.classList.add('hidden');
         await renderProjects();
@@ -8848,11 +9404,16 @@
         return;
       }
 
+      const existingSceneObj = existingId ? existingScenes.find(s => s.id === existingId) : null;
+      const nowScene = Date.now();
       await saveEntityToDB(STORE_SCENES, {
-        id: existingId || ('sc_' + Date.now()),
+        ...(existingSceneObj || {}),
+        id: existingId || ('sc_' + nowScene),
         projectId: activeProjectId,
         sceneNum: num,
-        desc: desc
+        desc: desc,
+        createdAt: existingSceneObj?.createdAt || nowScene,
+        updatedAt: Math.max(nowScene, (Number(existingSceneObj?.updatedAt) || 0) + 1)
       });
 
       resetSceneForm();
@@ -9114,10 +9675,12 @@
         Array.from(document.querySelectorAll('.batch-char-pin-checkbox:checked')).map(cb => cb.value)
       );
       const chars = await getEntitiesForProject(STORE_CHARACTERS, activeProjectId);
+      const now = Date.now();
       for (const c of chars) {
         const nextPinned = selectedIds.has(c.id);
         if (Boolean(c.pinned) !== nextPinned) {
           c.pinned = nextPinned;
+          c.updatedAt = Math.max(now, (Number(c.updatedAt) || 0) + 1);
           await saveEntityToDB(STORE_CHARACTERS, c);
         }
       }
@@ -9135,14 +9698,20 @@
 
       const existingId = editCharacterId.value;
       const isPinned = charPinnedCheck ? Boolean(charPinnedCheck.checked) : Boolean(editingCharacterPinned);
+      const existingChars = existingId ? await getEntitiesForProject(STORE_CHARACTERS, activeProjectId) : [];
+      const existingCharObj = existingId ? existingChars.find(c => c.id === existingId) : null;
+      const nowChar = Date.now();
 
       await saveEntityToDB(STORE_CHARACTERS, {
-        id: existingId || ('char_' + Date.now()),
+        ...(existingCharObj || {}),
+        id: existingId || ('char_' + nowChar),
         projectId: activeProjectId,
         name,
         actor,
         photo: currentActorPhotoBase64 || null,
-        pinned: isPinned
+        pinned: isPinned,
+        createdAt: existingCharObj?.createdAt || nowChar,
+        updatedAt: Math.max(nowChar, (Number(existingCharObj?.updatedAt) || 0) + 1)
       });
 
       resetCharacterForm();
@@ -10622,7 +11191,8 @@
           id: 'p_' + now + '_' + idx + '_' + Math.random().toString(36).slice(2, 6),
           character: entry.character || '',
           note: entry.note || '',
-          photo: entry.photo || null
+          photo: entry.photo || null,
+          updatedAt: now
         }));
 
       const newTake = {
@@ -10997,15 +11567,34 @@
       }
 
       const uniqueChars = Array.from(new Set(currentPhotoItems.map(p => p.character).filter(Boolean)));
+      const existingTakeObj = existingId ? allProjectTakes.find(t => t.id === existingId) : null;
+      const nowTake = Date.now();
+      const deletedEntries = { ...((existingTakeObj && existingTakeObj.deletedEntries) || {}) };
+      if (existingTakeObj) {
+        const currentIds = new Set(currentPhotoItems.map(p => p.id));
+        for (const oldEntry of getNormalizedPhotos(existingTakeObj)) {
+          if (oldEntry && oldEntry.id && !currentIds.has(oldEntry.id)) {
+            deletedEntries[oldEntry.id] = nowTake;
+          }
+        }
+      }
+      const normalizedPhotosToSave = currentPhotoItems.map(p => ({
+        ...p,
+        updatedAt: p.updatedAt || nowTake
+      }));
 
       await saveTakeToDB({
+        ...(existingTakeObj || {}),
         id,
         projectId: activeProjectId,
         scene,
         sceneDesc,
         character: uniqueChars.join(', '),
         notes,
-        photos: currentPhotoItems
+        photos: normalizedPhotosToSave,
+        deletedEntries,
+        createdAt: existingTakeObj?.createdAt || nowTake,
+        updatedAt: Math.max(nowTake, (Number(existingTakeObj?.updatedAt) || 0) + 1)
       });
 
       entryModal.classList.add('hidden');
@@ -11351,7 +11940,58 @@
       clearTimeout(cloudSyncDebounceTimer);
       cloudSyncDebounceTimer = setTimeout(() => {
         syncAllWithCloud({ silent: true });
-      }, 1200);
+      }, 650);
+    }
+
+    let cloudRealtimeUnsubs = [];
+    let cloudRealtimeUid = null;
+    let remotePullTimer = null;
+    let lastCloudWriteTs = 0;
+    let lastForegroundSyncTs = 0;
+
+    function detachRealtimeCloudListeners() {
+      cloudRealtimeUnsubs.forEach(unsub => {
+        try { if (typeof unsub === 'function') unsub(); } catch (e) {}
+      });
+      cloudRealtimeUnsubs = [];
+      cloudRealtimeUid = null;
+    }
+
+    function scheduleRemotePullSync() {
+      if (!currentCloudUser || !navigator.onLine || cloudConnectionFailed) return;
+      clearTimeout(remotePullTimer);
+      remotePullTimer = setTimeout(() => {
+        if (isCloudSyncing) {
+          isCloudSyncPending = true;
+        } else {
+          syncAllWithCloud({ silent: true });
+        }
+      }, 350);
+    }
+
+    function attachRealtimeCloudListeners(uid) {
+      if (!firebaseDb || !uid || cloudRealtimeUid === uid) return;
+      detachRealtimeCloudListeners();
+      cloudRealtimeUid = uid;
+      const userRef = firebaseDb.collection('users').doc(uid);
+      const watchedCollections = [STORE_PROJECTS, STORE_SCENES, STORE_CHARACTERS, STORE_TAKES, 'profile'];
+
+      watchedCollections.forEach((colName) => {
+        let isInitialSnap = true;
+        const unsub = userRef.collection(colName).onSnapshot((snapshot) => {
+          if (isInitialSnap) {
+            isInitialSnap = false;
+            return;
+          }
+          if (snapshot.metadata && snapshot.metadata.hasPendingWrites) return;
+          if (Date.now() - lastCloudWriteTs < 1500) return;
+          const hasRemoteChange = snapshot.docChanges().some(ch => !ch.doc.metadata.hasPendingWrites);
+          if (hasRemoteChange) {
+            scheduleRemotePullSync();
+          }
+        }, () => {});
+        cloudRealtimeUnsubs.push(unsub);
+      });
     }
 
     async function handleCloudSyncAction() {
@@ -11409,6 +12049,7 @@
       handlingAuthUid = user.uid;
 
       try {
+        attachRealtimeCloudListeners(user.uid);
         // Ensure background view is rendered behind the blurred loading overlay
         await enterAppFromAuth();
 
@@ -11587,7 +12228,8 @@
       updateCloudAccountUI();
       if (currentCloudUser && firebaseDb && navigator.onLine) {
         try {
-          await firebaseDb.collection('users').doc(currentCloudUser.uid).collection('profile').doc('main').set(nextProfile);
+          lastCloudWriteTs = Date.now();
+          await firebaseDb.collection('users').doc(currentCloudUser.uid).collection('profile').doc('main').set(nextProfile, { merge: true });
         } catch (e) {}
       }
       await enterAppFromAuth();
@@ -11595,6 +12237,7 @@
 
     document.getElementById('btn-auth-logout')?.addEventListener('click', async () => {
       if (!firebaseAuth) return;
+      detachRealtimeCloudListeners();
       localStorage.removeItem(AUTH_SKIPPED_KEY);
       localStorage.removeItem(AUTH_HAS_SESSION_KEY);
       localStorage.removeItem(AUTH_PENDING_TS_KEY);
@@ -11615,7 +12258,8 @@
       updateCloudAccountUI();
       if (currentCloudUser && firebaseDb && navigator.onLine) {
         try {
-          await firebaseDb.collection('users').doc(currentCloudUser.uid).collection('profile').doc('main').set(nextProfile);
+          lastCloudWriteTs = Date.now();
+          await firebaseDb.collection('users').doc(currentCloudUser.uid).collection('profile').doc('main').set(nextProfile, { merge: true });
         } catch (e) {}
       }
       showToast(t('toast_profile_saved'));
@@ -11647,19 +12291,61 @@
     }
 
     async function getAllLocalEntities(storeName) {
+      const fallbackItems = getFallbackList('rp_' + storeName);
       if (useFallbackStorage || !dbInstance || !dbInstance.objectStoreNames.contains(storeName)) {
-        return getFallbackList('rp_' + storeName);
+        return fallbackItems;
       }
       return new Promise((resolve) => {
         try {
           const tx = dbInstance.transaction([storeName], 'readonly');
           const req = tx.objectStore(storeName).getAll();
-          req.onsuccess = () => resolve(req.result || []);
-          req.onerror = () => resolve(getFallbackList('rp_' + storeName));
+          req.onsuccess = () => {
+            const dbItems = req.result || [];
+            const map = new Map();
+            fallbackItems.forEach(item => map.set(item.id, item));
+            dbItems.forEach(item => map.set(item.id, pickNewerEntity(map.get(item.id), item)));
+            resolve(Array.from(map.values()));
+          };
+          req.onerror = () => resolve(fallbackItems);
         } catch (e) {
-          resolve(getFallbackList('rp_' + storeName));
+          resolve(fallbackItems);
         }
       });
+    }
+
+    function hasUnpushedLocalDiffAtSameTimestamp(storeName, localItem, cloudItem) {
+      if (!localItem || !cloudItem) return false;
+      if (storeName === STORE_PROJECTS) {
+        return (
+          Boolean(localItem.pinned) !== Boolean(cloudItem.pinned) ||
+          Boolean(localItem.completed) !== Boolean(cloudItem.completed) ||
+          (localItem.customOrder ?? null) !== (cloudItem.customOrder ?? null) ||
+          String(localItem.name || '') !== String(cloudItem.name || '') ||
+          String(localItem.producer || '') !== String(cloudItem.producer || '')
+        );
+      }
+      if (storeName === STORE_CHARACTERS) {
+        return (
+          Boolean(localItem.pinned) !== Boolean(cloudItem.pinned) ||
+          String(localItem.name || '') !== String(cloudItem.name || '') ||
+          String(localItem.actor || '') !== String(cloudItem.actor || '') ||
+          Boolean(localItem.photo) !== Boolean(cloudItem.photoId)
+        );
+      }
+      if (storeName === STORE_SCENES) {
+        return (
+          String(localItem.sceneNum || '') !== String(cloudItem.sceneNum || '') ||
+          String(localItem.desc || '') !== String(cloudItem.desc || '')
+        );
+      }
+      if (storeName === STORE_TAKES) {
+        return (
+          String(localItem.scene || '') !== String(cloudItem.scene || '') ||
+          String(localItem.sceneDesc || '') !== String(cloudItem.sceneDesc || '') ||
+          String(localItem.notes || '') !== String(cloudItem.notes || '')
+        );
+      }
+      return false;
     }
 
     async function syncAllWithCloud({ silent = false } = {}) {
@@ -11670,18 +12356,40 @@
       const userRef = firebaseDb.collection('users').doc(currentCloudUser.uid);
 
       try {
-        // 1. Sync user profile
+        let anyChange = false;
+
+        // 1. Sync user profile & project sort mode
         const localProfile = getLocalUserProfile();
+        const localSortUpdatedAt = Number(localStorage.getItem('rp_projects_sort_updated_at') || 0);
         const profSnap = await userRef.collection('profile').doc('main').get();
         if (profSnap.exists) {
           const cloudProf = profSnap.data() || {};
           if ((cloudProf.updatedAt || 0) > (localProfile.updatedAt || 0)) {
             saveLocalUserProfile(cloudProf);
           } else if ((localProfile.updatedAt || 0) > (cloudProf.updatedAt || 0)) {
-            await userRef.collection('profile').doc('main').set(localProfile);
+            lastCloudWriteTs = Date.now();
+            await userRef.collection('profile').doc('main').set(localProfile, { merge: true });
           }
-        } else if (localProfile.name || localProfile.department) {
-          await userRef.collection('profile').doc('main').set(localProfile);
+          if (cloudProf.sortMode && (cloudProf.sortUpdatedAt || 0) > localSortUpdatedAt) {
+            projectsSortMode = cloudProf.sortMode;
+            localStorage.setItem('rp_projects_sort', projectsSortMode);
+            localStorage.setItem('rp_projects_sort_updated_at', String(cloudProf.sortUpdatedAt));
+            updateSortButtonsUI();
+            anyChange = true;
+          } else if (localSortUpdatedAt > (cloudProf.sortUpdatedAt || 0)) {
+            lastCloudWriteTs = Date.now();
+            await userRef.collection('profile').doc('main').set({
+              sortMode: projectsSortMode,
+              sortUpdatedAt: localSortUpdatedAt
+            }, { merge: true });
+          }
+        } else if (localProfile.name || localProfile.department || localSortUpdatedAt > 0) {
+          lastCloudWriteTs = Date.now();
+          await userRef.collection('profile').doc('main').set({
+            ...localProfile,
+            sortMode: projectsSortMode,
+            sortUpdatedAt: localSortUpdatedAt
+          }, { merge: true });
         }
 
         // 2. Push pending local deletes
@@ -11689,6 +12397,7 @@
         const remainingDeletes = [];
         for (const del of pendingDeletes) {
           try {
+            lastCloudWriteTs = Date.now();
             await userRef.collection(del.store).doc(del.id).set({
               id: del.id,
               projectId: del.projectId || null,
@@ -11707,7 +12416,6 @@
         // 3. Sync collections (projects, scenes, characters, takes)
         const stores = [STORE_PROJECTS, STORE_SCENES, STORE_CHARACTERS, STORE_TAKES];
         const syncTs = Date.now();
-        let anyChange = false;
 
         for (const storeName of stores) {
           const [localList, cloudSnap] = await Promise.all([
@@ -11722,18 +12430,34 @@
           // Push local -> cloud
           for (const localItem of localList) {
             const cloudItem = cloudMap.get(localItem.id);
-            const localUpdated = localItem.updatedAt || localItem.createdAt || 1;
-            const cloudUpdated = cloudItem ? (cloudItem.updatedAt || cloudItem.createdAt || 0) : 0;
+            let localUpdated = Number(localItem.updatedAt || localItem.createdAt || 1);
+            const cloudUpdated = cloudItem ? Number(cloudItem.updatedAt || cloudItem.createdAt || 0) : 0;
 
             if (cloudItem && cloudItem.deletedAt && cloudItem.deletedAt >= localUpdated) {
               continue; // Cloud deleted more recently
             }
 
+            // Heal legacy local edits where updatedAt was not incremented when pinning/completing/editing
+            if (cloudItem && !cloudItem.deletedAt && localUpdated === cloudUpdated && hasUnpushedLocalDiffAtSameTimestamp(storeName, localItem, cloudItem)) {
+              localUpdated = Math.max(Date.now(), cloudUpdated + 1);
+              localItem.updatedAt = localUpdated;
+              await saveEntityToDB(storeName, localItem, { markDirty: false });
+            }
+
             if (!cloudItem || localUpdated > cloudUpdated) {
+              if (localItem.updatedAt !== localUpdated) {
+                localItem.updatedAt = localUpdated;
+                await saveEntityToDB(storeName, localItem, { markDirty: false });
+              }
               if (storeName === STORE_CHARACTERS) {
-                const payload = { ...localItem, updatedAt: localUpdated };
+                const payload = {
+                  ...localItem,
+                  pinned: Boolean(localItem.pinned),
+                  updatedAt: localUpdated
+                };
                 if (localItem.photo) {
                   const photoId = `char_${localItem.id}`;
+                  lastCloudWriteTs = Date.now();
                   await uploadPhotoDoc(userRef, photoId, localItem.photo, localItem.projectId, localUpdated);
                   payload.photo = null;
                   payload.photoId = photoId;
@@ -11741,6 +12465,7 @@
                   payload.photo = null;
                   payload.photoId = null;
                 }
+                lastCloudWriteTs = Date.now();
                 await userRef.collection(STORE_CHARACTERS).doc(localItem.id).set(payload);
               } else if (storeName === STORE_TAKES) {
                 if (cloudItem && !cloudItem.deletedAt) {
@@ -11752,6 +12477,7 @@
                 for (const entry of entries) {
                   if (entry && entry.photo) {
                     const photoId = `take_${localItem.id}_${entry.id}`;
+                    lastCloudWriteTs = Date.now();
                     await uploadPhotoDoc(userRef, photoId, entry.photo, localItem.projectId, localUpdated);
                     cloudEntries.push({ ...entry, photo: null, photoId });
                   } else {
@@ -11759,8 +12485,18 @@
                   }
                 }
                 const payload = { ...localItem, photo: null, photos: cloudEntries, updatedAt: localUpdated };
+                lastCloudWriteTs = Date.now();
                 await userRef.collection(STORE_TAKES).doc(localItem.id).set(payload);
+              } else if (storeName === STORE_PROJECTS) {
+                lastCloudWriteTs = Date.now();
+                await userRef.collection(STORE_PROJECTS).doc(localItem.id).set({
+                  ...localItem,
+                  pinned: Boolean(localItem.pinned),
+                  completed: Boolean(localItem.completed),
+                  updatedAt: localUpdated
+                });
               } else {
+                lastCloudWriteTs = Date.now();
                 await userRef.collection(storeName).doc(localItem.id).set({ ...localItem, updatedAt: localUpdated });
               }
             }
@@ -11770,10 +12506,10 @@
           for (const [id, cloudItem] of cloudMap.entries()) {
             const localItem = localMap.get(id);
             const localDelAt = deletedMap.get(`${storeName}:${id}`) || 0;
-            const cloudUpdated = cloudItem.updatedAt || cloudItem.createdAt || 0;
+            const cloudUpdated = Number(cloudItem.updatedAt || cloudItem.createdAt || 0);
 
             if (cloudItem.deletedAt) {
-              if (localItem && cloudItem.deletedAt >= (localItem.updatedAt || localItem.createdAt || 0)) {
+              if (localItem && cloudItem.deletedAt >= Number(localItem.updatedAt || localItem.createdAt || 0)) {
                 if (storeName === STORE_PROJECTS) {
                   await deleteProjectFromDB(id, { skipCloudDelete: true });
                 } else {
@@ -11788,7 +12524,7 @@
 
             // Smart entry-level merge when both local and cloud have the same take
             if (storeName === STORE_TAKES && localItem) {
-              const localUpdated = localItem.updatedAt || localItem.createdAt || 0;
+              const localUpdated = Number(localItem.updatedAt || localItem.createdAt || 0);
               const mergedDeleted = { ...(cloudItem.deletedEntries || {}) };
               for (const [eId, delTs] of Object.entries(localItem.deletedEntries || {})) {
                 mergedDeleted[eId] = Math.max(mergedDeleted[eId] || 0, Number(delTs) || 0);
@@ -11807,8 +12543,8 @@
               for (const entryId of allEntryIds) {
                 const lEntry = localEntryMap.get(entryId);
                 const cEntry = cloudEntryMap.get(entryId);
-                const lTs = lEntry ? (lEntry.updatedAt || localUpdated || 1) : 0;
-                const cTs = cEntry ? (cEntry.updatedAt || cloudUpdated || 1) : 0;
+                const lTs = lEntry ? Number(lEntry.updatedAt || localUpdated || 1) : 0;
+                const cTs = cEntry ? Number(cEntry.updatedAt || cloudUpdated || 1) : 0;
                 const delTs = mergedDeleted[entryId] || 0;
 
                 if (delTs >= Math.max(lTs, cTs)) {
@@ -11851,7 +12587,8 @@
 
               const newerTake = cloudUpdated > localUpdated ? cloudItem : localItem;
               const olderTake = cloudUpdated > localUpdated ? localItem : cloudItem;
-              const mergedNotes = (newerTake.notes || '').trim() || (olderTake.notes || '').trim();
+              const mergedScene = newerTake.scene || olderTake.scene;
+              const mergedNotes = newerTake.notes !== undefined ? String(newerTake.notes || '').trim() : String(olderTake.notes || '').trim();
               const mergedSceneDesc = (newerTake.sceneDesc || '').trim() || (olderTake.sceneDesc || '').trim();
 
               if (cloudUpdated !== localUpdated) {
@@ -11867,7 +12604,7 @@
                   ...newerTake,
                   id: localItem.id,
                   projectId: localItem.projectId || cloudItem.projectId,
-                  scene: localItem.scene || cloudItem.scene,
+                  scene: mergedScene,
                   sceneDesc: mergedSceneDesc,
                   notes: mergedNotes,
                   character: uniqueChars.join(', '),
@@ -11886,12 +12623,14 @@
                   for (const entry of mergedPhotos) {
                     if (entry && entry.photo) {
                       const photoId = `take_${mergedTake.id}_${entry.id}`;
+                      lastCloudWriteTs = Date.now();
                       await uploadPhotoDoc(userRef, photoId, entry.photo, mergedTake.projectId, entry.updatedAt || mergedUpdatedAt);
                       cloudPhotosPayload.push({ ...entry, photo: null, photoId });
                     } else {
                       cloudPhotosPayload.push({ ...entry, photo: null, photoId: null });
                     }
                   }
+                  lastCloudWriteTs = Date.now();
                   await userRef.collection(STORE_TAKES).doc(mergedTake.id).set({
                     ...mergedTake,
                     photo: null,
@@ -11902,13 +12641,19 @@
               continue;
             }
 
-            const localUpdated = localItem ? (localItem.updatedAt || localItem.createdAt || 0) : 0;
+            const localUpdated = localItem ? Number(localItem.updatedAt || localItem.createdAt || 0) : 0;
             if (!localItem || cloudUpdated > localUpdated) {
-              let itemToSave = { ...cloudItem };
-              if (storeName === STORE_CHARACTERS) {
+              let itemToSave = { ...cloudItem, updatedAt: cloudUpdated };
+              if (storeName === STORE_PROJECTS) {
+                itemToSave.pinned = Boolean(cloudItem.pinned);
+                itemToSave.completed = Boolean(cloudItem.completed);
+              } else if (storeName === STORE_CHARACTERS) {
+                itemToSave.pinned = Boolean(cloudItem.pinned);
                 if (cloudItem.photoId) {
                   const dataUrl = await fetchPhotoDoc(userRef, cloudItem.photoId);
-                  itemToSave.photo = dataUrl || null;
+                  itemToSave.photo = dataUrl || (localItem ? localItem.photo : null) || null;
+                } else {
+                  itemToSave.photo = null;
                 }
                 delete itemToSave.photoId;
               } else if (storeName === STORE_TAKES) {
@@ -11935,7 +12680,100 @@
           }
         }
 
-        // 4. Deduplicate takes created offline on two devices for the same project + scene number
+        // 4a. Deduplicate characters created/imported offline on two devices for the same project + character name
+        const allCharsAfterSync = await getAllLocalEntities(STORE_CHARACTERS);
+        const charsByProjectName = new Map();
+        for (const ch of allCharsAfterSync) {
+          if (!ch || !ch.projectId || !ch.name) continue;
+          const key = `${ch.projectId}::${String(ch.name).trim().toUpperCase()}`;
+          if (!charsByProjectName.has(key)) {
+            charsByProjectName.set(key, [ch]);
+          } else {
+            charsByProjectName.get(key).push(ch);
+          }
+        }
+        for (const group of charsByProjectName.values()) {
+          if (group.length < 2) continue;
+          group.sort((a, b) => Number(b.updatedAt || b.createdAt || 0) - Number(a.updatedAt || a.createdAt || 0));
+          const primary = group[0];
+          const mergedPinned = group.some(c => Boolean(c.pinned));
+          const mergedActor = group.map(c => (c.actor || '').trim()).find(Boolean) || '';
+          const mergedPhoto = group.map(c => c.photo).find(Boolean) || null;
+          const nowMergeChar = Date.now();
+          const unifiedChar = {
+            ...primary,
+            actor: mergedActor,
+            photo: mergedPhoto,
+            pinned: mergedPinned,
+            updatedAt: nowMergeChar
+          };
+          await saveEntityToDB(STORE_CHARACTERS, unifiedChar, { markDirty: false });
+          const charPayload = { ...unifiedChar, photo: null, photoId: null };
+          if (unifiedChar.photo) {
+            const photoId = `char_${unifiedChar.id}`;
+            lastCloudWriteTs = Date.now();
+            await uploadPhotoDoc(userRef, photoId, unifiedChar.photo, unifiedChar.projectId, nowMergeChar);
+            charPayload.photoId = photoId;
+          }
+          lastCloudWriteTs = Date.now();
+          await userRef.collection(STORE_CHARACTERS).doc(unifiedChar.id).set(charPayload);
+
+          for (let i = 1; i < group.length; i++) {
+            const dup = group[i];
+            await deleteEntityFromDB(STORE_CHARACTERS, dup.id, { markDirty: false, skipCloudDelete: true });
+            lastCloudWriteTs = Date.now();
+            await userRef.collection(STORE_CHARACTERS).doc(dup.id).set({
+              id: dup.id,
+              projectId: dup.projectId || null,
+              deletedAt: nowMergeChar,
+              updatedAt: nowMergeChar
+            }, { merge: true });
+          }
+          anyChange = true;
+        }
+
+        // 4b. Deduplicate scenes created/imported offline on two devices for the same project + scene number
+        const allScenesAfterSync = await getAllLocalEntities(STORE_SCENES);
+        const scenesByProjectNum = new Map();
+        for (const sc of allScenesAfterSync) {
+          if (!sc || !sc.projectId || !sc.sceneNum) continue;
+          const key = `${sc.projectId}::${String(sc.sceneNum).trim().toUpperCase()}`;
+          if (!scenesByProjectNum.has(key)) {
+            scenesByProjectNum.set(key, [sc]);
+          } else {
+            scenesByProjectNum.get(key).push(sc);
+          }
+        }
+        for (const group of scenesByProjectNum.values()) {
+          if (group.length < 2) continue;
+          group.sort((a, b) => Number(b.updatedAt || b.createdAt || 0) - Number(a.updatedAt || a.createdAt || 0));
+          const primary = group[0];
+          const mergedDesc = group.map(s => (s.desc || '').trim()).find(Boolean) || '';
+          const nowMergeScene = Date.now();
+          const unifiedScene = {
+            ...primary,
+            desc: mergedDesc,
+            updatedAt: nowMergeScene
+          };
+          await saveEntityToDB(STORE_SCENES, unifiedScene, { markDirty: false });
+          lastCloudWriteTs = Date.now();
+          await userRef.collection(STORE_SCENES).doc(unifiedScene.id).set(unifiedScene);
+
+          for (let i = 1; i < group.length; i++) {
+            const dup = group[i];
+            await deleteEntityFromDB(STORE_SCENES, dup.id, { markDirty: false, skipCloudDelete: true });
+            lastCloudWriteTs = Date.now();
+            await userRef.collection(STORE_SCENES).doc(dup.id).set({
+              id: dup.id,
+              projectId: dup.projectId || null,
+              deletedAt: nowMergeScene,
+              updatedAt: nowMergeScene
+            }, { merge: true });
+          }
+          anyChange = true;
+        }
+
+        // 4c. Deduplicate takes created offline on two devices for the same project + scene number
         const allTakesAfterSync = await getAllLocalEntities(STORE_TAKES);
         const takesByProjectScene = new Map();
         for (const tk of allTakesAfterSync) {
@@ -11993,12 +12831,14 @@
           for (const entry of mergedPhotos) {
             if (entry && entry.photo) {
               const photoId = `take_${unifiedTake.id}_${entry.id}`;
+              lastCloudWriteTs = Date.now();
               await uploadPhotoDoc(userRef, photoId, entry.photo, unifiedTake.projectId, entry.updatedAt || nowMerge);
               cloudPhotosPayload.push({ ...entry, photo: null, photoId });
             } else {
               cloudPhotosPayload.push({ ...entry, photo: null, photoId: null });
             }
           }
+          lastCloudWriteTs = Date.now();
           await userRef.collection(STORE_TAKES).doc(unifiedTake.id).set({
             ...unifiedTake,
             photo: null,
@@ -12008,6 +12848,7 @@
           for (let i = 1; i < group.length; i++) {
             const dup = group[i];
             await deleteEntityFromDB(STORE_TAKES, dup.id, { markDirty: false, skipCloudDelete: true });
+            lastCloudWriteTs = Date.now();
             await userRef.collection(STORE_TAKES).doc(dup.id).set({
               id: dup.id,
               projectId: dup.projectId || null,
@@ -12023,11 +12864,34 @@
         allProjects.forEach(p => markProjectCloudSynced(p.id, syncTs));
         refreshUnsavedBackupsBanner(allProjects);
         if (anyChange) {
-          if (!viewProjects.classList.contains('hidden')) {
-            await renderProjects();
-          } else if (activeProjectId) {
+          if (activeProjectId) {
+            activeProjectData = allProjects.find(p => p.id === activeProjectId) || activeProjectData;
+            if (activeProjectData) {
+              document.getElementById('active-project-title').textContent = activeProjectData.name;
+              const prodEl = document.getElementById('active-project-producer');
+              const prodValue = activeProjectData.producer || activeProjectData.director || '';
+              if (prodValue.trim()) {
+                prodEl.textContent = prodValue.trim();
+                prodEl.classList.remove('hidden');
+              } else {
+                prodEl.textContent = '';
+                prodEl.classList.add('hidden');
+              }
+            }
             await updateCatalogCaches();
             await renderTakes();
+            if (charactersModal && !charactersModal.classList.contains('hidden')) {
+              await renderCharactersList();
+            }
+            if (scenesModal && !scenesModal.classList.contains('hidden')) {
+              await renderScenesList();
+            }
+            if (raccordViewerModal && !raccordViewerModal.classList.contains('hidden') && activeViewerTakeId) {
+              await openRaccordViewer(activeViewerTakeId);
+            }
+          }
+          if (!viewProjects.classList.contains('hidden')) {
+            await renderProjects();
           }
         } else if (!viewProjects.classList.contains('hidden')) {
           await renderProjects();
@@ -12175,6 +13039,20 @@
           }
           updateCloudAccountUI();
         });
+        const triggerForegroundCloudSync = () => {
+          if (!currentCloudUser || !navigator.onLine) return;
+          const now = Date.now();
+          if (now - lastForegroundSyncTs < 2000) return;
+          lastForegroundSyncTs = now;
+          cloudConnectionFailed = false;
+          syncAllWithCloud({ silent: true });
+        };
+        document.addEventListener('visibilitychange', () => {
+          if (document.visibilityState === 'visible') {
+            triggerForegroundCloudSync();
+          }
+        });
+        window.addEventListener('focus', triggerForegroundCloudSync);
       } catch (e) {
         console.warn('Firebase init warning:', e);
         enterAppFromAuth().finally(() => setAuthLoading(false));
