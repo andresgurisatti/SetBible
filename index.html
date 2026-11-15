@@ -1195,6 +1195,50 @@
       gap: 8px;
     }
 
+    .quick-char-row {
+      display: flex;
+      align-items: stretch;
+      gap: 8px;
+    }
+
+    .btn-quick-char-toggle {
+      width: 52px;
+      min-width: 52px;
+      min-height: 52px;
+      border-color: rgba(245, 158, 11, 0.45);
+      background: rgba(245, 158, 11, 0.12);
+    }
+
+    .btn-quick-char-toggle.is-open {
+      background: var(--amber);
+      color: #000;
+      border-color: var(--amber);
+    }
+
+    .quick-char-backdrop {
+      background: rgba(5, 7, 10, 0.82);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .quick-char-modal-card {
+      max-width: 430px;
+      border-color: rgba(245, 158, 11, 0.45);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.85);
+    }
+
+    #subentry-modal .modal-card {
+      transition: filter 0.16s ease, opacity 0.16s ease;
+    }
+
+    #subentry-modal.is-quick-char-locked .modal-card {
+      filter: blur(4px);
+      opacity: 0.45;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
     .subentry-compact-card {
       background: var(--bg-900);
       border: 1px solid var(--border-700);
@@ -3111,16 +3155,26 @@
   <!-- MODAL: AVISO TRAS IMPORTAR GUION           -->
   <!-- ========================================== -->
   <div id="script-review-modal" class="modal-backdrop hidden" style="z-index: 70;">
-    <div class="modal-card" style="max-width:440px;">
+    <div class="modal-card" style="max-width:460px;">
       <div class="modal-header">
         <h2 class="modal-title" style="color:var(--amber);" data-i18n="modal_script_processed">GUION PROCESADO</h2>
         <button type="button" id="btn-close-review-modal" class="btn-close-touch" title="Cerrar" data-i18n-title="close_title">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
       </div>
-      <div class="modal-body">
-        <p id="script-review-summary" style="margin:0 0 14px 0; font-size:16px; font-weight:800; color:#fff;"></p>
-        <div style="background:rgba(245, 158, 11, 0.1); border:1px solid rgba(245, 158, 11, 0.35); padding:14px; border-radius:12px; margin-bottom:18px;">
+      <div class="modal-body" style="max-height:72vh; overflow-y:auto;">
+        <div id="script-review-summary" style="margin:0 0 14px 0; font-size:16px; font-weight:800; color:#fff; line-height:1.45;"></div>
+        <div id="script-suggested-chars-box" class="hidden" style="background:rgba(255,255,255,0.03); border:1px solid var(--border-700); padding:12px; border-radius:12px; margin-bottom:14px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:4px;">
+            <strong style="color:var(--amber); font-size:13px;" data-i18n="script_suggested_chars_title">Posibles personajes detectados en acción (sin diálogo)</strong>
+            <button type="button" id="btn-toggle-all-suggested-chars" style="color:var(--amber); font-size:12px; font-weight:800; white-space:nowrap; flex-shrink:0;" data-i18n="btn_check_all_m">Seleccionar Todos</button>
+          </div>
+          <p style="margin:0 0 10px 0; font-size:12px; color:var(--text-400); line-height:1.35;" data-i18n="script_suggested_chars_desc">
+            Marca con un clic los que quieras añadir y descarta cualquier ruido antes de continuar:
+          </p>
+          <div id="script-suggested-chars-list" style="max-height:190px; overflow-y:auto; display:flex; flex-direction:column; gap:6px;"></div>
+        </div>
+        <div style="background:rgba(245, 158, 11, 0.1); border:1px solid rgba(245, 158, 11, 0.35); padding:14px; border-radius:12px; margin-bottom:6px;">
           <strong style="color:var(--amber); font-size:14px; display:block; margin-bottom:6px;" data-i18n="script_rec_title">RECOMENDACIÓN DE SET:</strong>
           <p style="margin:0; font-size:14px; color:#d1d5db; line-height:1.45;" data-i18n="script_rec_body">
             Por favor <strong>revisa los datos extraídos</strong> en los apartados de <em>Escenas</em> y <em>Personajes</em>. Debido a las variaciones de formato o maquetación del guion, pudieron cometerse omisiones o pequeñas diferencias en los nombres.
@@ -3128,7 +3182,41 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" id="btn-ok-review-modal" class="btn-primary" style="width:100%;" data-i18n="btn_understood_review">Entendido, revisar datos</button>
+        <button type="button" id="btn-ok-review-modal" class="btn-primary" style="width:100%;" data-i18n="btn_understood_review">Entendido</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: COMBINAR O REEMPLAZAR GUION         -->
+  <!-- ========================================== -->
+  <div id="script-import-mode-modal" class="modal-backdrop hidden" style="z-index: 75;">
+    <div class="modal-card" style="max-width:460px;">
+      <div class="modal-header">
+        <h2 class="modal-title" style="color:var(--amber);" data-i18n="modal_script_import_mode">GUION VS. DATOS EXISTENTES</h2>
+        <button type="button" id="btn-close-import-mode-modal" class="btn-close-touch" title="Cerrar" data-i18n-title="close_title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="script-import-existing-msg" style="margin:0 0 14px 0; font-size:15px; font-weight:700; color:#fff; line-height:1.45;"></p>
+        <div style="background:rgba(16, 185, 129, 0.1); border:1px solid rgba(16, 185, 129, 0.35); padding:12px 14px; border-radius:12px; margin-bottom:12px;">
+          <strong style="color:#34d399; font-size:13px; display:block; margin-bottom:4px; text-transform:uppercase;" data-i18n="script_import_btn_combine">Combinar con lo existente</strong>
+          <p style="margin:0; font-size:13.5px; color:#d1d5db; line-height:1.4;" data-i18n="script_import_combine_desc">
+            Conserva tus escenas, personajes, continuidades y entradas actuales. Solo se agregarán las escenas y personajes nuevos del guion sin duplicarlos.
+          </p>
+        </div>
+        <div style="background:rgba(239, 68, 68, 0.1); border:1px solid rgba(239, 68, 68, 0.38); padding:12px 14px; border-radius:12px; margin-bottom:4px;">
+          <strong style="color:#f87171; font-size:13px; display:block; margin-bottom:4px; text-transform:uppercase;" data-i18n="script_import_btn_replace">Reemplazar todo</strong>
+          <p style="margin:0; font-size:13.5px; color:#fca5a5; line-height:1.4;" data-i18n="script_import_replace_warn">
+            Reemplaza todas las escenas y personajes anteriores por los del guion. Perderás todas las continuidades y entradas ya creadas en este proyecto.
+          </p>
+        </div>
+      </div>
+      <div class="modal-footer" style="display:flex; flex-direction:column; gap:10px;">
+        <button type="button" id="btn-script-import-combine" class="btn-primary" style="width:100%; flex:none;" data-i18n="script_import_btn_combine">Combinar con lo existente</button>
+        <button type="button" id="btn-script-import-replace" class="btn-submit" style="width:100%; flex:none; background:#ef4444; color:#fff;" data-i18n="script_import_btn_replace">Reemplazar todo</button>
+        <button type="button" id="btn-script-import-cancel" class="btn-secondary" style="width:100%; flex:none;" data-i18n="btn_cancel">Cancelar</button>
       </div>
     </div>
   </div>
@@ -3313,6 +3401,9 @@
         <div style="display:flex; align-items:center; gap:6px;">
           <button type="button" id="btn-open-batch-pin-characters" class="btn-action-small" title="Fijar personajes" data-i18n-title="batch_title_pin_chars" style="min-width:36px; min-height:36px; color:var(--amber);">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg>
+          </button>
+          <button type="button" id="btn-open-batch-delete-characters" class="btn-action-small delete" title="Borrar personajes" data-i18n-title="batch_title_delete_chars" style="min-width:36px; min-height:36px;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
           </button>
           <button type="button" id="btn-close-characters-modal" class="btn-close-touch" title="Cerrar" data-i18n-title="close_title">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -3565,9 +3656,14 @@
 
           <div class="form-group">
             <label class="form-label" data-i18n="form_character">Personaje *</label>
-            <select id="subentry-character" required class="form-control">
-              <option value="" data-i18n="form_select_character">Selecciona un personaje...</option>
-            </select>
+            <div class="quick-char-row">
+              <select id="subentry-character" required class="form-control" style="flex:1; min-width:0;">
+                <option value="" data-i18n="form_select_character">Selecciona un personaje...</option>
+              </select>
+              <button type="button" id="btn-quick-add-char" class="btn-icon btn-quick-char-toggle" title="Crear personaje nuevo" data-i18n-title="btn_quick_add_char_title" aria-expanded="false" aria-controls="subentry-quick-char-box">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+              </button>
+            </div>
           </div>
 
           <div class="form-group">
@@ -3603,6 +3699,58 @@
           <button type="submit" id="btn-save-subentry" class="btn-submit" data-i18n="btn_save_entry">Guardar Entrada</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- MINI-VENTANA CREAR PERSONAJE RÁPIDO (#subentry-quick-char-box) -->
+  <div id="subentry-quick-char-box" class="modal-backdrop quick-char-backdrop hidden" style="z-index: 72;" role="dialog" aria-modal="true" aria-labelledby="quick-char-modal-title">
+    <div class="modal-card quick-char-modal-card">
+      <div class="modal-header">
+        <h2 id="quick-char-modal-title" class="modal-title" style="color:var(--amber);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+          <span data-i18n="quick_char_box_title">Nuevo Personaje</span>
+        </h2>
+        <button type="button" id="btn-close-quick-char-modal" class="btn-close-touch" title="Cerrar" data-i18n-title="close_title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="modal-body" style="display:flex; flex-direction:column; gap:12px;">
+        <input type="file" id="input-quick-actor-photo" accept="image/*" class="hidden">
+
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <input type="text" id="quick-char-name" placeholder="Personaje (Ej: Valeria)" class="form-control" style="flex:1 1 160px; min-height:46px;" data-i18n-placeholder="placeholder_char_name">
+          <input type="text" id="quick-char-actor" placeholder="Actor (Opcional)" class="form-control" style="flex:1 1 130px; min-height:46px;" data-i18n-placeholder="placeholder_actor_name">
+        </div>
+
+        <div style="display:flex; align-items:center; gap:8px;">
+          <div id="quick-actor-photo-preview-box" class="hidden" style="display:flex; align-items:center; gap:10px; background:var(--bg-900); border:1px solid var(--border-700); padding:6px 10px; border-radius:var(--btn-radius); flex:1;">
+            <img id="quick-actor-photo-preview-img" src="" alt="Actor" style="width:36px; height:36px; border-radius:8px; object-fit:cover;">
+            <span style="font-size:13px; font-weight:700; color:#e5e7eb; flex:1;" data-i18n="actor_photo_loaded">Foto del actor cargada</span>
+            <button type="button" id="btn-remove-quick-actor-photo" class="btn-action-small delete" title="Quitar foto" data-i18n-title="btn_remove_photo_title" style="min-width:34px; min-height:34px;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+          </div>
+
+          <button type="button" id="btn-trigger-quick-actor-photo" class="btn-actor-photo-pick" style="min-height:44px;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+            <span data-i18n="btn_actor_photo_opt">Foto del Actor (Opcional)</span>
+          </button>
+        </div>
+
+        <label class="pdf-scene-check-item" style="margin:0; padding:8px 10px;">
+          <input type="checkbox" id="quick-char-pinned-check">
+          <div style="display:flex; align-items:center; gap:8px; font-weight:800; font-size:13.5px; color:#fff;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg>
+            <span data-i18n="pin_char_title">Anclar personaje arriba</span>
+          </div>
+        </label>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" id="btn-cancel-quick-char" class="btn-secondary" data-i18n="btn_cancel">Cancelar</button>
+        <button type="button" id="btn-save-quick-char" class="btn-submit" data-i18n="btn_create_character">Crear</button>
+      </div>
     </div>
   </div>
 
@@ -3825,14 +3973,15 @@
   <div id="batch-characters-pin-modal" class="modal-backdrop hidden" style="z-index: 75;">
     <div class="modal-card" style="max-width:460px;">
       <div class="modal-header">
-        <h2 class="modal-title" style="color:var(--amber);" data-i18n="batch_title_pin_chars">FIJAR PERSONAJES</h2>
+        <h2 id="batch-chars-modal-title" class="modal-title" style="color:var(--amber);" data-i18n="batch_title_pin_chars">FIJAR PERSONAJES</h2>
         <button type="button" id="btn-close-batch-pin-chars" class="btn-close-touch" title="Cerrar" data-i18n-title="close_title">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
       </div>
       <div class="modal-body">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; gap:8px;">
-          <span class="form-label" style="margin:0; text-transform:none;" data-i18n="batch_sub_pin_chars">Marca los personajes que quieres ver primero</span>
+          <span id="batch-chars-subtitle" class="form-label" style="margin:0; text-transform:none;" data-i18n="batch_sub_pin_chars">Marca los personajes que quieres ver primero</span>
+          <button type="button" id="btn-toggle-all-batch-chars" class="hidden" style="color:var(--amber); font-size:13px; font-weight:800; white-space:nowrap;" data-i18n="btn_check_all_m">Seleccionar Todos</button>
         </div>
         <div id="batch-characters-pin-checklist" style="max-height:300px; overflow-y:auto;"></div>
       </div>
@@ -3987,7 +4136,7 @@
         <div style="width:100%; border-top:1px solid var(--border-700); padding-top:14px; display:flex; flex-direction:column; gap:6px; font-size:13px; color:var(--text-muted);">
           <div>
             <span data-i18n="app_info_version_label">Versión</span>:
-            <strong id="app-info-version-val" style="color:#fff;">1.4</strong>
+            <strong id="app-info-version-val" style="color:#fff;">1.11</strong>
           </div>
           <div>
             <span data-i18n="app_info_created_by">Creado por</span>:
@@ -4112,8 +4261,16 @@
         modal_script_processed: 'GUION PROCESADO',
         script_rec_title: 'RECOMENDACIÓN DE SET:',
         script_rec_body: 'Por favor <strong>revisa los datos extraídos</strong> en los apartados de <em>Escenas</em> y <em>Personajes</em>. Debido a las variaciones de formato o maquetación del guion, pudieron cometerse omisiones o pequeñas diferencias en los nombres.',
-        btn_understood_review: 'Entendido, revisar datos',
-        script_detected_summary: 'Se detectaron {scenes} escenas y {chars} personajes.',
+        btn_understood_review: 'Entendido',
+        script_detected_summary: 'Se crearon {scenes} escenas y {chars} personajes.',
+        modal_script_import_mode: 'GUION VS. DATOS EXISTENTES',
+        script_import_existing_msg: 'Este proyecto ya tiene {existingScenes} escenas y {existingChars} personajes. Del guion se detectaron {parsedScenes} escenas y {parsedChars} personajes.',
+        script_import_btn_combine: 'Combinar con lo existente',
+        script_import_combine_desc: 'Conserva tus escenas, personajes, continuidades y entradas actuales. Solo se agregarán las escenas y personajes nuevos del guion sin duplicarlos.',
+        script_import_btn_replace: 'Reemplazar todo',
+        script_import_replace_warn: 'Reemplaza todas las escenas y personajes anteriores por los del guion. Perderás todas las continuidades y entradas ya creadas en este proyecto.',
+        script_summary_combined_scenes: 'Escenas: {created} creadas · {merged} combinadas',
+        script_summary_combined_chars: 'Personajes: {created} creados · {merged} combinados',
         btn_add_scene_plus: '+ Añadir Escena',
         placeholder_scene_num: 'N° (Ej: 14)',
         placeholder_scene_desc: 'Encabezado / Set (Ej: INT. COCINA - DÍA)',
@@ -4482,7 +4639,22 @@
         general_notes_label: 'Notas Generales de la Escena',
         lightbox_zoom_in_title: 'Acercar foto',
         lightbox_zoom_out_title: 'Alejar foto',
-        lightbox_zoom_reset_title: 'Restablecer zoom'
+        lightbox_zoom_reset_title: 'Restablecer zoom',
+        btn_quick_add_char_title: 'Crear personaje nuevo',
+        quick_char_box_title: 'Nuevo Personaje',
+        btn_create_character: 'Crear',
+        toast_enter_char_name: 'Escribe el nombre del personaje',
+        script_suggested_chars_title: 'Posibles personajes detectados en acción (sin diálogo)',
+        script_suggested_chars_desc: 'Marca con un clic los que quieras añadir y descarta cualquier ruido antes de continuar:',
+        script_sug_reason_caps: 'Mayúsculas en acción',
+        script_sug_reason_name: 'Nombre en acción',
+        script_sug_reason_role: 'Rol en acción',
+        toast_suggested_chars_added: 'Se añadieron {count} personajes sugeridos',
+        batch_title_delete_chars: 'BORRAR PERSONAJES',
+        batch_sub_delete_chars: 'Selecciona los personajes a eliminar:',
+        toast_select_at_least_one_char: 'Selecciona al menos un personaje',
+        confirm_delete_chars_plural: '¿Eliminar definitivamente los {count} personajes seleccionados?',
+        toast_chars_deleted_plural: '{count} personajes eliminados'
       },
       en: {
         lang_name: 'English',
@@ -4504,8 +4676,16 @@
         modal_script_processed: 'SCRIPT PROCESSED',
         script_rec_title: 'SET RECOMMENDATION:',
         script_rec_body: 'Please <strong>review the extracted data</strong> in <em>Scenes</em> and <em>Characters</em>. Due to script formatting variations, small omissions or name differences may occur.',
-        btn_understood_review: 'Got it, review data',
-        script_detected_summary: '{scenes} scenes and {chars} characters detected.',
+        btn_understood_review: 'Got it',
+        script_detected_summary: '{scenes} scenes and {chars} characters created.',
+        modal_script_import_mode: 'SCRIPT VS. EXISTING DATA',
+        script_import_existing_msg: 'This project already has {existingScenes} scenes and {existingChars} characters. The script contains {parsedScenes} scenes and {parsedChars} characters.',
+        script_import_btn_combine: 'Merge with existing',
+        script_import_combine_desc: 'Keeps your current scenes, characters, continuities, and entries. Only new scenes and characters from the script will be added without duplicates.',
+        script_import_btn_replace: 'Replace all',
+        script_import_replace_warn: 'Replaces all previous scenes and characters with the ones from the script. You will lose all continuities and entries already created in this project.',
+        script_summary_combined_scenes: 'Scenes: {created} created · {merged} merged',
+        script_summary_combined_chars: 'Characters: {created} created · {merged} merged',
         btn_add_scene_plus: '+ Add Scene',
         placeholder_scene_num: 'No. (e.g. 14)',
         placeholder_scene_desc: 'Heading / Set (e.g. INT. KITCHEN - DAY)',
@@ -4874,7 +5054,22 @@
         general_notes_label: 'General Scene Notes',
         lightbox_zoom_in_title: 'Zoom in',
         lightbox_zoom_out_title: 'Zoom out',
-        lightbox_zoom_reset_title: 'Reset zoom'
+        lightbox_zoom_reset_title: 'Reset zoom',
+        btn_quick_add_char_title: 'Create new character',
+        quick_char_box_title: 'New Character',
+        btn_create_character: 'Create',
+        toast_enter_char_name: 'Enter the character name',
+        script_suggested_chars_title: 'Possible characters detected in action (no dialogue)',
+        script_suggested_chars_desc: 'One-click check the ones you want to import and ignore any noise before continuing:',
+        script_sug_reason_caps: 'Uppercase in action',
+        script_sug_reason_name: 'Name in action',
+        script_sug_reason_role: 'Role in action',
+        toast_suggested_chars_added: '{count} suggested character(s) added',
+        batch_title_delete_chars: 'DELETE CHARACTERS',
+        batch_sub_delete_chars: 'Select characters to delete:',
+        toast_select_at_least_one_char: 'Select at least one character',
+        confirm_delete_chars_plural: 'Permanently delete the {count} selected characters?',
+        toast_chars_deleted_plural: '{count} characters deleted'
       },
       pt: {
         lang_name: 'Português',
@@ -4896,8 +5091,16 @@
         modal_script_processed: 'ROTEIRO PROCESSADO',
         script_rec_title: 'RECOMENDAÇÃO DE SET:',
         script_rec_body: 'Por favor, <strong>revise os dados extraídos</strong> em <em>Cenas</em> e <em>Personagens</em>. Devido a variações de formatação do roteiro, podem ocorrer pequenas omissões ou diferenças nos nomes.',
-        btn_understood_review: 'Entendi, revisar dados',
-        script_detected_summary: 'Foram detectadas {scenes} cenas e {chars} personagens.',
+        btn_understood_review: 'Entendi',
+        script_detected_summary: 'Foram criadas {scenes} cenas e {chars} personagens.',
+        modal_script_import_mode: 'ROTEIRO VS. DADOS EXISTENTES',
+        script_import_existing_msg: 'Este projeto já tem {existingScenes} cenas e {existingChars} personagens. No roteiro foram detectadas {parsedScenes} cenas e {parsedChars} personagens.',
+        script_import_btn_combine: 'Combinar com existentes',
+        script_import_combine_desc: 'Mantém suas cenas, personagens, continuidades e entradas atuais. Apenas as cenas e personagens novos do roteiro serão adicionados sem duplicar.',
+        script_import_btn_replace: 'Substituir tudo',
+        script_import_replace_warn: 'Substitui todas as cenas e personagens anteriores pelos do roteiro. Você perderá todas as continuidades e entradas já criadas neste projeto.',
+        script_summary_combined_scenes: 'Cenas: {created} criadas · {merged} combinadas',
+        script_summary_combined_chars: 'Personagens: {created} criados · {merged} combinados',
         btn_add_scene_plus: '+ Adicionar Cena',
         placeholder_scene_num: 'N° (Ex: 14)',
         placeholder_scene_desc: 'Cabeçalho / Set (Ex: INT. COZINHA - DIA)',
@@ -5266,7 +5469,22 @@
         toast_cloud_sync_error: 'Erro ao sincronizar com a nuvem',
         lightbox_zoom_in_title: 'Ampliar foto',
         lightbox_zoom_out_title: 'Reduzir zoom',
-        lightbox_zoom_reset_title: 'Redefinir zoom'
+        lightbox_zoom_reset_title: 'Redefinir zoom',
+        btn_quick_add_char_title: 'Criar novo personagem',
+        quick_char_box_title: 'Novo Personagem',
+        btn_create_character: 'Criar',
+        toast_enter_char_name: 'Digite o nome do personagem',
+        script_suggested_chars_title: 'Possíveis personagens detectados na ação (sem diálogo)',
+        script_suggested_chars_desc: 'Marque com um clique os que deseja adicionar e descarte qualquer ruído antes de continuar:',
+        script_sug_reason_caps: 'Maiúsculas na ação',
+        script_sug_reason_name: 'Nome na ação',
+        script_sug_reason_role: 'Papel na ação',
+        toast_suggested_chars_added: '{count} personagem(ns) sugerido(s) adicionado(s)',
+        batch_title_delete_chars: 'EXCLUIR PERSONAGENS',
+        batch_sub_delete_chars: 'Selecione os personagens para excluir:',
+        toast_select_at_least_one_char: 'Selecione pelo menos um personagem',
+        confirm_delete_chars_plural: 'Excluir definitivamente os {count} personagens selecionados?',
+        toast_chars_deleted_plural: '{count} personagens excluídos'
       },
       it: {
         lang_name: 'Italiano',
@@ -5288,8 +5506,16 @@
         modal_script_processed: 'SCENEGGIATURA ELABORATA',
         script_rec_title: 'CONSIGLIO SUL SET:',
         script_rec_body: 'Per favore <strong>controlla i dati estratti</strong> in <em>Scene</em> e <em>Personaggi</em>. A causa delle variazioni di formato, potrebbero esserci piccole omissioni o differenze nei nomi.',
-        btn_understood_review: 'Capito, controlla i dati',
-        script_detected_summary: 'Rilevate {scenes} scene e {chars} personaggi.',
+        btn_understood_review: 'Capito',
+        script_detected_summary: 'Create {scenes} scene e {chars} personaggi.',
+        modal_script_import_mode: 'SCENEGGIATURA VS. DATI ESISTENTI',
+        script_import_existing_msg: 'Questo progetto ha già {existingScenes} scene e {existingChars} personaggi. Nella sceneggiatura sono stati rilevati {parsedScenes} scene e {parsedChars} personaggi.',
+        script_import_btn_combine: 'Unisci agli esistenti',
+        script_import_combine_desc: 'Mantiene le scene, i personaggi, le continuità e le voci attuali. Verranno aggiunti solo le nuove scene e i nuovi personaggi della sceneggiatura senza duplicati.',
+        script_import_btn_replace: 'Sostituisci tutto',
+        script_import_replace_warn: 'Sostituisce tutte le scene e i personaggi precedenti con quelli della sceneggiatura. Perderai tutte le continuità e le voci già create in questo progetto.',
+        script_summary_combined_scenes: 'Scene: {created} create · {merged} unite',
+        script_summary_combined_chars: 'Personaggi: {created} creati · {merged} uniti',
         btn_add_scene_plus: '+ Aggiungi Scena',
         placeholder_scene_num: 'N° (Es: 14)',
         placeholder_scene_desc: 'Intestazione / Set (Es: INT. CUCINA - GIORNO)',
@@ -5658,7 +5884,22 @@
         toast_cloud_sync_error: 'Errore di sincronizzazione con il cloud',
         lightbox_zoom_in_title: 'Ingrandisci foto',
         lightbox_zoom_out_title: 'Riduci zoom',
-        lightbox_zoom_reset_title: 'Ripristina zoom'
+        lightbox_zoom_reset_title: 'Ripristina zoom',
+        btn_quick_add_char_title: 'Crea nuovo personaggio',
+        quick_char_box_title: 'Nuovo Personaggio',
+        btn_create_character: 'Crea',
+        toast_enter_char_name: 'Inserisci il nome del personaggio',
+        script_suggested_chars_title: 'Possibili personaggi rilevati nell\'azione (senza dialoghi)',
+        script_suggested_chars_desc: 'Seleziona con un clic quelli che vuoi importare e ignora eventuale rumore prima di continuare:',
+        script_sug_reason_caps: 'Maiuscolo nell\'azione',
+        script_sug_reason_name: 'Nome nell\'azione',
+        script_sug_reason_role: 'Ruolo nell\'azione',
+        toast_suggested_chars_added: '{count} personaggi suggeriti aggiunti',
+        batch_title_delete_chars: 'ELIMINA PERSONAGGI',
+        batch_sub_delete_chars: 'Seleziona i personaggi da eliminare:',
+        toast_select_at_least_one_char: 'Seleziona almeno un personaggio',
+        confirm_delete_chars_plural: 'Eliminare definitivamente i {count} personaggi selezionati?',
+        toast_chars_deleted_plural: '{count} personaggi eliminati'
       },
       de: {
         lang_name: 'Deutsch',
@@ -5680,8 +5921,16 @@
         modal_script_processed: 'DREHBUCH VERARBEITET',
         script_rec_title: 'SET-EMPFEHLUNG:',
         script_rec_body: 'Bitte <strong>überprüfe die extrahierten Daten</strong> unter <em>Szenen</em> und <em>Figuren</em>. Aufgrund von Formatabweichungen kann es zu Auslassungen oder Namensunterschieden kommen.',
-        btn_understood_review: 'Verstanden, Daten prüfen',
-        script_detected_summary: '{scenes} Szenen und {chars} Figuren erkannt.',
+        btn_understood_review: 'Verstanden',
+        script_detected_summary: '{scenes} Szenen und {chars} Figuren erstellt.',
+        modal_script_import_mode: 'DREHBUCH VS. BESTEHENDE DATEN',
+        script_import_existing_msg: 'Dieses Projekt enthält bereits {existingScenes} Szenen und {existingChars} Figuren. Im Drehbuch wurden {parsedScenes} Szenen und {parsedChars} Figuren erkannt.',
+        script_import_btn_combine: 'Mit bestehenden zusammenführen',
+        script_import_combine_desc: 'Behält vorhandene Szenen, Figuren, Kontinuitäten und Einträge. Nur neue Szenen und Figuren aus dem Drehbuch werden ohne Duplikate hinzugefügt.',
+        script_import_btn_replace: 'Alles ersetzen',
+        script_import_replace_warn: 'Ersetzt alle bisherigen Szenen und Figuren durch die des Drehbuchs. Alle bereits erstellten Kontinuitäten und Einträge dieses Projekts gehen verloren.',
+        script_summary_combined_scenes: 'Szenen: {created} erstellt · {merged} zusammengeführt',
+        script_summary_combined_chars: 'Figuren: {created} erstellt · {merged} zusammengeführt',
         btn_add_scene_plus: '+ Szene hinzufügen',
         placeholder_scene_num: 'Nr. (z.B. 14)',
         placeholder_scene_desc: 'Überschrift / Set (z.B. INT. KÜCHE - TAG)',
@@ -6050,7 +6299,22 @@
         toast_cloud_sync_error: 'Fehler bei der Cloud-Synchronisierung',
         lightbox_zoom_in_title: 'Foto vergrößern',
         lightbox_zoom_out_title: 'Foto verkleinern',
-        lightbox_zoom_reset_title: 'Zoom zurücksetzen'
+        lightbox_zoom_reset_title: 'Zoom zurücksetzen',
+        btn_quick_add_char_title: 'Neue Figur erstellen',
+        quick_char_box_title: 'Neue Figur',
+        btn_create_character: 'Erstellen',
+        toast_enter_char_name: 'Gib den Namen der Figur ein',
+        script_suggested_chars_title: 'Mögliche Figuren in der Handlung (ohne Dialog)',
+        script_suggested_chars_desc: 'Hake mit einem Klick an, wen du importieren möchtest, und ignoriere Unzutreffendes:',
+        script_sug_reason_caps: 'Großbuchstaben',
+        script_sug_reason_name: 'Name in Handlung',
+        script_sug_reason_role: 'Rolle in Handlung',
+        toast_suggested_chars_added: '{count} vorgeschlagene Figur(en) hinzugefügt',
+        batch_title_delete_chars: 'FIGUREN LÖSCHEN',
+        batch_sub_delete_chars: 'Wähle die zu löschenden Figuren:',
+        toast_select_at_least_one_char: 'Wähle mindestens eine Figur',
+        confirm_delete_chars_plural: 'Die {count} ausgewählten Figuren endgültig löschen?',
+        toast_chars_deleted_plural: '{count} Figuren gelöscht'
       },
       fr: {
         lang_name: 'Français',
@@ -6072,8 +6336,16 @@
         modal_script_processed: 'SCÉNARIO TRAITÉ',
         script_rec_title: 'RECOMMANDATION DE PLATEAU :',
         script_rec_body: 'Veuillez <strong>vérifier les données extraites</strong> dans <em>Scènes</em> et <em>Personnages</em>. En raison des variations de format, de petites omissions ou différences de noms peuvent survenir.',
-        btn_understood_review: 'Compris, vérifier les données',
-        script_detected_summary: '{scenes} scènes et {chars} personnages détectés.',
+        btn_understood_review: 'Compris',
+        script_detected_summary: '{scenes} scènes et {chars} personnages créés.',
+        modal_script_import_mode: 'SCÉNARIO VS. DONNÉES EXISTANTES',
+        script_import_existing_msg: 'Ce projet contient déjà {existingScenes} scènes et {existingChars} personnages. Le scénario contient {parsedScenes} scènes et {parsedChars} personnages.',
+        script_import_btn_combine: 'Fusionner avec l’existant',
+        script_import_combine_desc: 'Conserve vos scènes, personnages, raccords et entrées actuels. Seuls les nouveaux personnages et scènes du scénario seront ajoutés sans doublons.',
+        script_import_btn_replace: 'Tout remplacer',
+        script_import_replace_warn: 'Remplace toutes les scènes et personnages précédents par ceux du scénario. Vous perdrez tous les raccords et entrées déjà créés dans ce projet.',
+        script_summary_combined_scenes: 'Scènes : {created} créées · {merged} fusionnées',
+        script_summary_combined_chars: 'Personnages : {created} créés · {merged} fusionnés',
         btn_add_scene_plus: '+ Ajouter une scène',
         placeholder_scene_num: 'N° (Ex : 14)',
         placeholder_scene_desc: 'Intitulé / Décor (Ex : INT. CUISINE - JOUR)',
@@ -6442,7 +6714,22 @@
         toast_cloud_sync_error: 'Erreur de synchronisation avec le cloud',
         lightbox_zoom_in_title: 'Agrandir la photo',
         lightbox_zoom_out_title: 'Réduire le zoom',
-        lightbox_zoom_reset_title: 'Réinitialiser le zoom'
+        lightbox_zoom_reset_title: 'Réinitialiser le zoom',
+        btn_quick_add_char_title: 'Créer un nouveau personnage',
+        quick_char_box_title: 'Nouveau Personnage',
+        btn_create_character: 'Créer',
+        toast_enter_char_name: 'Saisissez le nom du personnage',
+        script_suggested_chars_title: 'Personnages possibles détectés dans l\'action (sans dialogue)',
+        script_suggested_chars_desc: 'Cochez en un clic ceux à importer et ignorez les faux positifs avant de continuer :',
+        script_sug_reason_caps: 'Majuscules',
+        script_sug_reason_name: 'Nom dans l\'action',
+        script_sug_reason_role: 'Rôle dans l\'action',
+        toast_suggested_chars_added: '{count} personnage(s) suggéré(s) ajouté(s)',
+        batch_title_delete_chars: 'SUPPRIMER DES PERSONNAGES',
+        batch_sub_delete_chars: 'Sélectionnez les personnages à supprimer :',
+        toast_select_at_least_one_char: 'Sélectionnez au moins un personnage',
+        confirm_delete_chars_plural: 'Supprimer définitivement les {count} personnages sélectionnés ?',
+        toast_chars_deleted_plural: '{count} personnages supprimés'
       }
     };
 
@@ -6570,6 +6857,7 @@
     let currentPhotoItems = [];
     let currentSubentryPhotoBase64 = null;
     let currentActorPhotoBase64 = null;
+    let currentQuickActorPhotoBase64 = null;
     let searchProjectsQuery = '';
     let searchQuery = '';
     let pendingConfirmAction = null;
@@ -8076,38 +8364,45 @@
           for (const file of files) {
             const data = await parseBackupFile(file);
 
+            const restoreDedupedEntities = async (storeName, projectId, items, normalizeFn, labelProp) => {
+              if (!Array.isArray(items) || items.length === 0) return;
+              const existing = await getEntitiesForProject(storeName, projectId);
+              const keyToId = new Map();
+              for (const item of existing) {
+                const k = normalizeFn(item && item[labelProp]);
+                if (k && !keyToId.has(k)) keyToId.set(k, item.id || '__existing__');
+              }
+              for (const entry of items) {
+                if (!entry) continue;
+                const k = normalizeFn(entry[labelProp]);
+                if (!k) continue;
+                const ownerId = entry.id || '__restored__';
+                if (keyToId.has(k) && keyToId.get(k) !== ownerId) continue;
+                await saveEntityToDB(storeName, { ...entry, projectId: entry.projectId || projectId, updatedAt: importTs });
+                keyToId.set(k, ownerId);
+              }
+            };
+
+            const restoreProjectBackupBundle = async (bundle) => {
+              if (!bundle || !bundle.project || !bundle.project.id) return;
+              const projId = bundle.project.id;
+              await saveProjectToDB({ ...bundle.project, updatedAt: importTs });
+              if (Array.isArray(bundle.takes)) {
+                for (const take of bundle.takes) await saveTakeToDB({ ...take, updatedAt: importTs });
+              }
+              await restoreDedupedEntities(STORE_SCENES, projId, bundle.scenes, normalizeSceneKey, 'sceneNum');
+              await restoreDedupedEntities(STORE_CHARACTERS, projId, bundle.characters, normalizeCharacterKey, 'name');
+              markProjectBackedUp(projId);
+              importedProjectsCount++;
+              lastImportedProjectName = bundle.project.name || '';
+            };
+
             if (data.multiProjectBackup && Array.isArray(data.projects)) {
               for (const bundle of data.projects) {
-                if (bundle && bundle.project && bundle.project.id) {
-                  await saveProjectToDB({ ...bundle.project, updatedAt: importTs });
-                  if (Array.isArray(bundle.takes)) {
-                    for (const take of bundle.takes) await saveTakeToDB({ ...take, updatedAt: importTs });
-                  }
-                  if (Array.isArray(bundle.scenes)) {
-                    for (const s of bundle.scenes) await saveEntityToDB(STORE_SCENES, { ...s, updatedAt: importTs });
-                  }
-                  if (Array.isArray(bundle.characters)) {
-                    for (const c of bundle.characters) await saveEntityToDB(STORE_CHARACTERS, { ...c, updatedAt: importTs });
-                  }
-                  markProjectBackedUp(bundle.project.id);
-                  importedProjectsCount++;
-                  lastImportedProjectName = bundle.project.name || '';
-                }
+                await restoreProjectBackupBundle(bundle);
               }
             } else if (data.project && data.project.id) {
-              await saveProjectToDB({ ...data.project, updatedAt: importTs });
-              if (Array.isArray(data.takes)) {
-                for (const take of data.takes) await saveTakeToDB({ ...take, updatedAt: importTs });
-              }
-              if (Array.isArray(data.scenes)) {
-                for (const s of data.scenes) await saveEntityToDB(STORE_SCENES, { ...s, updatedAt: importTs });
-              }
-              if (Array.isArray(data.characters)) {
-                for (const c of data.characters) await saveEntityToDB(STORE_CHARACTERS, { ...c, updatedAt: importTs });
-              }
-              markProjectBackedUp(data.project.id);
-              importedProjectsCount++;
-              lastImportedProjectName = data.project.name || '';
+              await restoreProjectBackupBundle(data);
             } else if (Array.isArray(data) && data.length > 0 && data[0].projectId) {
               for (const take of data) await saveTakeToDB({ ...take, updatedAt: importTs });
               importedLegacyRecords = true;
@@ -9182,19 +9477,1351 @@
     });
 
     /* ==========================================================================
-       IMPORTADOR AVANZADO DE GUIONES (ESCENAS + PERSONAJES + AVISO)
+       IMPORTADOR AVANZADO DE GUIONES (ESCENAS + PERSONAJES + COMBINAR/REEMPLAZAR)
        ========================================================================== */
     const inputScriptPdf = document.getElementById('input-script-pdf');
     const scriptReviewModal = document.getElementById('script-review-modal');
+    const scriptSuggestedCharsBox = document.getElementById('script-suggested-chars-box');
+    const scriptSuggestedCharsList = document.getElementById('script-suggested-chars-list');
+    const btnToggleAllSuggestedChars = document.getElementById('btn-toggle-all-suggested-chars');
+    const scriptImportModeModal = document.getElementById('script-import-mode-modal');
+    let pendingScriptImportResolve = null;
+    let pendingSuggestedChars = [];
 
-    document.getElementById('btn-close-review-modal').addEventListener('click', () => scriptReviewModal.classList.add('hidden'));
-    document.getElementById('btn-ok-review-modal').addEventListener('click', () => scriptReviewModal.classList.add('hidden'));
+    function finishScriptImportModePrompt(choice) {
+      scriptImportModeModal.classList.add('hidden');
+      if (pendingScriptImportResolve) {
+        const resolve = pendingScriptImportResolve;
+        pendingScriptImportResolve = null;
+        resolve(choice);
+      }
+    }
+
+    function clearSuggestedScriptCharacters() {
+      pendingSuggestedChars = [];
+      if (scriptSuggestedCharsBox) scriptSuggestedCharsBox.classList.add('hidden');
+      if (scriptSuggestedCharsList) scriptSuggestedCharsList.innerHTML = '';
+    }
+
+    function updateSuggestedCharsToggleBtn() {
+      if (!btnToggleAllSuggestedChars || !scriptSuggestedCharsList) return;
+      const checkboxes = Array.from(scriptSuggestedCharsList.querySelectorAll('.script-suggested-char-cb'));
+      const allChecked = checkboxes.length > 0 && checkboxes.every(cb => cb.checked);
+      btnToggleAllSuggestedChars.textContent = allChecked ? t('btn_uncheck_all_m') : t('btn_check_all_m');
+    }
+
+    function renderSuggestedScriptCharacters(items) {
+      pendingSuggestedChars = Array.isArray(items) ? items : [];
+      if (!scriptSuggestedCharsBox || !scriptSuggestedCharsList) return;
+      if (pendingSuggestedChars.length === 0) {
+        clearSuggestedScriptCharacters();
+        return;
+      }
+
+      const reasonKeyMap = {
+        caps: 'script_sug_reason_caps',
+        name: 'script_sug_reason_name',
+        role: 'script_sug_reason_role'
+      };
+      scriptSuggestedCharsList.innerHTML = pendingSuggestedChars.map((item, idx) => {
+        const reasonText = t(reasonKeyMap[item.reason] || 'script_sug_reason_role');
+        const countSuffix = item.count > 1 ? ` · ${item.count}×` : '';
+        return `
+          <label class="pdf-scene-check-item" style="margin:0; padding:9px 11px;">
+            <input type="checkbox" class="script-suggested-char-cb" value="${escapeHtml(item.name)}" data-idx="${idx}">
+            <div style="flex:1; min-width:0; display:flex; align-items:center; justify-content:space-between; gap:8px;">
+              <span style="font-size:14px; font-weight:700; color:#fff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${escapeHtml(item.name)}</span>
+              <span style="font-size:11px; color:var(--text-400); white-space:nowrap; flex-shrink:0;">${escapeHtml(reasonText + countSuffix)}</span>
+            </div>
+          </label>
+        `;
+      }).join('');
+      scriptSuggestedCharsBox.classList.remove('hidden');
+      updateSuggestedCharsToggleBtn();
+    }
+
+    scriptSuggestedCharsList?.addEventListener('change', updateSuggestedCharsToggleBtn);
+
+    btnToggleAllSuggestedChars?.addEventListener('click', () => {
+      if (!scriptSuggestedCharsList) return;
+      const checkboxes = Array.from(scriptSuggestedCharsList.querySelectorAll('.script-suggested-char-cb'));
+      if (checkboxes.length === 0) return;
+      const nextChecked = !checkboxes.every(cb => cb.checked);
+      checkboxes.forEach(cb => { cb.checked = nextChecked; });
+      updateSuggestedCharsToggleBtn();
+    });
+
+    async function persistScriptCharacterEntity(charName, knownKeySet = null) {
+      const trimmedName = String(charName || '').trim();
+      const key = normalizeCharacterKey(trimmedName);
+      if (!key) return null;
+
+      let keySet = knownKeySet instanceof Set ? knownKeySet : null;
+      if (!keySet) {
+        const existingChars = await getEntitiesForProject(STORE_CHARACTERS, activeProjectId);
+        keySet = new Set(existingChars.map(c => normalizeCharacterKey(c.name)).filter(Boolean));
+      }
+      if (keySet.has(key)) return null;
+
+      const nowChar = Date.now();
+      const item = {
+        id: 'char_' + nowChar + '_' + Math.random().toString(36).slice(2, 7),
+        projectId: activeProjectId,
+        name: trimmedName,
+        actor: '',
+        photo: null,
+        createdAt: nowChar,
+        updatedAt: nowChar
+      };
+      await saveEntityToDB(STORE_CHARACTERS, item);
+      keySet.add(key);
+      return item;
+    }
+
+    document.getElementById('btn-close-review-modal').addEventListener('click', () => {
+      clearSuggestedScriptCharacters();
+      scriptReviewModal.classList.add('hidden');
+    });
+
+    document.getElementById('btn-ok-review-modal').addEventListener('click', async () => {
+      const checkedNames = scriptSuggestedCharsList
+        ? Array.from(scriptSuggestedCharsList.querySelectorAll('.script-suggested-char-cb:checked')).map(cb => cb.value.trim()).filter(Boolean)
+        : [];
+      clearSuggestedScriptCharacters();
+      scriptReviewModal.classList.add('hidden');
+
+      if (checkedNames.length > 0 && activeProjectId) {
+        try {
+          const existingChars = await getEntitiesForProject(STORE_CHARACTERS, activeProjectId);
+          const existingKeySet = new Set(existingChars.map(c => normalizeCharacterKey(c.name)).filter(Boolean));
+          let addedCount = 0;
+          for (const charName of checkedNames) {
+            const saved = await persistScriptCharacterEntity(charName, existingKeySet);
+            if (saved) addedCount++;
+          }
+          if (addedCount > 0) {
+            await updateCatalogCaches();
+            if (typeof renderTakes === 'function') await renderTakes();
+            showToast(t('toast_suggested_chars_added', { count: addedCount }));
+          }
+        } catch (err) {
+          console.error('Error guardando personajes sugeridos:', err);
+          showToast(t('toast_error_processing_script'));
+        }
+      }
+    });
+
+    document.getElementById('btn-script-import-combine').addEventListener('click', () => finishScriptImportModePrompt('combine'));
+    document.getElementById('btn-script-import-replace').addEventListener('click', () => finishScriptImportModePrompt('replace'));
+    document.getElementById('btn-script-import-cancel').addEventListener('click', () => finishScriptImportModePrompt('cancel'));
+    document.getElementById('btn-close-import-mode-modal').addEventListener('click', () => finishScriptImportModePrompt('cancel'));
+    scriptImportModeModal.addEventListener('click', (ev) => {
+      if (ev.target === scriptImportModeModal) finishScriptImportModePrompt('cancel');
+    });
+
+    function askScriptImportMode(existingScenesCount, existingCharsCount, parsedScenesCount, parsedCharsCount) {
+      document.getElementById('script-import-existing-msg').textContent = t('script_import_existing_msg', {
+        existingScenes: existingScenesCount,
+        existingChars: existingCharsCount,
+        parsedScenes: parsedScenesCount,
+        parsedChars: parsedCharsCount
+      });
+      scriptImportModeModal.classList.remove('hidden');
+      return new Promise((resolve) => {
+        pendingScriptImportResolve = resolve;
+      });
+    }
 
     document.getElementById('menu-opt-script-pdf').addEventListener('click', () => {
       closeProjectMenu();
       inputScriptPdf.value = '';
       inputScriptPdf.click();
     });
+
+    function normalizeSceneKey(sceneNum) {
+      return String(sceneNum || '').trim().replace(/\s+/g, '').toUpperCase();
+    }
+
+    function normalizeCharacterKey(name) {
+      return String(name || '')
+        .replace(/[*+#()[\]{}]/g, ' ')
+        .replace(/[.,:;!?]+$/g, '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .toUpperCase();
+    }
+
+    function findDuplicateEntityByKey(list, normalizeFn, labelProp, candidateValue, excludeId = '') {
+      const targetKey = normalizeFn(candidateValue);
+      if (!targetKey || !Array.isArray(list)) return null;
+      return list.find(item =>
+        item &&
+        item.id !== excludeId &&
+        normalizeFn(item[labelProp]) === targetKey
+      ) || null;
+    }
+
+    function formatCharacterDisplayName(cleanUpper) {
+      const romanSet = new Set(['II', 'III', 'IV', 'VI', 'VII', 'VIII', 'IX', 'XI', 'XII']);
+      const minorConnectorSet = new Set(['DE', 'DEL', 'LA', 'LAS', 'LOS', 'DA', 'DO', 'DAS', 'DOS', 'DI', 'DEGLI', 'DU', 'DES', 'OF', 'THE', 'VON', 'VAN']);
+      const words = String(cleanUpper || '').trim().split(/\s+/).filter(Boolean);
+      return words
+        .map((word, idx) => {
+          const upper = word.toUpperCase();
+          if (idx > 0 && romanSet.has(upper)) return upper;
+          if (idx > 0 && idx < words.length - 1 && minorConnectorSet.has(upper)) return word.toLowerCase();
+          return word
+            .toLowerCase()
+            .split('-')
+            .map(hPart => hPart
+              .split("'")
+              .map(aPart => aPart ? aPart.charAt(0).toUpperCase() + aPart.slice(1) : '')
+              .join("'")
+            )
+            .join('-');
+        })
+        .join(' ');
+    }
+
+    function reconstructPdfRows(items, pageWidth, pageHeight) {
+      const rowBuckets = [];
+      const rowYTolerance = 3.5;
+
+      for (const item of items) {
+        const rawStr = typeof item.str === 'string' ? item.str : '';
+        const tr = Array.isArray(item.transform) && item.transform.length >= 6
+          ? item.transform
+          : [12, 0, 0, 12, 0, 0];
+        const a = tr[0], b = tr[1], c = tr[2], d = tr[3], x = tr[4], y = tr[5];
+
+        // Skip rotated watermarks while preserving normal axis-aligned text
+        const isAxisAligned =
+          (Math.abs(b) <= 0.12 && Math.abs(c) <= 0.12) ||
+          (Math.abs(a) <= 0.12 && Math.abs(d) <= 0.12);
+        if (!isAxisAligned) continue;
+
+        const fontSize = Math.max(Math.hypot(a, b), Math.hypot(c, d), Number(item.height) || 0) || 12;
+        if (fontSize > 22 || fontSize < 5) continue;
+
+        let bucket = rowBuckets.find(r => Math.abs(r.y - y) <= rowYTolerance);
+        if (!bucket) {
+          bucket = { y, items: [] };
+          rowBuckets.push(bucket);
+        }
+
+        const pushNormalizedItem = (xPos, subStr, subWidth) => {
+          bucket.items.push({
+            x: xPos,
+            y,
+            width: subWidth,
+            fontSize,
+            str: subStr,
+            isSpace: !subStr.trim()
+          });
+        };
+
+        const itemWidth = (typeof item.width === 'number' && item.width > 0)
+          ? item.width
+          : rawStr.length * (fontSize * 0.56);
+
+        // Split single PDF runs containing 4+ consecutive spaces (e.g. Courier space-padded dual dialogue)
+        if (/\S\s{4,}\S/.test(rawStr) && rawStr.length > 0) {
+          const charW = itemWidth / rawStr.length;
+          let cursor = 0;
+          for (const part of rawStr.split(/(\s{4,})/)) {
+            if (!part) continue;
+            pushNormalizedItem(x + cursor * charW, part, part.length * charW);
+            cursor += part.length;
+          }
+        } else {
+          pushNormalizedItem(x, rawStr, itemWidth);
+        }
+      }
+
+      rowBuckets.sort((a, b) => b.y - a.y);
+
+      const rebuiltRows = [];
+
+      for (const bucket of rowBuckets) {
+        bucket.items.sort((a, b) => a.x - b.x);
+
+        const accepted = [];
+        let sawExplicitSpace = false;
+
+        for (const it of bucket.items) {
+          if (it.isSpace) {
+            sawExplicitSpace = true;
+            continue;
+          }
+
+          const trimmed = it.str.trim();
+          // Skip right-margin revision markers (*, +, #)
+          if (pageWidth > 0 && it.x > pageWidth * 0.80 && /^[*+#]+$/.test(trimmed)) {
+            continue;
+          }
+
+          // Deduplicate bold overstrike / double-drawn PDF items at same horizontal coordinate
+          const overstrikeTol = trimmed.length > 1
+            ? Math.max(3.0, it.fontSize * 0.25)
+            : Math.max(0.8, it.fontSize * 0.12);
+
+          const isDuplicateOverstrike = accepted.some(prev => {
+            if (Math.abs(it.x - prev.x) > overstrikeTol) return false;
+            const prevTrim = prev.str.trim();
+            return prevTrim === trimmed || (trimmed.length > 1 && prevTrim.startsWith(trimmed));
+          });
+          if (isDuplicateOverstrike) continue;
+
+          it.spaceBefore = sawExplicitSpace;
+          sawExplicitSpace = false;
+          accepted.push(it);
+        }
+
+        if (accepted.length === 0) continue;
+
+        const segments = [];
+        let currSeg = {
+          x: accepted[0].x,
+          text: accepted[0].str,
+          maxFont: accepted[0].fontSize,
+          lastRight: accepted[0].x + accepted[0].width,
+          lastFont: accepted[0].fontSize,
+          lastStr: accepted[0].str
+        };
+
+        for (let i = 1; i < accepted.length; i++) {
+          const item = accepted[i];
+          const gap = item.x - currSeg.lastRight;
+          const minFont = Math.min(currSeg.lastFont, item.fontSize);
+          const spaceThreshold = Math.max(1.6, minFont * 0.22);
+          const columnGapThreshold = Math.max(24, minFont * 2.1);
+
+          if (gap > columnGapThreshold) {
+            const finalizedText = currSeg.text.replace(/\s+/g, ' ').trim();
+            if (finalizedText) {
+              segments.push({ x: currSeg.x, right: currSeg.lastRight, text: finalizedText, maxFont: currSeg.maxFont });
+            }
+            currSeg = {
+              x: item.x,
+              text: item.str,
+              maxFont: item.fontSize,
+              lastRight: item.x + item.width,
+              lastFont: item.fontSize,
+              lastStr: item.str
+            };
+          } else {
+            const alreadySpaced = /\s$/.test(currSeg.lastStr) || /^\s/.test(item.str);
+            const needsSpace = !alreadySpaced && (item.spaceBefore || gap > spaceThreshold);
+            currSeg.text += (needsSpace ? ' ' : '') + item.str;
+            currSeg.lastRight = Math.max(currSeg.lastRight, item.x + item.width);
+            currSeg.lastFont = item.fontSize;
+            currSeg.maxFont = Math.max(currSeg.maxFont, item.fontSize);
+            currSeg.lastStr = item.str;
+          }
+        }
+
+        const lastFinalized = currSeg.text.replace(/\s+/g, ' ').trim();
+        if (lastFinalized) {
+          segments.push({ x: currSeg.x, right: currSeg.lastRight, text: lastFinalized, maxFont: currSeg.maxFont });
+        }
+
+        if (segments.length === 0) continue;
+
+        const fullText = segments.map(s => s.text).join(' ').replace(/\s+/g, ' ').trim();
+        if (!fullText) continue;
+
+        rebuiltRows.push({
+          y: bucket.y,
+          x: segments[0].x,
+          fullText,
+          segments,
+          isTopBand: pageHeight > 0 && bucket.y > pageHeight * 0.88,
+          isBottomBand: pageHeight > 0 && bucket.y < pageHeight * 0.10
+        });
+      }
+
+      return rebuiltRows;
+    }
+
+    const OMITTED_SCENE_RE = /^(?:ESCENA\s+OMITIDA|SC[ÈE]NE\s+OMISE|SC[ÈE]NE\s+SUPPRIM[ÉE]E|SCENA\s+OMESSA|SZENE\s+ENTF[ÄA]LLT|SCENE\s+OMITTED|OMITIDA|OMITIDO|OMITTED|OMIT|OMESSA|OMESSO|OMISE|ENTF[ÄA]LLT|GESTRICHEN|SUPPRIM[ÉE]E?|ANULADA|VOID)\.?$/i;
+
+    const IE_PREFIX_PATTERN =
+      '(?:INT\\.?\\s*\\/\\s*EXT\\.?|EXT\\.?\\s*\\/\\s*INT\\.?|I\\s*\\/\\s*E\\.?|INT\\.?\\s*-\\s*EXT\\.?|EXT\\.?\\s*-\\s*INT\\.?|' +
+      'INT\\.?\\s*\\/\\s*EST\\.?|EST\\.?\\s*\\/\\s*INT\\.?|' +
+      'INTERIOR\\s*\\/\\s*EXTERIOR|EXTERIOR\\s*\\/\\s*INTERIOR|' +
+      'INTERNO\\s*\\/\\s*ESTERNO|ESTERNO\\s*\\/\\s*INTERNO|' +
+      'INT[ÉE]RIEUR\\s*\\/\\s*EXT[ÉE]RIEUR|EXT[ÉE]RIEUR\\s*\\/\\s*INT[ÉE]RIEUR|' +
+      'INNEN\\s*\\/\\s*AU(?:SS|ß)EN|AU(?:SS|ß)EN\\s*\\/\\s*INNEN|I\\s*\\/\\s*A\\.?|' +
+      'EXT\\s*\\/\\s*DAY|INT\\s*\\/\\s*DAY|EXT\\s*\\/\\s*NIGHT|INT\\s*\\/\\s*NIGHT|' +
+      'EXT\\s*\\/\\s*DAWN|INT\\s*\\/\\s*DAWN|EXT\\s*\\/\\s*DUSK|INT\\s*\\/\\s*DUSK|' +
+      'INTERIOR\\.?|EXTERIOR\\.?|INTERNO\\.?|ESTERNO\\.?|INT[ÉE]RIEUR\\.?|EXT[ÉE]RIEUR\\.?|' +
+      'INNEN\\.?|AU(?:SS|ß)EN\\.?|INT\\.?|EXT\\.?|EST\\.?)';
+
+    const TIME_WORD_PATTERN =
+      '(?:D[ÍI]A|NOCHE|TARDE|AMANECER|ATARDECER|MADRUGADA|CONTINUO|CONTINUA|MA[ÑN]ANA|' +
+      'DAY|NIGHT|DAWN|DUSK|TWILIGHT|MORNING|AFTERNOON|EVENING|SUNRISE|SUNSET|CONTINUOUS|LATER|SAME|MOMENTS\\s+LATER|' +
+      'NOITE|MANH[ÃA]|AMANHECER|ENTARDECER|' +
+      'GIORNO|NOTTE|ALBA|TRAMONTO|SERA|MATTINA|POMERIGGIO|' +
+      'TAG|NACHT|ABEND|MORGEN|D[ÄA]MMERUNG|MITTAG|NACHMITTAG|SONNENAUFGANG|SONNENUNTERGANG|' +
+      'JOUR|NUIT|AUBE|CR[ÉE]PUSCULE|MATIN|SOIR|SOIR[ÉE]E|APR[ÈE]S-MIDI|CONTINU)';
+
+    const SCENE_PREFIX_RE = new RegExp('^(?:' + IE_PREFIX_PATTERN + ')(?:\\s+|$|[./\\-–—:])', 'i');
+
+    const TIME_OF_DAY_RE = new RegExp('\\b' + TIME_WORD_PATTERN + '\\b', 'i');
+
+    const SCENE_TRAILING_MARKER_RE = new RegExp(
+      '(?:' +
+        '[-–—\\u2011\\u2212]\\s*(?:' + IE_PREFIX_PATTERN + ')(?:\\s*[-/–—\\u2011\\u2212.]\\s*(?:' + TIME_WORD_PATTERN + ')(?:[\\s/.-]+(?:' + TIME_WORD_PATTERN + ')){0,2})?|' +
+        '\\s+(?:' + IE_PREFIX_PATTERN + ')\\s*\\/\\s*(?:' + TIME_WORD_PATTERN + ')(?:[\\s/.-]+(?:' + TIME_WORD_PATTERN + ')){0,2}|' +
+        '[-–—\\u2011\\u2212]\\s*(?:' + TIME_WORD_PATTERN + ')\\s*\\/\\s*(?:' + TIME_WORD_PATTERN + ')(?:[\\s/.-]+(?:' + TIME_WORD_PATTERN + '))*' +
+      ')\\s*$',
+      'i'
+    );
+
+    const SCENE_MIRRORED_TIME_ONLY_RE = new RegExp('[-–—\\u2011\\u2212]\\s*(?:' + TIME_WORD_PATTERN + ')\\s*$', 'i');
+
+    function isSceneBodyStructure(body, hasMirroredNumbers) {
+      if (!body) return false;
+      if (OMITTED_SCENE_RE.test(body)) return true;
+      if (SCENE_PREFIX_RE.test(body)) return true;
+      if (SCENE_TRAILING_MARKER_RE.test(body)) return true;
+      if (hasMirroredNumbers && SCENE_MIRRORED_TIME_ONLY_RE.test(body)) return true;
+      return false;
+    }
+
+    function splitTrailingSceneNum(text, expectedNum) {
+      const m = text.match(/^(.+?)\s+([A-Z]?\d+[A-Z]{0,2})$/i);
+      if (m) return { body: m[1].trim(), num: m[2].trim(), glued: false };
+      if (expectedNum && text.length > expectedNum.length + 2 && text.toUpperCase().endsWith(expectedNum.toUpperCase())) {
+        const splitIdx = text.length - expectedNum.length;
+        if (/[A-Za-zÁÉÍÓÚÜÑÀÂÄÇÈÉÊËÎÏÔÖÒÙÛẞ./)]/.test(text[splitIdx - 1])) {
+          const body = text.slice(0, splitIdx).trim();
+          if (isSceneBodyStructure(body, true)) {
+            return { body, num: text.slice(splitIdx), glued: true };
+          }
+        }
+      }
+      return null;
+    }
+
+    function parseSceneHeading(rawLine, options = {}) {
+      const cleaned = String(rawLine || '')
+        .replace(/(?:^|\s)[*+#]+(?=\s|$)|[*+#]+$/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+      if (!cleaned) return null;
+
+      let leadingNum = '';
+      let rest = cleaned;
+      const leadMatch = cleaned.match(
+        /^(?:(?:ESC(?:ENA)?|SCENE|SC[ÈE]NE|S[ÉE]Q(?:UENCE)?|CENA|SZENE|SC)\.?\s+)?([A-Z]?\d+[A-Z]{0,2}(?:\.\d+)?)\s*(?:[.:–—-]\s*|\s+)(.+)$/i
+      );
+      if (leadMatch) {
+        const candidateNum = leadMatch[1].trim();
+        const candidateRest = leadMatch[2].trim();
+        const trailCheck = splitTrailingSceneNum(candidateRest, candidateNum);
+        const mirroredTrail = Boolean(trailCheck && trailCheck.num.toUpperCase() === candidateNum.toUpperCase());
+        const candidateWithoutTrail = mirroredTrail ? trailCheck.body : candidateRest;
+        if (isSceneBodyStructure(candidateWithoutTrail, mirroredTrail) || isSceneBodyStructure(candidateRest, false)) {
+          leadingNum = candidateNum;
+          rest = candidateRest;
+        }
+      }
+
+      let trailingNum = '';
+      const trailMatch = splitTrailingSceneNum(rest, leadingNum);
+      if (trailMatch) {
+        const bodyPart = trailMatch.body;
+        const trailCandidate = trailMatch.num;
+        const matchesLeading = Boolean(leadingNum && trailCandidate.toUpperCase() === leadingNum.toUpperCase());
+        const isOmittedBody = OMITTED_SCENE_RE.test(bodyPart);
+        const hasRightSegmentHint = Boolean(options.hasTrailingIsolatedNumber);
+        const followsTimeOrMarker = TIME_OF_DAY_RE.test(bodyPart.slice(-28)) || /\)\s*$/.test(bodyPart) || SCENE_TRAILING_MARKER_RE.test(bodyPart);
+        if (matchesLeading || isOmittedBody || hasRightSegmentHint || (!leadingNum && followsTimeOrMarker)) {
+          trailingNum = trailCandidate;
+          rest = bodyPart;
+        }
+      }
+
+      if (OMITTED_SCENE_RE.test(rest)) {
+        return { omitted: true };
+      }
+
+      const lettersOnly = rest.replace(/[^A-Za-zÁÉÍÓÚÜÑÀÂÄÇÈÉÊËÎÏÔÖÒÙÛÄÖÜẞ]/g, '');
+      const upperLetters = rest.replace(/[^A-ZÁÉÍÓÚÜÑÀÂÄÇÈÉÊËÎÏÔÖÒÙÛẞ]/g, '');
+      const upperRatio = lettersOnly.length > 0 ? upperLetters.length / lettersOnly.length : 0;
+
+      const prefixMatch = rest.match(SCENE_PREFIX_RE);
+      if (prefixMatch) {
+        const prefixToken = prefixMatch[0].trim();
+        if (/^EST\.?$/i.test(prefixToken) && upperRatio < 0.7 && !TIME_OF_DAY_RE.test(rest)) {
+          return null;
+        }
+        if (upperRatio < 0.5 && !leadingNum && !trailingNum && !TIME_OF_DAY_RE.test(rest)) {
+          return null;
+        }
+        const withoutPrefix = rest.slice(prefixMatch[0].length).replace(/^[.\s\-–—:/]+/, '').trim();
+        if (withoutPrefix.length < 2) {
+          return null;
+        }
+        return {
+          omitted: false,
+          sceneNum: leadingNum || trailingNum || '',
+          desc: rest
+        };
+      }
+
+      const hasMirroredNums = Boolean(leadingNum && trailingNum && leadingNum.toUpperCase() === trailingNum.toUpperCase());
+      const trailingMatch = rest.match(SCENE_TRAILING_MARKER_RE) || (hasMirroredNums ? rest.match(SCENE_MIRRORED_TIME_ONLY_RE) : null);
+      if (!trailingMatch) return null;
+
+      const locationPart = rest.slice(0, trailingMatch.index).trim();
+      if (locationPart.replace(/[^A-Za-zÁÉÍÓÚÜÑÀÂÄÇÈÉÊËÎÏÔÖÒÙÛÄÖÜẞ0-9]/g, '').length < 2) {
+        return null;
+      }
+
+      const locLetters = locationPart.replace(/[^A-Za-zÁÉÍÓÚÜÑÀÂÄÇÈÉÊËÎÏÔÖÒÙÛÄÖÜẞ]/g, '');
+      const locUpper = locationPart.replace(/[^A-ZÁÉÍÓÚÜÑÀÂÄÇÈÉÊËÎÏÔÖÒÙÛẞ]/g, '');
+      const locUpperRatio = locLetters.length > 0 ? locUpper.length / locLetters.length : 0;
+      const minLocUpper = (leadingNum || trailingNum) ? 0.5 : 0.65;
+      if (locUpperRatio < minLocUpper) {
+        return null;
+      }
+
+      return {
+        omitted: false,
+        sceneNum: leadingNum || trailingNum || '',
+        desc: rest
+      };
+    }
+
+    const NON_CHARACTER_EXACT_SET = new Set([
+      'CORTE A', 'CORTA A', 'CORTE DIRECTO', 'CORTE BRUSCO', 'CORTE SONORO', 'ENCADENADO A',
+      'DISOLVENCIA A', 'DISOLVENCIA', 'FUNDIDO A', 'FUNDIDO A NEGRO', 'FUNDIDO A BLANCO',
+      'FUNDE A', 'FUNDE A NEGRO', 'FUNDE A BLANCO',
+      'FUNDIDO DE ENTRADA', 'FUNDIDO DE SALIDA', 'FUNDIDO ENCADENADO', 'A NEGRO',
+      'VUELTA A', 'REGRESA A', 'VOLVEMOS A', 'CONTINÚA', 'CONTINUA', 'CONT', 'MÁS', 'SIGUE',
+      'FIN', 'FIN DEL FLASHBACK', 'FLASHBACK', 'FLASHFORWARD', 'FIN DE MONTAJE', 'MONTAJE',
+      'INSERT', 'INSERTO', 'INTERCUT', 'INTERCALADO', 'MONTAJE PARALELO',
+      'TÍTULO', 'TITULO', 'SOBREIMPRESO', 'SOBREIMPRESIÓN', 'LETRERO', 'CARTELA', 'VOZ EN OFF',
+      'POV', 'PUNTO DE VISTA', 'PLANO DETALLE', 'PRIMER PLANO', 'DETALLE', 'PAUSA', 'SILENCIO',
+      'BORRADOR', 'REVISIÓN', 'REVISION', 'CONFIDENCIAL', 'MÚSICA', 'MUSICA', 'SONIDO',
+      'CUT TO', 'MATCH CUT', 'SMASH CUT', 'JUMP CUT', 'HARD CUT', 'PRE-LAP', 'TIME CUT', 'FLASH CUT',
+      'BACK TO', 'BACK TO SCENE', 'RETURN TO', 'FADE IN', 'FADE OUT', 'FADE TO BLACK', 'FADE TO WHITE',
+      'FADE TO', 'DISSOLVE TO', 'RIPPLE DISSOLVE', 'WIPE TO', 'IRIS IN', 'IRIS OUT',
+      'CONTINUED', 'MORE', 'THE END', 'END', 'END FLASHBACK', 'END OF FLASHBACK', 'END MONTAGE',
+      'END OF MONTAGE', 'MONTAGE', 'DREAM SEQUENCE', 'TITLE', 'TITLE CARD', 'TITLE OVERLAY',
+      'SUPER', 'SUPERIMPOSE', 'CHYRON', 'VOICE OVER', 'ANGLE ON', 'CLOSE ON', 'CLOSE UP',
+      'BEAT', 'SILENCE', 'MUSIC', 'SOUND', 'SFX', 'BGM', 'COLD OPEN', 'TEASER', 'PROLOGUE', 'EPILOGUE',
+      'DRAFT', 'CONFIDENTIAL',
+      'CORTE PARA', 'CORTA PARA', 'CORTA EM', 'FUSÃO', 'FUSAO', 'FUSÃO PARA', 'DISSOLVÊNCIA',
+      'DISSOLVENCIA', 'ESCURECE', 'ABRE EM', 'FECHA EM', 'MAIS', 'SEGUE', 'FIM',
+      'FIM DO FLASHBACK', 'MONTAGEM', 'FIM DA MONTAGEM', 'INSERÇÃO', 'INSERCAO', 'SOBREIMPRESSÃO',
+      'SOBREIMPRESSAO', 'PONTO DE VISTA', 'RASCUNHO', 'SILÊNCIO',
+      'STACCO', 'STACCO SU', 'STACCO A', 'DISSOLVENZA', 'DISSOLVENZA IN', 'DISSOLVENZA INCROCIATA',
+      'DISSOLVENZA IN APERTURA', 'DISSOLVENZA IN CHIUSURA', 'NERO', 'TORNA A', 'CONTINUAZIONE',
+      'AVANTI', 'FINE', 'FINE FLASHBACK', 'MONTAGGIO', 'FINE MONTAGGIO', 'MONTAGGIO ALTERNATO',
+      'CARTELLO', 'CARTELLO NERO', 'DIDASCALIA', 'SOVRAIMPRESSIONE', 'FUORI CAMPO', 'SOGGETTIVA',
+      'DETTAGLIO', 'SILENZIO', 'BOZZA', 'RISERVATO',
+      'SCHNITT', 'SCHNITT AUF', 'HARTER SCHNITT', 'ZEITSPRUNG', 'AUFBLENDE', 'ABBLENDE',
+      'SCHWARZBLENDE', 'WEISSBLENDE', 'ÜBERBLENDE', 'UBERBLENDE', 'ÜBERBLENDE ZU', 'ZURÜCK ZU',
+      'FORTSETZUNG', 'WEITER', 'ENDE', 'ENDE FLASHBACK', 'MONTAGE-SEQUENZ', 'WECHSELSCHNITT',
+      'EINFÜGUNG', 'EINBLENDUNG', 'SCHRIFTEINBLENDUNG', 'TEXTEINBLENDUNG', 'AUS DEM OFF',
+      'SUBJEKTIVE', 'NAHAUFNAHME', 'STILLE', 'ENTWURF', 'VERTRAULICH',
+      'COUPE À', 'COUPE A', 'COUPURE', 'RACCORD', 'FONDU', 'FONDU AU NOIR', 'FONDU AU BLANC',
+      'FONDU ENCHAÎNÉ', 'FONDU ENCHAINE', 'NOIR', 'RETOUR À', 'RETOUR A', 'SUITE', 'À SUIVRE',
+      'A SUIVRE', 'FIN DU FLASHBACK', 'FIN DU MONTAGE', 'SÉQUENCE MONTAGE', 'MONTAGE PARALLÈLE',
+      'CARTON', 'CARTON NOIR', 'SURIMPRESSION', 'SOUS-TITRE', 'VOIX OFF', 'POINT DE VUE',
+      'GROS PLAN', 'BROUILLON', 'CONFIDENTIEL',
+      'OMITIDA', 'OMITIDO', 'OMITTED', 'OMIT', 'OMESSA', 'OMESSO', 'OMISE', 'ENTFÄLLT',
+      'GESTRICHEN', 'SUPPRIMÉE', 'SUPPRIMEE', 'ANULADA', 'VOID'
+    ]);
+
+    const NON_CHARACTER_PATTERN_RE = /^(?:(?:CUT|FADE|DISSOLVE|WIPE|CORTE|CORTA|FUNDIDO|FUNDE|DISOLVENCIA|FUS[ÃA]O|STACCO|DISSOLVENZA|SCHNITT|AUFBLENDE|ABBLENDE|[ÜU]BERBLENDE|COUPE|FONDU)\b|(?:ACT|ACTO|ATTO|AKT|ACTE|CAP[ÍI]TULO|CHAPTER|CAPITOLO|KAPITEL|CHAPITRE|PART|PARTE|TEIL|SCENE|ESCENA|CENA|SC[ÈE]NE|SZENE)\s+(?:\d+|[IVXLCDM]+)\b|(?:END\s+OF|FIN\s+DE|FIN\s+DEL|FIN\s+DU|FIM\s+DA|FIM\s+DO|FINE\s+DI)\b|(?:DAY|NIGHT|D[ÍI]A|NOCHE|NOITE|GIORNO|NOTTE|TAG|NACHT|JOUR|NUIT)\s+\d+\b|\d+\s*(?:DAYS?|YEARS?|MONTHS?|HOURS?|A[ÑN]OS?|D[ÍI]AS?|MESES?|HORAS?|ANOS?|ANNI|JAHRE|ANS|JOURS)\s+(?:LATER|EARLIER|DESPU[ÉE]S|ANTES|DEPOIS|DOPO|PRIMA|SP[ÄA]TER|PLUS\s+TARD|T[ÔO]T)\b)/i;
+
+    function cleanCharacterCueText(rawText) {
+      let s = String(rawText || '').replace(/\s+/g, ' ').trim();
+      if (!s) return '';
+
+      const dupHalfMatch = s.match(/^(.{3,}?)\s*\1$/i);
+      if (dupHalfMatch && /[()]|\bCONT/i.test(s)) {
+        s = dupHalfMatch[1].trim();
+      }
+
+      s = s.replace(/(?:^|\s)[*+#]+(?=\s|$)/g, ' ').replace(/[*+#]+$/g, '');
+
+      while (/\([^)]*\)/.test(s)) {
+        s = s.replace(/\([^)]*\)/g, ' ');
+      }
+      s = s.replace(/\([^)]*$/g, ' ').replace(/[()[\]{}]/g, ' ');
+      s = s.replace(/\s+/g, ' ').replace(/^[.,:;!?\-–—/\\"'«»]+|[.,:;!?\-–—/\\"'«»]+$/g, '').trim();
+
+      let prevS;
+      do {
+        prevS = s;
+        s = s.replace(
+          /(?:[,\s/]|^)+(?:CONT(?:'?D)?\.?|CONTIN[ÚU]A|CONTINUED|SUITE|FORTF(?:[ÜU]HREND)?\.?|WEITER|MORE|V\.?O\.?|O\.?S\.?|O\.?C\.?|H\.?C\.?|F\.?C\.?|A\.?B\.?|OFF)$/i,
+          ''
+        ).trim();
+        s = s.replace(/[.,:;!?\-–—/\\]+$/g, '').trim();
+      } while (s && s !== prevS);
+
+      const gluedDup = s.match(/^([A-ZÁÉÍÓÚÜÑÀÂÄÇÈÉÊËÎÏÔÖÒÙÛẞ]{3,})\1$/);
+      if (gluedDup) {
+        s = gluedDup[1];
+      }
+
+      return s.replace(/\s+/g, ' ').trim();
+    }
+
+    const COVER_BYLINE_RE = /^(?:by|written\s+by|screenplay\s+by|story\s+by|adapted\s+from|based\s+on|guion\s+de|escrito\s+por|historia\s+de|roteiro\s+de|baseado\s+em|di|scritto\s+da|tratto\s+da|von|drehbuch\s+von|nach\s+dem|par|sc[ée]nario\s+de|d['’]apr[èe]s)(?:\s|$)/i;
+
+    function segmentHasDialogueBelow(rows, rowIdx, segX, pageWidth) {
+      let prevY = rows[rowIdx].y;
+      const stepFont = Math.max(10, rows[rowIdx].segments?.[0]?.maxFont || 12);
+      for (let look = 1; look <= 2 && (rowIdx + look) < rows.length; look++) {
+        const nextRow = rows[rowIdx + look];
+        if (typeof prevY === 'number' && typeof nextRow.y === 'number' && (prevY - nextRow.y) > stepFont * 1.85) {
+          return false;
+        }
+        if (parseSceneHeading(nextRow.fullText)) return false;
+
+        let matchedNearCol = false;
+        for (const nextSeg of nextRow.segments) {
+          const t = nextSeg.text.trim();
+          if (!t) continue;
+          const isColumnNear = (segX - nextSeg.x <= pageWidth * 0.24) && (nextSeg.x - segX <= pageWidth * 0.22);
+          if (!isColumnNear) continue;
+          matchedNearCol = true;
+
+          if (COVER_BYLINE_RE.test(t)) return false;
+
+          if (/^\([^)]*\)$/.test(t)) {
+            if (look === 1 && (rowIdx + 2) < rows.length) {
+              prevY = nextRow.y;
+              continue;
+            }
+            return /[a-zà-öø-ÿáéíóúüñ]/.test(t);
+          }
+
+          if (/^\((?:MORE|M[ÁA]S|SIGUE|SUITE|FORTSETZUNG|CONTINUA)\)$/i.test(t)) {
+            prevY = nextRow.y;
+            continue;
+          }
+
+          return /[a-zà-öø-ÿáéíóúüñ]/.test(t);
+        }
+        if (!matchedNearCol) prevY = nextRow.y;
+      }
+      return false;
+    }
+
+    function isValidSingleCharacterName(clean) {
+      if (!clean || clean.length < 2 || clean.length > 32) return false;
+      const hasLetters = /[A-ZÁÉÍÓÚÜÑÀÂÄÇÈÉÊËÎÏÔÖÒÙÛẞ]{2,}/.test(clean.replace(/[\s.'\-]/g, ''));
+      const isAllCaps = clean === clean.toUpperCase();
+      if (!hasLetters || !isAllCaps) return false;
+      if (/[!?¿¡;@©®™%$€£&+/=_~<>]/.test(clean) || /^\d/.test(clean)) return false;
+      if (clean.split(/\s+/).length > 4) return false;
+      const upperKey = clean.toUpperCase();
+      if (NON_CHARACTER_EXACT_SET.has(upperKey) || NON_CHARACTER_PATTERN_RE.test(upperKey)) return false;
+      if (parseSceneHeading(clean)) return false;
+      return true;
+    }
+
+    function extractCharacterCandidatesFromSegment(rows, rowIdx, seg, pageWidth) {
+      const hasMultipleSegs = rows[rowIdx].segments.length > 1;
+      const minX = hasMultipleSegs ? pageWidth * 0.14 : pageWidth * 0.22;
+      const maxX = pageWidth * 0.78;
+      if (seg.x <= minX || seg.x >= maxX) return [];
+
+      const rawCueCore = String(seg.text || '')
+        .replace(/\([^)]*\)/g, ' ')
+        .replace(/(?:^|\s)[*+#]+(?=\s|$)|[*+#]+$/g, '')
+        .trim();
+      if (/[!?¿¡"“”«»]/.test(rawCueCore)) return [];
+
+      const clean = cleanCharacterCueText(seg.text);
+      if (!clean) return [];
+
+      const jointSplitRe = /\s+(?:&|\+|AND|Y|E|ET|UND)\s+|\s*\/\s*/i;
+      const candidates = jointSplitRe.test(clean)
+        ? clean.split(jointSplitRe).map(p => p.trim()).filter(Boolean)
+        : [clean];
+
+      if (candidates.length === 0 || candidates.length > 3) return [];
+      if (!candidates.every(isValidSingleCharacterName)) return [];
+      if (!segmentHasDialogueBelow(rows, rowIdx, seg.x, pageWidth)) return [];
+
+      return candidates;
+    }
+
+    const HUMAN_ROLE_WORDS_SET = new Set([
+      // ES
+      'HOMBRE', 'MUJER', 'NINO', 'NINA', 'ANCIANO', 'ANCIANA', 'VIEJO', 'VIEJA',
+      'CHICO', 'CHICA', 'MUCHACHO', 'MUCHACHA', 'JOVEN', 'BEBE', 'SENOR', 'SENORA',
+      'SENORITA', 'GERENTE', 'JEFE', 'JEFA', 'LIDER', 'POLICIA', 'AGENTE', 'OFICIAL',
+      'GUARDIA', 'SOLDADO', 'BARRENDERA', 'BARRENDERO', 'MEDICO', 'MEDICA', 'DOCTOR',
+      'DOCTORA', 'ENFERMERO', 'ENFERMERA', 'MAESTRO', 'MAESTRA', 'PROFESOR', 'PROFESORA',
+      'DOCENTE', 'ABOGADO', 'ABOGADA', 'DETECTIVE', 'INSPECTOR', 'INSPECTORA', 'COMANDANTE',
+      'CAPITAN', 'SARGENTO', 'TENIENTE', 'CORONEL', 'GENERAL', 'CONDUCTOR', 'CONDUCTORA',
+      'CHOFER', 'TAXISTA', 'MESERO', 'MESERA', 'CAMARERO', 'CAMARERA', 'VENDEDOR', 'VENDEDORA',
+      'MERCADER', 'MATON', 'ASISTENTE', 'SECRETARIO', 'SECRETARIA', 'EMPLEADO', 'EMPLEADA',
+      'VIGILANTE', 'MOTOCICLISTA', 'ENCAPUCHADO', 'ENCAPUCHADA', 'RECEPCIONISTA', 'CAJERO',
+      'CAJERA', 'DIRECTOR', 'DIRECTORA', 'JUEZ', 'JUEZA', 'SACERDOTE', 'CURA', 'MONJA',
+      'BOMBERO', 'PILOTO', 'GUARDESPALDAS', 'PORTERO', 'PORTERA', 'REPARTIDOR', 'REPARTIDORA',
+      // EN
+      'MAN', 'WOMAN', 'BOY', 'GIRL', 'CHILD', 'KID', 'BABY', 'TODDLER', 'TEEN', 'TEENAGER',
+      'ELDERLY', 'GUY', 'LADY', 'GENTLEMAN', 'MANAGER', 'BOSS', 'LEADER', 'OFFICER', 'COP',
+      'POLICEMAN', 'POLICEWOMAN', 'GUARD', 'SOLDIER', 'NURSE', 'SURGEON', 'PARAMEDIC',
+      'TEACHER', 'PROFESSOR', 'LAWYER', 'SERGEANT', 'CAPTAIN', 'LIEUTENANT', 'COMMANDER',
+      'DRIVER', 'CHAUFFEUR', 'WAITER', 'WAITRESS', 'SERVER', 'BARTENDER', 'CASHIER', 'CLERK',
+      'VENDOR', 'SELLER', 'ASSISTANT', 'SECRETARY', 'EMPLOYEE', 'WORKER', 'CLEANER', 'JANITOR',
+      'SWEEPER', 'RECEPTIONIST', 'JUDGE', 'PRIEST', 'FIREFIGHTER', 'PILOT', 'BODYGUARD',
+      'SURFER', 'PARTNER', 'OPPONENT', 'REFEREE', 'UMPIRE', 'COACH', 'TRAINER', 'REPORTER',
+      'JOURNALIST', 'COMMENTATOR', 'ANNOUNCER',
+      // PT
+      'HOMEM', 'MULHER', 'MENINO', 'MENINA', 'CRIANCA', 'IDOSO', 'IDOSA', 'VELHO', 'VELHA',
+      'RAPAZ', 'MOCA', 'SENHOR', 'SENHORA', 'CHEFE', 'POLICIAL', 'GUARDA', 'DOUTOR', 'DOUTORA',
+      'ENFERMEIRO', 'ENFERMEIRA', 'ADVOGADO', 'DETETIVE', 'INSPETOR', 'MOTORISTA', 'GARCOM',
+      'GARCONETE', 'FAXINEIRO', 'FAXINEIRA', 'VARREDOR', 'VARREDORA',
+      // IT
+      'UOMO', 'DONNA', 'BAMBINO', 'BAMBINA', 'RAGAZZO', 'RAGAZZA', 'ANZIANO',
+      'ANZIANA', 'VECCHIO', 'VECCHIA', 'GIOVANE', 'SIGNORE', 'SIGNORA', 'DIRETTORE', 'CAPO',
+      'POLIZIOTTO', 'POLIZIOTTA', 'DOTTORE', 'DOTTORESSA', 'INFERMIERE', 'INFERMIERA',
+      'INSEGNANTE', 'PROFESSORE', 'AVVOCATO', 'COMMISSARIO', 'ISPETTORE', 'AUTISTA',
+      'CAMERIERE', 'CAMERIERA', 'COMMESSO', 'COMMESSA', 'PORTINAIO', 'SPAZZINO',
+      // DE
+      'MANN', 'FRAU', 'JUNGE', 'MADCHEN', 'KIND', 'SENIOR', 'HERR', 'DAME', 'CHEF', 'LEITER',
+      'POLIZIST', 'POLIZISTIN', 'BEAMTER', 'WACHMANN', 'SOLDAT', 'ARZT', 'ARZTIN', 'DOKTOR',
+      'KRANKENSCHWESTER', 'LEHRER', 'LEHRERIN', 'ANWALT', 'KOMMISSAR', 'INSPEKTOR', 'FAHRER',
+      'KELLNER', 'KELLNERIN', 'VERKAUFER', 'REINIGUNGSKRAFT', 'PUTZFRAU', 'ASSISTENT',
+      // FR
+      'HOMME', 'FEMME', 'GARCON', 'FILLE', 'ENFANT', 'JEUNE', 'MONSIEUR', 'MADAME', 'DIRECTEUR',
+      'PATRON', 'POLICIER', 'POLICIERE', 'GARDE', 'SOLDAT', 'MEDECIN', 'DOCTEUR', 'INFIRMIER',
+      'INFIRMIERE', 'PROFESSEUR', 'AVOCAT', 'INSPECTEUR', 'COMMISSAIRE', 'CHAUFFEUR',
+      'SERVEUR', 'SERVEUSE', 'VENDEUR', 'VENDEUSE', 'BALAYEUR', 'BALAYEUSE', 'ASSISTANT'
+    ]);
+
+    const GENERIC_BASE_ROLE_SET = new Set([
+      'HOMBRE', 'MUJER', 'JOVEN', 'MAN', 'WOMAN', 'GUY', 'LADY', 'HOMEM', 'MULHER', 'UOMO',
+      'DONNA', 'MANN', 'FRAU', 'HOMME', 'FEMME', 'JEUNE', 'JEFE', 'JEFA', 'LIDER', 'LEADER',
+      'BOSS', 'CHIEF', 'HEAD', 'CHEFE', 'CAPO', 'LEITER', 'CHEF', 'GUARDIA', 'GUARD', 'GARDE'
+    ]);
+
+    const INSTITUTION_ONLY_ROLE_SET = new Set(['POLICIA', 'POLICE', 'POLIZIA', 'POLIZEI']);
+    const GERMAN_CHILD_ARTICLES_SET = new Set(['EIN', 'DAS', 'DEM', 'DEN']);
+
+    const ACTION_LOCATION_NOUNS_SET = new Set([
+      'BEACH', 'PORCH', 'TERRACE', 'ROOMS', 'OFFICE', 'KITCHEN', 'BEDROOM', 'HALLWAY',
+      'CORRIDOR', 'LOBBY', 'PARK', 'LAKE', 'STREET', 'CITY', 'VILLA', 'YARD', 'GARDEN',
+      'BATHROOM', 'STADIUM', 'COURT', 'TENNIS COURT', 'PLAYA', 'PARQUE', 'CALLE', 'OFICINA',
+      'COCINA', 'SALA', 'CUARTO', 'PISCINA', 'TERRAZA', 'UNIVERSIDAD', 'BLOQUES', 'APARTAMENTO',
+      'EDIFICIO', 'PARED', 'LAGO', 'BANCO', 'ESCUELA', 'FABRICA', 'STRAND', 'KUCHE', 'ZIMMER',
+      'PLAGE', 'RUE', 'PIAZZA', 'PRAIA', 'RUA', 'SALON', 'CASA', 'HOGAR', 'AVISPAS', 'BUNKER',
+      'SAN CRISTOBAL', 'SANTO DOMINGO'
+    ]);
+
+    const NON_PERSON_CAPS_NOISE_SET = new Set([
+      'BANG', 'BOOM', 'BAM', 'CRASH', 'CRACK', 'CLICK', 'CLACK', 'SNAP', 'THUD', 'SLAM',
+      'RING', 'BEEP', 'BUZZ', 'HISS', 'ROAR', 'SCREAM', 'PUM', 'PAM', 'PLAF', 'ZAS',
+      'GUAU', 'MIAU', 'TIC', 'TAC', 'TOC', 'KNOCK', 'WHOOSH', 'SPLASH', 'POP', 'POW',
+      'SMASH', 'THUMP', 'PING', 'DING',
+      'LITTLE LATER', 'A LITTLE LATER', 'BIT LATER', 'A BIT LATER', 'WHILE LATER',
+      'A WHILE LATER', 'AFTER A WHILE', 'MOMENTS LATER', 'SECONDS LATER', 'MINUTES LATER',
+      'HOURS LATER', 'DAYS LATER', 'YEARS LATER', 'LATER THAT NIGHT', 'LATER THAT DAY',
+      'THAT EVENING', 'THAT NIGHT', 'THAT MORNING', 'THAT AFTERNOON', 'NEXT DAY', 'NEXT MORNING',
+      'NEXT NIGHT', 'MEANWHILE', 'SUDDENLY', 'CONTINUOUS', 'AFTER', 'WHILE', 'LATER', 'BEFORE',
+      'EARLIER', 'POCO DESPUES', 'UN RATO DESPUES', 'MOMENTOS DESPUES', 'MIENTRAS TANTO',
+      'DE REPENTE', 'ESA NOCHE', 'AL DIA SIGUIENTE', 'MAIS TARDE', 'ENQUANTO ISSO', 'POCO DOPO',
+      'PIU TARDI', 'WENIG SPATER', 'UN PEU PLUS TARD', 'PENDANT CE TEMPS',
+      'TV', 'CIA', 'FBI', 'DEA', 'NSA', 'SWAT', 'NYPD', 'LAPD', 'ESMAD', 'SMAD', 'EL SMAD',
+      'ONU', 'UN', 'EU', 'UE', 'USA', 'US', 'UK', 'VIP', 'DNA', 'ADN', 'GPS', 'SMS', 'ATM',
+      'PC', 'DJ', 'ID', 'HQ', 'RV', 'SUV', 'BMW', 'CNN', 'BBC', 'NYC', 'LA', 'CD', 'DVD',
+      'VHS', 'HD', 'LED', 'ICU', 'ER', 'OK', 'FYI', 'ASAP', 'SOS', 'UFO', 'OVNI', 'AI', 'IA',
+      'VR', 'PR', 'CEO', 'CFO', 'CTO', 'POV', 'NOT', 'THIS', 'THAT', 'HERE', 'THERE', 'BACK',
+      'FUERTE', 'UN RUIDO', 'RUIDO FUERTE', 'ENTENDIDO', 'TRANSFERIR', 'MILLONES', 'NUMERO DE',
+      'CALENDAR', 'HEADLINE', 'MONITOR', 'ROOMS', 'SERVE TRAINING', 'SESSION', 'TANGO DOWN',
+      'HERMANO', 'OHANA', 'MANOS', 'BOTARGA', 'MANOS DEL CHE', 'CHE GUEVARA', 'GUEVARA',
+      'THIS COULD BE', 'THIS COULD BE LOVE', 'CAREER OVER'
+    ]);
+
+    const CAPS_SENTENCE_NOISE_WORDS = new Set([
+      'QUE', 'TE', 'ME', 'NOS', 'LES', 'PUEDE', 'PUEDO', 'TENGO', 'TIENES', 'TIENE', 'ESTOY',
+      'ESTAS', 'ESTA', 'ALGO', 'NADA', 'HACE', 'HACER', 'QUIERO', 'SABER', 'COULD', 'WOULD',
+      'SHOULD', 'CAN', 'WILL', 'THIS', 'THAT', 'BE', 'ARE', 'WAS', 'WERE', 'BEEN', 'HAVE', 'HAS',
+      'LOVE', 'MANOS', 'BOTARGA', 'RUIDO', 'AFTER', 'WHILE', 'SESSION'
+    ]);
+
+    const ACTION_STOP_WORDS_SET = new Set([
+      'EL', 'LA', 'LOS', 'LAS', 'UN', 'UNA', 'UNOS', 'UNAS', 'AL', 'DEL', 'DE', 'A', 'AN', 'THE',
+      'UM', 'UMA', 'UNS', 'UMAS', 'O', 'OS', 'AS', 'DO', 'DA', 'DOS', 'DAS', 'UNO', 'IL', 'LO',
+      'GLI', 'LE', 'I', 'DEI', 'DEGLI', 'DELLE', 'DI', 'PER', 'CON', 'EIN', 'EINE', 'EINEN',
+      'EINEM', 'EINER', 'DER', 'DIE', 'DAS', 'DEM', 'DEN', 'DES', 'VON', 'MIT', 'UNE', 'DU',
+      'AU', 'AUX', 'ET', 'EN', 'Y', 'E', 'AND', 'OR', 'NI', 'QUE', 'QUI', 'CHE', 'WHO', 'SE',
+      'SU', 'SUS', 'MI', 'MIS', 'TU', 'TUS', 'HIS', 'HER', 'THEIR', 'ITS', 'MY', 'YOUR', 'OUR',
+      'SON', 'SA', 'SES', 'SEU', 'SUA', 'ELLE', 'ELLA', 'ELLOS', 'ELLAS', 'NOSOTROS', 'VOSOTROS',
+      'OTRO', 'OTRA', 'OTROS', 'OTRAS', 'OTHER', 'ANOTHER', 'EACH', 'EVERY', 'ALL', 'TODOS',
+      'TODAS', 'TODO', 'TODA', 'ALGUIEN', 'NADIE', 'NINGUNO', 'NINGUNA', 'ALGO', 'SOMEONE',
+      'SOMEBODY', 'ANYONE', 'ANYBODY', 'EVERYONE', 'NOBODY', 'PEOPLE', 'PERSONAS', 'GENTE',
+      'CROWD', 'MULTITUD', 'GRUPO', 'FAMILIA', 'EQUIPO', 'PUBLICO', 'ESCENA', 'ESCENAS',
+      'TOMA', 'PLANO', 'IMAGEN', 'IMAGENES', 'CAMARA', 'SECUENCIA', 'CUADRO', 'MOMENTO',
+      'TIEMPO', 'VEZ', 'VECES', 'DIA', 'DIAS', 'NOCHE', 'TARDE', 'MANANA', 'ANO', 'ANOS',
+      'MES', 'MESES', 'HORA', 'HORAS', 'MINUTO', 'MINUTOS', 'SEGUNDO', 'SEGUNDOS', 'NUMERO',
+      'CAPITULO', 'ACTO', 'PARTE', 'PAGINA', 'TITULO', 'LETRERO', 'LOGO', 'ESTENCIL', 'GRAFITI',
+      'PANTALLA', 'SONIDO', 'RUIDO', 'VOZ', 'VOCES', 'SILENCIO', 'PAUSA', 'MUSICA',
+      'ARBOL', 'FLOR', 'HOJA', 'SOL', 'LUNA', 'MAR', 'RIO', 'AGUA', 'FUEGO', 'VIENTO', 'TIERRA',
+      'CIELO', 'PUERTA', 'VENTANA', 'MESA', 'SILLA', 'CAMA', 'CARRO', 'COCHE', 'AUTO', 'MOTO',
+      'COMPUTADOR', 'TELEVISOR', 'PERIODICO', 'RECIBO', 'BOMBA', 'PASAMONTANAS', 'BENGALA', 'ESCUDO',
+      'TREE', 'FLOWER', 'SUN', 'MOON', 'SEA', 'WATER', 'FIRE', 'WIND', 'EARTH', 'SKY', 'WALL',
+      'DOOR', 'WINDOW', 'TABLE', 'CHAIR', 'BED', 'CAR', 'JEEP', 'TRUCK', 'VAN', 'MOTORCYCLE',
+      'BIKE', 'PHONE', 'IPHONE', 'IPAD', 'LAPTOP', 'COMPUTER', 'SCREEN', 'SIGN', 'NOTE', 'BOOK',
+      'BAG', 'BOX', 'KEYS', 'GUN', 'KNIFE', 'BOTTLE', 'GLASS', 'CUP', 'COFFEE', 'NEWSPAPER',
+      'ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SEPTIEMBRE',
+      'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE', 'LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES',
+      'SABADO', 'DOMINGO', 'JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY',
+      'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER', 'MONDAY', 'TUESDAY', 'WEDNESDAY',
+      'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY', 'JANEIRO', 'FEVEREIRO', 'MAIO', 'JUNHO',
+      'JULHO', 'OUTUBRO', 'DEZEMBRO', 'GENNAIO', 'FEBBRAIO', 'APRILE', 'MAGGIO', 'GIUGNO',
+      'LUGLIO', 'SETTEMBRE', 'OTTOBRE', 'DICEMBRE', 'JANUAR', 'FEBRUAR', 'MARZ', 'MAI', 'JUNI',
+      'JULI', 'OKTOBER', 'DEZEMBER', 'JANVIER', 'FEVRIER', 'MARS', 'AVRIL', 'JUIN', 'JUILLET',
+      'AOUT', 'DECEMBRE',
+      'CHILE', 'ARGENTINA', 'GRECIA', 'ESPANA', 'INGLATERRA', 'COLOMBIA', 'MEXICO', 'BRASIL',
+      'PERU', 'VENEZUELA', 'ECUADOR', 'BOLIVIA', 'URUGUAY', 'PARAGUAY', 'CUBA', 'FRANCIA',
+      'ITALIA', 'ALEMANIA', 'PORTUGAL', 'JAPON', 'CHINA', 'RUSIA', 'HAWAII', 'NEW YORK',
+      'NUEVA YORK', 'LOS ANGELES', 'MADRID', 'BOGOTA', 'LONDRES', 'LONDON', 'PARIS', 'ROMA',
+      'BERLIN', 'LISBOA', 'TOKIO', 'EUROPA', 'AMERICA', 'ASIA', 'AFRICA', 'OCEANIA', 'DIOS',
+      'GOD', 'NAVIDAD', 'CHRISTMAS', 'INTERNET', 'YOUTUBE', 'FACEBOOK', 'GOOGLE', 'TWITTER',
+      'INSTAGRAM', 'WHATSAPP', 'PAPERSTORM', 'BANKSY', 'MOLOTOV', 'ANARQUIA', 'ANONYMOUS',
+      'ANONIMOS', 'FORAJIDOS', 'SOYFORAJIDO', 'DIEGO GARCIA', 'LEGION', 'ESTADO', 'GOBIERNO',
+      'SOCIEDAD', 'MEDIOS', 'PUEBLO', 'SAN CRISTOBAL', 'AVISPAS', 'NOMBRE', 'NAME', 'NOM', 'NOME'
+    ]);
+
+    function stripAccentsUpper(str) {
+      return String(str || '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .toUpperCase();
+    }
+
+    function stripLeadingArticlesAndPreps(raw) {
+      let s = String(raw || '')
+        .replace(/^[\-–—•*.,:;¡¿"'«»()[\]\s]+/, '')
+        .replace(/[\-–—•*.,:;!?"'«»()[\]\s]+$/, '')
+        .trim();
+      let prev;
+      do {
+        prev = s;
+        s = s.replace(/^(?:a|de|con|por|para|hacia|entre|como|y|e|o|en|desde|sobre|tras|from|to|with|by|at|for|as|of|com|da|per|tra|mit|von|zu|bei|avec|pour|par|chez)\s+(?=.+)/i, '');
+        s = s.replace(/^(?:un|una|unos|unas|el|la|los|las|al|del|a|an|the|um|uma|uns|umas|o|os|as|uno|un['’]|il|lo|gli|ein|eine|einen|einem|einer|der|die|das|dem|den|une|des|du|au|aux|l['’])\s+(?=.+)/i, '');
+        s = s.trim();
+      } while (s && s !== prev);
+      return s;
+    }
+
+    function containsHumanRoleWord(phrase) {
+      const words = stripAccentsUpper(phrase).split(/[^A-Z0-9]+/).filter(Boolean);
+      return words.some(w => HUMAN_ROLE_WORDS_SET.has(w));
+    }
+
+    function isBlockedActionCandidate(cleanPhrase, sceneLocationSet) {
+      const upperNoAccent = stripAccentsUpper(cleanPhrase);
+      const upperWithAccent = String(cleanPhrase || '').trim().toUpperCase();
+      if (!upperNoAccent || upperNoAccent.length < 2 || upperNoAccent.length > 34) return true;
+      if (/[!?¿¡;@©®™%$€£&+/=_~<>0-9]$/.test(cleanPhrase) && !/\s\d$/.test(cleanPhrase)) return true;
+      if (/^\d/.test(upperNoAccent)) return true;
+      if (NON_CHARACTER_EXACT_SET.has(upperWithAccent) || NON_CHARACTER_EXACT_SET.has(upperNoAccent)) return true;
+      if (NON_CHARACTER_PATTERN_RE.test(upperWithAccent) || NON_CHARACTER_PATTERN_RE.test(upperNoAccent)) return true;
+      if (NON_PERSON_CAPS_NOISE_SET.has(upperNoAccent)) return true;
+      if (ACTION_STOP_WORDS_SET.has(upperNoAccent)) return true;
+      if (ACTION_LOCATION_NOUNS_SET.has(upperNoAccent)) return true;
+      if (sceneLocationSet && sceneLocationSet.has(upperNoAccent)) return true;
+      if (parseSceneHeading(cleanPhrase)) return true;
+      return false;
+    }
+
+    function buildSceneLocationSet(parsedScenes) {
+      const set = new Set();
+      for (const sc of parsedScenes) {
+        const desc = String(sc.desc || '');
+        const segments = desc.split(/[\/\-–—]+/);
+        for (const seg of segments) {
+          const norm = stripAccentsUpper(seg);
+          if (!norm || /['’]S\b/.test(norm)) continue;
+          if (/^(?:INT|EXT|DAY|NIGHT|DIA|NOCHE|NOITE|GIORNO|NOTTE|TAG|NACHT|JOUR|NUIT|SUNRISE|SUNSET|DUSK|DAWN|EVENING|MORNING|AFTERNOON|CONTINUOUS|MONTAGE SEQUENCE)$/.test(norm)) continue;
+          const words = norm.split(/\s+/).filter(Boolean);
+          if (words.length >= 2 || (norm.length >= 4 && !containsHumanRoleWord(norm))) {
+            set.add(norm);
+          }
+        }
+      }
+      return set;
+    }
+
+    const ACTION_AGE_PAREN_RE = /^\s*(?:~|ca\.?|approx\.?|early|late|mid[\-\s]?|finales\s+de\s+|mediados\s+de\s+)?(?:([1-9]?\d)\s*(?:'?s)?|(\d{1,3})\s*(?:años|anos|years?|yrs?|ans?|anni|jahre?)(?:\s+(?:despu[ée]s|m[áa]s\s+tarde|antes|later|after|earlier|depois|mais\s+tarde|dopo|prima|pi[ùu]\s+tardi|sp[äa]ter|plus\s+tard|apr[èe]s|avant))?)\s*$/i;
+    const AGE_CONNECTOR_SET = new Set(['DE', 'DEL', 'LA', 'VAN', 'VON', 'DA', 'DO', 'DI', 'DU', 'DES']);
+    const COPULA_GUARD_SET = new Set([
+      'ES', 'ERA', 'SON', 'FUE', 'SERA', 'ESTA', 'ESTAN', 'HAY', 'CON', 'POR', 'PARA',
+      'DE', 'EN', 'SU', 'SUS', 'SE', 'THIS', 'THAT', 'THESE', 'MEET', 'HERE', 'THERE',
+      'WITH', 'FROM', 'THE', 'EL', 'LA', 'UN', 'UNA', 'AL', 'DEL'
+    ]);
+
+    function extractActionAgeCharacters(paragraph, sceneLocationSet) {
+      const results = [];
+      const parenRe = /\(([^()]{1,38})\)/g;
+      let match;
+      while ((match = parenRe.exec(paragraph)) !== null) {
+        const inner = match[1].trim();
+        const ageMatch = inner.match(ACTION_AGE_PAREN_RE);
+        if (!ageMatch) continue;
+        const num = parseInt(ageMatch[1] || ageMatch[2], 10);
+        if (!Number.isFinite(num) || num < 2 || num > 115) continue;
+
+        const beforeRaw = paragraph.slice(0, match.index).replace(/\s+$/, '');
+        if (!beforeRaw) continue;
+        // Preserve abbreviated honorific titles ("Dr.", "Sr.", "Mr.") before clause splitting
+        const HONORIFIC_PLACEHOLDER = '\u0001';
+        const beforeProtected = beforeRaw.replace(/\b(Dr|Dra|Sr|Sra|Srta|Mr|Mrs|Ms|Prof|St|Capt|Sgt|Lt|Gen|Col)\./gi, '$1' + HONORIFIC_PLACEHOLDER);
+        const clauseParts = beforeProtected.split(/[.!?;:"“”«»\n—–[\]()]+/);
+        const clause = (clauseParts[clauseParts.length - 1] || '')
+          .replace(new RegExp(HONORIFIC_PLACEHOLDER, 'g'), '.')
+          .replace(/^[\s\-,]+/, '')
+          .trim();
+        if (!clause) continue;
+
+        const tokens = clause.split(/\s+/).filter(Boolean);
+        if (tokens.length === 0) continue;
+        const lastTok = tokens[tokens.length - 1].replace(/^[,]+|[,]+$/g, '');
+        if (!lastTok || !/^[A-Za-z\u00C0-\u024F]/.test(lastTok)) continue;
+
+        let candidate = '';
+        if (/^[A-Z\u00C0-\u017F]/.test(lastTok)) {
+          // Capitalized or ALL-CAPS name immediately before (age)
+          const collected = [];
+          for (let i = tokens.length - 1; i >= 0 && collected.length < 4; i--) {
+            const wClean = tokens[i].replace(/^[,]+|[,]+$/g, '');
+            if (!wClean) break;
+            if (/^[A-Z\u00C0-\u017F]/.test(wClean)) {
+              const wUpper = stripAccentsUpper(wClean);
+              if (collected.length > 0 && COPULA_GUARD_SET.has(wUpper)) break;
+              collected.unshift(wClean);
+              if (i === tokens.length - 1 && tokens.length >= 2) {
+                const prevUpper = stripAccentsUpper(tokens[i - 1]);
+                if (COPULA_GUARD_SET.has(prevUpper)) break;
+              }
+            } else if (AGE_CONNECTOR_SET.has(wClean.toUpperCase()) && i > 0 && /^[A-Z\u00C0-\u017F]/.test(tokens[i - 1])) {
+              collected.unshift(wClean);
+            } else {
+              break;
+            }
+          }
+          candidate = stripLeadingArticlesAndPreps(collected.join(' '));
+        } else {
+          // Lowercase role phrase preceded by article before (age), e.g. "Un anciano (70)", "Un niño pequeño (9)"
+          const tailMatch = clause.match(/(?:^|\s)(?:un|una|unos|unas|el|la|al|del|a|an|the|um|uma|uno|un['’]|ein|eine|einen|der|die|das|une|le|l['’])\s+([a-z\u00E0-\u024F\-]{2,}(?:\s+[a-z\u00E0-\u024F\-]{2,}){0,2})$/i);
+          if (tailMatch && containsHumanRoleWord(tailMatch[1])) {
+            candidate = stripLeadingArticlesAndPreps(tailMatch[1]);
+          }
+        }
+
+        if (!candidate) continue;
+        const wordCount = candidate.split(/\s+/).filter(Boolean).length;
+        if (wordCount === 0 || wordCount > 4) continue;
+        if (isBlockedActionCandidate(candidate, sceneLocationSet)) continue;
+        results.push(formatCharacterDisplayName(candidate));
+      }
+      return results;
+    }
+
+    const PREP_LOC_OPENER_RE = /^(?:ON|AT|IN|INTO|OUT|OVER|UNDER|BEHIND|INSIDE|OUTSIDE|BACK|FROM|TO|THROUGH|AROUND|NEAR|FRONT|ACROSS|EN|AL|DEL|POR|HACIA|SOBRE|DETRAS|DENTRO|FUERA|NA|NO|EM|NEL|NELLA|SUL|AUF|IM|AM|DANS|SUR|SOUS|DEVANT)\b/;
+
+    function scanActionCapsTokens(paragraphs, sceneLocationSet) {
+      const capsCounts = new Map();
+      const capsMeta = new Map();
+      const capsRe = /\b([A-Z\u00C0-\u017F][A-Z\u00C0-\u017F0-9'\-]{1,}(?:\s+(?:[A-Z\u00C0-\u017F][A-Z\u00C0-\u017F0-9'\-]*|DEL|DE|LA|VON|VAN)){0,2})(?=\s|[.,;:!?)\]]|$)/g;
+
+      for (const para of paragraphs) {
+        if (!/[a-z\u00E0-\u024F]/.test(para)) continue;
+        const cleaned = para
+          .replace(/["“”«»][^"“”«»\n]*["“”«»]/g, ' ')
+          .replace(/\([^()]*\)/g, ' ');
+        let m;
+        capsRe.lastIndex = 0;
+        while ((m = capsRe.exec(cleaned)) !== null) {
+          const rawTok = m[1].trim();
+          const beforeSlice = cleaned.slice(Math.max(0, m.index - 14), m.index);
+          const afterSlice = cleaned.slice(m.index + rawTok.length);
+          if (/^\s*[!?:]/.test(afterSlice)) continue;
+          if (/(?:t[íi]tulo|title|headline|letrero|sign|reads|lee|dice)\s*:\s*$/i.test(beforeSlice)) continue;
+
+          const stripped = stripLeadingArticlesAndPreps(rawTok)
+            .replace(/\s+(?:DE|DEL|LA|EL|LOS|LAS|THE|OF|A|AN|AL|DA|DO|DI|DU|DES|VON|VAN)$/i, '')
+            .trim();
+          if (!stripped || stripped.length < 2 || stripped.length > 30) continue;
+          const words = stripped.split(/\s+/).filter(Boolean);
+          if (words.length === 0 || words.length > 3) continue;
+
+          const normNoAccent = stripAccentsUpper(stripped);
+          if (PREP_LOC_OPENER_RE.test(normNoAccent)) continue;
+          if (/^(?:AFTER|WHILE|LATER|BEFORE|EARLIER)\b/.test(normNoAccent)) continue;
+          if (words.some(w => CAPS_SENTENCE_NOISE_WORDS.has(stripAccentsUpper(w)))) continue;
+          if (isBlockedActionCandidate(stripped, sceneLocationSet)) continue;
+          if (words.some(w => (ACTION_LOCATION_NOUNS_SET.has(stripAccentsUpper(w)) || ACTION_STOP_WORDS_SET.has(stripAccentsUpper(w))) && !HUMAN_ROLE_WORDS_SET.has(stripAccentsUpper(w)))) continue;
+          if (stripped.replace(/[^A-Z\u00C0-\u017F]/g, '').length < 3 && !containsHumanRoleWord(stripped)) continue;
+
+          const key = normalizeCharacterKey(stripped);
+          if (!key) continue;
+          capsCounts.set(key, (capsCounts.get(key) || 0) + 1);
+          if (!capsMeta.has(key)) capsMeta.set(key, stripped);
+        }
+      }
+
+      const highConf = [];
+      const suggested = [];
+      for (const [key, rawForm] of capsMeta.entries()) {
+        const count = capsCounts.get(key) || 1;
+        const hasRole = containsHumanRoleWord(rawForm);
+        const displayName = formatCharacterDisplayName(rawForm);
+        if (hasRole || count >= 2) {
+          highConf.push(displayName);
+        } else {
+          suggested.push({ key, name: displayName, count, reason: 'caps' });
+        }
+      }
+      return { highConf, suggested };
+    }
+
+    const ROLE_MODIFIER_WORDS_SET = new Set([
+      'JOVEN', 'VIEJO', 'VIEJA', 'PEQUENO', 'PEQUENA', 'MAYOR', 'ANCIANO', 'ANCIANA',
+      'NUEVO', 'NUEVA', 'YOUNG', 'OLD', 'LITTLE', 'ELDERLY', 'SENIOR', 'CHIEF', 'HEAD',
+      'VELHO', 'VELHA', 'VECCHIO', 'VECCHIA', 'JUNG', 'JUNGE', 'ALT', 'ALTE', 'JEUNE',
+      'VIEUX', 'VIEILLE'
+    ]);
+
+    const INDEFINITE_ARTICLES_SET = new Set([
+      'UN', 'UNA', 'A', 'AN', 'UM', 'UMA', 'UNO', "UN'", 'EIN', 'EINE', 'EINEN', 'UNE'
+    ]);
+
+    function extractSuggestedNamesAndRoles(paragraphs, sceneLocationSet, highConfKeys) {
+      const candidateMap = new Map();
+      const upsert = (rawName, reason) => {
+        const display = formatCharacterDisplayName(rawName);
+        const key = normalizeCharacterKey(display);
+        if (!key || highConfKeys.has(key)) return;
+        if (isBlockedActionCandidate(display, sceneLocationSet)) return;
+        const existing = candidateMap.get(key);
+        if (existing) {
+          existing.count += 1;
+          if (existing.reason === 'name' && reason === 'role') existing.reason = 'role';
+        } else {
+          candidateMap.set(key, { key, name: display, count: 1, reason });
+        }
+      };
+
+      // 1. Mid-sentence Proper Names (requires >= 2 occurrences across script)
+      const properNameCount = new Map();
+      const properNameSample = new Map();
+      const midProperRe = /([a-z\u00E0-\u024F0-9,)\]]\s+)([A-Z\u00C0-\u017F][a-z\u00E0-\u024F]{2,}(?:\s+[A-Z\u00C0-\u017F][a-z\u00E0-\u024F]{2,})?)/g;
+
+      for (const para of paragraphs) {
+        const cleaned = para.replace(/["“”«»][^"“”«»\n]*["“”«»]/g, ' ');
+        let m;
+        midProperRe.lastIndex = 0;
+        while ((m = midProperRe.exec(cleaned)) !== null) {
+          const cand = m[2].trim();
+          const norm = stripAccentsUpper(cand);
+          if (norm.endsWith('MENTE')) continue;
+          const words = norm.split(/\s+/);
+          if (words.some(w => ACTION_STOP_WORDS_SET.has(w) || ACTION_LOCATION_NOUNS_SET.has(w) || HUMAN_ROLE_WORDS_SET.has(w))) continue;
+          if (isBlockedActionCandidate(cand, sceneLocationSet)) continue;
+          const key = normalizeCharacterKey(cand);
+          if (!key || highConfKeys.has(key)) continue;
+          properNameCount.set(key, (properNameCount.get(key) || 0) + 1);
+          if (!properNameSample.has(key)) properNameSample.set(key, cand);
+          midProperRe.lastIndex = Math.max(midProperRe.lastIndex - 1, m.index + m[1].length + 1);
+        }
+      }
+      for (const [key, cnt] of properNameCount.entries()) {
+        if (cnt >= 2) {
+          const display = formatCharacterDisplayName(properNameSample.get(key));
+          candidateMap.set(key, { key, name: display, count: cnt, reason: 'name' });
+        }
+      }
+
+      // 2. Article + Human Role phrases in action (across all 6 languages)
+      const roleSeqRe = /\b(un|una|el|la|al|del|a|an|the|um|uma|il|lo|uno|un['’]|ein|eine|einen|der|die|das|une|le|l['’])\s+([A-Za-z\u00C0-\u024F]{3,})/gi;
+      for (const para of paragraphs) {
+        const cleaned = para.replace(/["“”«»][^"“”«»\n]*["“”«»]/g, ' ');
+        let m;
+        roleSeqRe.lastIndex = 0;
+        while ((m = roleSeqRe.exec(cleaned)) !== null) {
+          const artUpper = stripAccentsUpper(m[1]);
+          const w1 = m[2];
+          const w1Upper = stripAccentsUpper(w1);
+          const afterW1 = cleaned.slice(m.index + m[0].length);
+          const nextWordMatch = afterW1.match(/^\s+([A-Za-z\u00C0-\u024F]{3,})/);
+
+          let mod = '';
+          let roleWord = '';
+          let tailOffset = m.index + m[0].length;
+          if (nextWordMatch && ROLE_MODIFIER_WORDS_SET.has(w1Upper) && HUMAN_ROLE_WORDS_SET.has(stripAccentsUpper(nextWordMatch[1]))) {
+            mod = w1;
+            roleWord = nextWordMatch[1];
+            tailOffset += nextWordMatch[0].length;
+          } else if (HUMAN_ROLE_WORDS_SET.has(w1Upper)) {
+            roleWord = w1;
+          } else {
+            continue;
+          }
+
+          const roleUpper = stripAccentsUpper(roleWord);
+          if (roleUpper === 'KIND' && !mod && !GERMAN_CHILD_ARTICLES_SET.has(artUpper)) continue;
+          if (INSTITUTION_ONLY_ROLE_SET.has(roleUpper) && !mod && !INDEFINITE_ARTICLES_SET.has(artUpper)) continue;
+
+          const compMatch = cleaned.slice(tailOffset).match(/^\s+(de|del|de\s+la|de\s+los|of|at|in|from|do|da|di|du|des)\s+([a-záéíóúüñàâäçèéêëîïôöòùû]{3,18})/i);
+          const prep = compMatch ? compMatch[1] : '';
+          const comp = compMatch ? compMatch[2] : '';
+          const compUpper = stripAccentsUpper(comp);
+
+          let phrase = (mod ? mod + ' ' : '') + roleWord;
+          if (!mod && comp && GENERIC_BASE_ROLE_SET.has(roleUpper) && (!ACTION_STOP_WORDS_SET.has(compUpper) || compUpper === 'BANCO') && (!ACTION_LOCATION_NOUNS_SET.has(compUpper) || compUpper === 'BANCO') && !HUMAN_ROLE_WORDS_SET.has(compUpper)) {
+            phrase += ' ' + prep + ' ' + comp;
+          } else if (GENERIC_BASE_ROLE_SET.has(roleUpper) && !mod) {
+            continue;
+          }
+          upsert(phrase, 'role');
+        }
+      }
+
+      return Array.from(candidateMap.values());
+    }
+
+    function parseScriptPagesData(pagesData) {
+      const bandPageSets = new Map();
+      const bodyPageSets = new Map();
+      const totalPages = pagesData.length;
+
+      for (let pIdx = 0; pIdx < totalPages; pIdx++) {
+        const { rows } = pagesData[pIdx];
+        for (const row of rows) {
+          const normLine = row.fullText.replace(/\d+/g, '#').replace(/\s+/g, ' ').trim().toUpperCase();
+          if (!normLine) continue;
+          if (row.isTopBand || row.isBottomBand) {
+            if (!bandPageSets.has(normLine)) bandPageSets.set(normLine, new Set());
+            bandPageSets.get(normLine).add(pIdx);
+          } else {
+            if (!bodyPageSets.has(normLine)) bodyPageSets.set(normLine, new Set());
+            bodyPageSets.get(normLine).add(pIdx);
+          }
+        }
+      }
+
+      const bandWatermarkLines = new Set();
+      if (totalPages >= 3) {
+        const bandMin = Math.max(3, Math.ceil(totalPages * 0.35));
+        for (const [k, set] of bandPageSets.entries()) {
+          if (set.size >= bandMin) bandWatermarkLines.add(k);
+        }
+      }
+      const bodyWatermarkLines = new Set();
+      if (totalPages >= 5) {
+        const bodyMin = Math.max(4, Math.ceil(totalPages * 0.45));
+        for (const [k, set] of bodyPageSets.entries()) {
+          if (set.size >= bodyMin) bodyWatermarkLines.add(k);
+        }
+      }
+
+      const parsedScenes = [];
+      const seenSceneKeys = new Set();
+      const parsedCharacters = [];
+      const seenCharKeys = new Set();
+      const actionParagraphs = [];
+      let autoSceneCounter = 1;
+      let prevUnnumberedBaseDesc = '';
+
+      const addHighConfChar = (rawName) => {
+        const display = formatCharacterDisplayName(rawName);
+        const cKey = normalizeCharacterKey(display);
+        if (!cKey || seenCharKeys.has(cKey)) return;
+        seenCharKeys.add(cKey);
+        parsedCharacters.push(display);
+      };
+
+      for (let pageIdx = 0; pageIdx < pagesData.length; pageIdx++) {
+        const pageData = pagesData[pageIdx];
+        const pageWidth = pageData.pageWidth;
+        const activeRows = pageData.rows.filter(row => {
+          const normLine = row.fullText.replace(/\d+/g, '#').replace(/\s+/g, ' ').trim().toUpperCase();
+          if ((row.isTopBand || row.isBottomBand) && bandWatermarkLines.has(normLine) && !parseSceneHeading(row.fullText)) {
+            return false;
+          }
+          if (!row.isTopBand && !row.isBottomBand && bodyWatermarkLines.has(normLine) && !parseSceneHeading(row.fullText)) {
+            return false;
+          }
+          return true;
+        });
+
+        const pageHasSceneHeading = activeRows.some(r => Boolean(parseSceneHeading(r.fullText)));
+        const pageAllText = activeRows.map(r => r.fullText).join('\n');
+        const isCoverPage = pageIdx === 0 && totalPages >= 2 && !pageHasSceneHeading && activeRows.length <= 22 &&
+          /(?:©|@|www\.|\bdraft\b|\bborrador\b|\brascunho\b|\bbozza\b|\bentwurf\b|\bbrouillon\b|\bwritten\s+by\b|\bbased\s+on\b|\bescrito\s+por\b|\bguion\s+de\b|\bbasado\b|\bradica(?:ci[oó]n)?\b|\bderechos?\s+de\s+autor\b)/i.test(pageAllText);
+
+        let curPara = '';
+        let prevParaY = null;
+        let inDialogueBlock = false;
+        const flushPara = () => {
+          if (curPara.trim()) actionParagraphs.push(curPara.trim());
+          curPara = '';
+          prevParaY = null;
+        };
+
+        for (let rIdx = 0; rIdx < activeRows.length; rIdx++) {
+          const row = activeRows[rIdx];
+          const lastSeg = row.segments[row.segments.length - 1];
+          const hasTrailingIsolatedNumber = row.segments.length >= 2 && lastSeg.x > pageWidth * 0.72 && /^[A-Z]?\d+[A-Z]{0,2}$/i.test(lastSeg.text.trim());
+
+          const sceneParsed = parseSceneHeading(row.fullText, { hasTrailingIsolatedNumber });
+          if (sceneParsed) {
+            flushPara();
+            inDialogueBlock = false;
+            if (sceneParsed.omitted) continue;
+
+            if (sceneParsed.sceneNum) {
+              const sKey = normalizeSceneKey(sceneParsed.sceneNum);
+              if (!seenSceneKeys.has(sKey)) {
+                seenSceneKeys.add(sKey);
+                parsedScenes.push({ sceneNum: sceneParsed.sceneNum, desc: sceneParsed.desc });
+              }
+            } else {
+              const isContRepeat = /\((?:CONT'?D|CONTIN[ÚU]A|CONTINUED|SUITE)\)\s*$/i.test(sceneParsed.desc);
+              const baseDesc = sceneParsed.desc.replace(/\s*\((?:CONT'?D|CONTIN[ÚU]A|CONTINUED|SUITE)\)\s*$/i, '').trim().toUpperCase();
+              if (isContRepeat && baseDesc === prevUnnumberedBaseDesc) continue;
+              prevUnnumberedBaseDesc = baseDesc;
+
+              let candidateNum = String(autoSceneCounter++);
+              while (seenSceneKeys.has(normalizeSceneKey(candidateNum))) {
+                candidateNum = String(autoSceneCounter++);
+              }
+              seenSceneKeys.add(normalizeSceneKey(candidateNum));
+              parsedScenes.push({ sceneNum: candidateNum, desc: sceneParsed.desc });
+            }
+            continue;
+          }
+
+          if (isCoverPage) continue;
+
+          let rowFoundCue = false;
+          for (const seg of row.segments) {
+            const cleanChars = extractCharacterCandidatesFromSegment(activeRows, rIdx, seg, pageWidth);
+            if (cleanChars.length > 0) rowFoundCue = true;
+            for (const cleanChar of cleanChars) {
+              addHighConfChar(cleanChar);
+            }
+          }
+
+          if (row.isTopBand || row.isBottomBand) continue;
+          if (rowFoundCue) {
+            flushPara();
+            inDialogueBlock = true;
+            prevParaY = row.y;
+            continue;
+          }
+
+          const stepFont = Math.max(10, row.segments?.[0]?.maxFont || 12);
+          const hasLargeGap = typeof prevParaY === 'number' && typeof row.y === 'number' && (prevParaY - row.y) > stepFont * 1.55;
+          const isLeftActionCol = row.x <= pageWidth * 0.24;
+
+          if (inDialogueBlock) {
+            if (isLeftActionCol || hasLargeGap) {
+              inDialogueBlock = false;
+            } else {
+              prevParaY = row.y;
+              continue;
+            }
+          }
+
+          const lineText = String(row.fullText || '').trim();
+          const lineUpperNoPunct = lineText.replace(/[.!?:]+$/, '').trim().toUpperCase();
+          if (!lineText || NON_CHARACTER_EXACT_SET.has(lineUpperNoPunct) || NON_CHARACTER_PATTERN_RE.test(lineUpperNoPunct)) {
+            flushPara();
+            continue;
+          }
+          if (row.segments.length === 1 && row.x >= pageWidth * 0.52 && lineText === lineText.toUpperCase()) {
+            flushPara();
+            continue;
+          }
+
+          if (!isLeftActionCol && row.x > pageWidth * 0.24) {
+            flushPara();
+            continue;
+          }
+
+          if (curPara && !hasLargeGap) {
+            curPara += ' ' + lineText;
+          } else {
+            flushPara();
+            curPara = lineText;
+          }
+          prevParaY = row.y;
+        }
+        flushPara();
+      }
+
+      const sceneLocationSet = buildSceneLocationSet(parsedScenes);
+
+      // Tier 1A: Nombre / Rol (edad) in action paragraphs
+      for (const para of actionParagraphs) {
+        const ageChars = extractActionAgeCharacters(para, sceneLocationSet);
+        for (const ch of ageChars) addHighConfChar(ch);
+      }
+
+      // Tier 1B: Filtered ALL-CAPS character introductions in mixed-case action + Tier 2A ambiguous caps
+      const capsResult = scanActionCapsTokens(actionParagraphs, sceneLocationSet);
+      for (const ch of capsResult.highConf) addHighConfChar(ch);
+
+      // Tier 2: Suggested characters (ambiguous caps + recurring mid-sentence names + action roles)
+      const suggestedMap = new Map();
+      for (const item of capsResult.suggested) {
+        if (!seenCharKeys.has(item.key) && !suggestedMap.has(item.key)) {
+          suggestedMap.set(item.key, item);
+        }
+      }
+      const nameRoleSuggested = extractSuggestedNamesAndRoles(actionParagraphs, sceneLocationSet, seenCharKeys);
+      for (const item of nameRoleSuggested) {
+        const existing = suggestedMap.get(item.key);
+        if (existing) {
+          existing.count += item.count;
+        } else {
+          suggestedMap.set(item.key, item);
+        }
+      }
+
+      const highConfTokenWords = new Set();
+      for (const hk of seenCharKeys) {
+        const parts = hk.split(/[^A-Z0-9]+/).filter(Boolean);
+        if (parts.length >= 2) {
+          for (const p of parts) {
+            if (p.length >= 3) highConfTokenWords.add(p);
+          }
+        }
+      }
+
+      const reasonOrder = { name: 0, role: 1, caps: 2 };
+      const suggestedCharacters = Array.from(suggestedMap.values())
+        .filter(item => {
+          const parts = stripAccentsUpper(item.name).split(/\s+/).filter(Boolean);
+          return !(parts.length === 1 && highConfTokenWords.has(parts[0]));
+        })
+        .sort((a, b) => (b.count - a.count) || (reasonOrder[a.reason] - reasonOrder[b.reason]) || a.name.localeCompare(b.name))
+        .slice(0, 35)
+        .map(({ name, count, reason }) => ({ name, count, reason }));
+
+      return { scenes: parsedScenes, characters: parsedCharacters, suggestedCharacters };
+    }
 
     inputScriptPdf.addEventListener('change', async (e) => {
       const file = e.target.files[0];
@@ -9211,135 +10838,144 @@
         const arrayBuffer = await file.arrayBuffer();
         const pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
 
-        const existingScenes = await getEntitiesForProject(STORE_SCENES, activeProjectId);
-        const existingCharacters = await getEntitiesForProject(STORE_CHARACTERS, activeProjectId);
-
-        const knownSceneNums = new Set(existingScenes.map(s => String(s.sceneNum).toUpperCase()));
-        const knownCharNames = new Set(existingCharacters.map(c => String(c.name).toUpperCase()));
-
-        let autoSceneCounter = existingScenes.length + 1;
-        let addedScenesCount = 0;
-        let addedCharactersCount = 0;
-
-        const timeRegex = /\b(?:EXT\/DAY|INT\/DAY|EXT\/NIGHT|INT\/NIGHT|SUNRISE\/DAY|SUNRISE\/NIGHT|EXT\/DAWN|INT\/DAWN|EXT\/DUSK|INT\/DUSK|INT\/EXT|EXT\/INT|I\/E|INT\.|EXT\.|INT|EXT)\b/i;
-
-        const nonCharacterKeywords = new Set([
-          'CORTE A', 'CUT TO', 'FADE IN', 'FADE OUT', 'DISSOLVE TO', 'DISOLVENCIA A', 'FUNDIDO A',
-          'FUNDIDO A NEGRO', 'CONTINÚA', 'CONTINUA', 'CONT', 'FIN', 'THE END', 'FLASHBACK',
-          'FIN DEL FLASHBACK', 'INSERT', 'INSERTO', 'INTERCUT', 'TÍTULO', 'TITULO', 'TITLE OVERLAY',
-          'SUPER', 'SOBREIMPRESO', 'VOZ EN OFF', 'MONTAJE', 'FIN DE MONTAJE', 'POV', 'PUNTO DE VISTA',
-          'DIEGO GARCIA', 'GAUMONT', 'GAUMONT GMBH'
-        ]);
-
+        const pagesData = [];
         for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
           const page = await pdf.getPage(pageNum);
           const viewport = page.getViewport({ scale: 1.0 });
-          const pageWidth = viewport.width;
           const textContent = await page.getTextContent();
+          const rows = reconstructPdfRows(textContent.items, viewport.width, viewport.height);
+          pagesData.push({ pageWidth: viewport.width, pageHeight: viewport.height, rows });
+        }
 
-          const rows = [];
-          for (const item of textContent.items) {
-            const text = item.str;
-            if (!text || !text.trim()) continue;
-            if (/diego\s+garcia/i.test(text)) continue;
+        const parsed = parseScriptPagesData(pagesData);
 
-            const y = Math.round(item.transform[5]);
-            let row = rows.find(r => Math.abs(r.y - y) <= 4);
-            if (!row) {
-              row = { y, items: [] };
-              rows.push(row);
-            }
-            row.items.push({ x: item.transform[4], str: text });
+        const existingScenes = await getEntitiesForProject(STORE_SCENES, activeProjectId);
+        const existingCharacters = await getEntitiesForProject(STORE_CHARACTERS, activeProjectId);
+        const existingTakes = await getAllTakesForProject(activeProjectId);
+
+        let importMode = 'fresh';
+        if (existingScenes.length > 0 || existingCharacters.length > 0 || existingTakes.length > 0) {
+          importMode = await askScriptImportMode(
+            existingScenes.length,
+            existingCharacters.length,
+            parsed.scenes.length,
+            parsed.characters.length
+          );
+          if (importMode === 'cancel') return;
+        }
+
+        let createdScenesCount = 0;
+        let mergedScenesCount = 0;
+        let createdCharactersCount = 0;
+        let mergedCharactersCount = 0;
+
+        const persistNewScene = async (sc) => {
+          const item = {
+            id: 'sc_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+            projectId: activeProjectId,
+            sceneNum: sc.sceneNum,
+            desc: sc.desc
+          };
+          await saveEntityToDB(STORE_SCENES, item);
+          return item;
+        };
+
+        const persistNewCharacter = async (charName, knownKeySet = null) => persistScriptCharacterEntity(charName, knownKeySet);
+
+        if (importMode === 'combine') {
+          const existingSceneByKey = new Map();
+          for (const s of existingScenes) {
+            const k = normalizeSceneKey(s.sceneNum);
+            if (k && !existingSceneByKey.has(k)) existingSceneByKey.set(k, s);
           }
 
-          rows.sort((a, b) => b.y - a.y);
-
-          for (let rIdx = 0; rIdx < rows.length; rIdx++) {
-            const row = rows[rIdx];
-            row.items.sort((a, b) => a.x - b.x);
-            const firstX = row.items[0].x;
-            const line = row.items.map(i => i.str).join(' ').replace(/\s+/g, ' ').trim();
-
-            if (!line || line.length < 2) continue;
-
-            if (timeRegex.test(line)) {
-              let sceneNum = '';
-              let workingLine = line;
-
-              const leadingNum = workingLine.match(/^(\d+[A-Z]?)\s+/);
-              if (leadingNum) {
-                sceneNum = leadingNum[1];
-                workingLine = workingLine.replace(/^\d+[A-Z]?\s+/, '').trim();
+          for (const sc of parsed.scenes) {
+            const sKey = normalizeSceneKey(sc.sceneNum);
+            if (!sKey) continue;
+            if (existingSceneByKey.has(sKey)) {
+              // Prioritize existing manually created scene (only fill blank description if missing)
+              const existingScene = existingSceneByKey.get(sKey);
+              if ((!existingScene.desc || !String(existingScene.desc).trim()) && sc.desc) {
+                existingScene.desc = sc.desc;
+                await saveEntityToDB(STORE_SCENES, existingScene);
               }
-
-              const trailingNum = workingLine.match(/\s+(\d+[A-Z]?)$/);
-              if (trailingNum) {
-                if (!sceneNum) sceneNum = trailingNum[1];
-                workingLine = workingLine.replace(/\s+\d+[A-Z]?$/, '').trim();
-              }
-
-              if (!sceneNum) {
-                sceneNum = String(autoSceneCounter++);
-              }
-
-              if (!knownSceneNums.has(sceneNum.toUpperCase())) {
-                knownSceneNums.add(sceneNum.toUpperCase());
-                await saveEntityToDB(STORE_SCENES, {
-                  id: 'sc_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
-                  projectId: activeProjectId,
-                  sceneNum: sceneNum,
-                  desc: workingLine
-                });
-                addedScenesCount++;
-              }
-              continue;
+              mergedScenesCount++;
+            } else {
+              const newScene = await persistNewScene(sc);
+              existingSceneByKey.set(sKey, newScene);
+              createdScenesCount++;
             }
+          }
 
-            const isIndented = firstX > (pageWidth * 0.22) && firstX < (pageWidth * 0.75);
-            const hasNextLine = (rIdx + 1) < rows.length;
+          const existingCharByKey = new Map();
+          for (const c of existingCharacters) {
+            const k = normalizeCharacterKey(c.name);
+            if (k && !existingCharByKey.has(k)) existingCharByKey.set(k, c);
+          }
 
-            if (isIndented && hasNextLine) {
-              const cleanCandidate = line
-                .replace(/\s*\([^)]*\)/g, '')
-                .replace(/[:.]+$/, '')
-                .trim();
-
-              const isAllCaps = cleanCandidate === cleanCandidate.toUpperCase() && /[A-ZÁÉÍÓÚÑ]{2,}/.test(cleanCandidate);
-              const validLength = cleanCandidate.length >= 2 && cleanCandidate.length <= 30;
-              const noPunct = !/[0-9!?¿¡;]/.test(cleanCandidate);
-
-              if (isAllCaps && validLength && noPunct && !nonCharacterKeywords.has(cleanCandidate.toUpperCase())) {
-                const nextLineText = rows[rIdx + 1].items.map(i => i.str).join(' ').trim();
-                const nextIsNotHeader = !timeRegex.test(nextLineText);
-                const nextIsDialogue = nextLineText.length > 0 && nextLineText !== nextLineText.toUpperCase();
-
-                if (nextIsNotHeader && nextIsDialogue && !knownCharNames.has(cleanCandidate.toUpperCase())) {
-                  knownCharNames.add(cleanCandidate.toUpperCase());
-
-                  const formattedName = cleanCandidate
-                    .toLowerCase()
-                    .split(/\s+/)
-                    .map(word => word.split('-').map(p => p.charAt(0).toUpperCase() + p.slice(1)).join('-'))
-                    .join(' ');
-
-                  await saveEntityToDB(STORE_CHARACTERS, {
-                    id: 'char_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
-                    projectId: activeProjectId,
-                    name: formattedName,
-                    actor: '',
-                    photo: null
-                  });
-                  addedCharactersCount++;
-                }
+          const combineCharKeySet = new Set(existingCharByKey.keys());
+          for (const charName of parsed.characters) {
+            const cKey = normalizeCharacterKey(charName);
+            if (!cKey) continue;
+            if (existingCharByKey.has(cKey)) {
+              // Prioritize existing manually created character without modifying or duplicating
+              mergedCharactersCount++;
+            } else {
+              const newChar = await persistNewCharacter(charName, combineCharKeySet);
+              if (newChar) {
+                existingCharByKey.set(cKey, newChar);
+                createdCharactersCount++;
               }
             }
+          }
+        } else {
+          if (importMode === 'replace') {
+            await deleteAllEntitiesForProject(STORE_TAKES, activeProjectId);
+            await deleteAllEntitiesForProject(STORE_SCENES, activeProjectId);
+            await deleteAllEntitiesForProject(STORE_CHARACTERS, activeProjectId);
+            if (typeof resetSceneForm === 'function') resetSceneForm();
+            if (typeof resetCharacterForm === 'function') resetCharacterForm();
+          }
+
+          const savedSceneKeySet = new Set(
+            importMode === 'replace' ? [] : existingScenes.map(s => normalizeSceneKey(s.sceneNum)).filter(Boolean)
+          );
+          for (const sc of parsed.scenes) {
+            const sKey = normalizeSceneKey(sc && sc.sceneNum);
+            if (!sKey || savedSceneKeySet.has(sKey)) continue;
+            await persistNewScene(sc);
+            savedSceneKeySet.add(sKey);
+            createdScenesCount++;
+          }
+
+          const savedCharKeySet = new Set(
+            importMode === 'replace' ? [] : existingCharacters.map(c => normalizeCharacterKey(c.name)).filter(Boolean)
+          );
+          for (const charName of parsed.characters) {
+            const saved = await persistNewCharacter(charName, savedCharKeySet);
+            if (saved) createdCharactersCount++;
           }
         }
 
         await updateCatalogCaches();
+        if (typeof renderTakes === 'function') await renderTakes();
 
-        document.getElementById('script-review-summary').textContent = 
-          t('script_detected_summary', { scenes: addedScenesCount, chars: addedCharactersCount });
+        const currentCatalogChars = await getEntitiesForProject(STORE_CHARACTERS, activeProjectId);
+        const savedCharKeySet = new Set(currentCatalogChars.map(c => normalizeCharacterKey(c.name)).filter(Boolean));
+        const remainingSuggestions = (parsed.suggestedCharacters || []).filter(item => {
+          const k = normalizeCharacterKey(item.name);
+          return k && !savedCharKeySet.has(k);
+        });
+        renderSuggestedScriptCharacters(remainingSuggestions);
+
+        const summaryEl = document.getElementById('script-review-summary');
+        if (importMode === 'combine') {
+          summaryEl.innerHTML =
+            '<div>' + escapeHtml(t('script_summary_combined_scenes', { created: createdScenesCount, merged: mergedScenesCount })) + '</div>' +
+            '<div style="margin-top:4px;">' + escapeHtml(t('script_summary_combined_chars', { created: createdCharactersCount, merged: mergedCharactersCount })) + '</div>';
+        } else {
+          summaryEl.textContent = t('script_detected_summary', { scenes: createdScenesCount, chars: createdCharactersCount });
+        }
         scriptReviewModal.classList.remove('hidden');
 
       } catch (err) {
@@ -9567,20 +11203,17 @@
       }
     }
 
-    scenesForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
+    let isSavingSceneRecord = false;
+    const handleSceneFormSubmit = async () => {
       const num = document.getElementById('new-scene-num').value.trim();
       const desc = document.getElementById('new-scene-desc').value.trim();
-      if (!num) return;
+      if (!num || !normalizeSceneKey(num)) return;
 
       const existingId = editSceneId.value;
       const existingScenes = await getEntitiesForProject(STORE_SCENES, activeProjectId);
-      const duplicateScene = existingScenes.find(s =>
-        String(s.sceneNum || '').trim().toUpperCase() === num.toUpperCase() &&
-        s.id !== existingId
-      );
+      const duplicateScene = findDuplicateEntityByKey(existingScenes, normalizeSceneKey, 'sceneNum', num, existingId);
       if (duplicateScene) {
-        showToast(t('toast_scene_num_exists', { num }));
+        showToast(t('toast_scene_num_exists', { num: duplicateScene.sceneNum || num }));
         document.getElementById('new-scene-num').focus();
         return;
       }
@@ -9615,6 +11248,17 @@
       await updateCatalogCaches();
       await renderTakes();
       showToast(existingId ? t('toast_scene_updated', { num }) : t('toast_scene_saved', { num }));
+    };
+
+    scenesForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (isSavingSceneRecord) return;
+      isSavingSceneRecord = true;
+      try {
+        await handleSceneFormSubmit();
+      } finally {
+        isSavingSceneRecord = false;
+      }
     });
 
     window.startEditScene = async function(id) {
@@ -9731,17 +11375,21 @@
       document.getElementById('new-character-name').focus();
     });
 
+    function updateActorPhotoPreviewUi(previewBox, previewImg, triggerBtn, base64) {
+      if (base64) {
+        previewImg.src = base64;
+        previewBox.classList.remove('hidden');
+        triggerBtn.classList.add('hidden');
+      } else {
+        previewImg.src = '';
+        previewBox.classList.add('hidden');
+        triggerBtn.classList.remove('hidden');
+      }
+    }
+
     function setActorPhotoPreview(base64) {
       currentActorPhotoBase64 = base64;
-      if (base64) {
-        actorPhotoPreviewImg.src = base64;
-        actorPhotoPreviewBox.classList.remove('hidden');
-        btnTriggerActorPhoto.classList.add('hidden');
-      } else {
-        actorPhotoPreviewImg.src = '';
-        actorPhotoPreviewBox.classList.add('hidden');
-        btnTriggerActorPhoto.classList.remove('hidden');
-      }
+      updateActorPhotoPreviewUi(actorPhotoPreviewBox, actorPhotoPreviewImg, btnTriggerActorPhoto, base64);
     }
 
     function resetCharacterForm() {
@@ -9824,13 +11472,35 @@
     }
 
     const batchCharactersPinModal = document.getElementById('batch-characters-pin-modal');
+    const batchCharsModalTitle = document.getElementById('batch-chars-modal-title');
+    const batchCharsSubtitle = document.getElementById('batch-chars-subtitle');
     const batchCharactersPinChecklist = document.getElementById('batch-characters-pin-checklist');
+    const btnToggleAllBatchChars = document.getElementById('btn-toggle-all-batch-chars');
     const btnOpenBatchPinCharacters = document.getElementById('btn-open-batch-pin-characters');
+    const btnOpenBatchDeleteCharacters = document.getElementById('btn-open-batch-delete-characters');
     const btnCloseBatchPinChars = document.getElementById('btn-close-batch-pin-chars');
     const btnCancelBatchPinChars = document.getElementById('btn-cancel-batch-pin-chars');
     const btnConfirmBatchPinChars = document.getElementById('btn-confirm-batch-pin-chars');
+    let currentBatchCharsMode = 'pin';
 
-    async function openBatchCharactersPinModal() {
+    function updateBatchCharsToggleAllLabel() {
+      if (!btnToggleAllBatchChars) return;
+      const checkboxes = Array.from(document.querySelectorAll('.batch-char-pin-checkbox'));
+      const allChecked = checkboxes.length > 0 && checkboxes.every(cb => cb.checked);
+      btnToggleAllBatchChars.textContent = allChecked ? t('btn_uncheck_all_m') : t('btn_check_all_m');
+    }
+
+    async function deleteCharacterIdsFromDB(ids) {
+      for (const id of ids) {
+        await deleteEntityFromDB(STORE_CHARACTERS, id);
+      }
+      if (ids.includes(editCharacterId.value)) resetCharacterForm();
+      await renderCharactersList();
+      await updateCatalogCaches();
+      await renderTakes();
+    }
+
+    async function openBatchCharactersModal(mode = 'pin') {
       if (!activeProjectId || !batchCharactersPinModal || !batchCharactersPinChecklist) return;
       const chars = await getEntitiesForProject(STORE_CHARACTERS, activeProjectId);
       if (chars.length === 0) {
@@ -9838,9 +11508,34 @@
         return;
       }
       sortCharactersWithPinnedFirst(chars);
+
+      currentBatchCharsMode = mode;
+      const isDelete = mode === 'delete';
+
+      if (batchCharsModalTitle) {
+        batchCharsModalTitle.textContent = t(isDelete ? 'batch_title_delete_chars' : 'batch_title_pin_chars');
+        batchCharsModalTitle.style.color = isDelete ? '#f87171' : 'var(--amber)';
+      }
+      if (batchCharsSubtitle) {
+        batchCharsSubtitle.textContent = t(isDelete ? 'batch_sub_delete_chars' : 'batch_sub_pin_chars');
+      }
+      if (btnConfirmBatchPinChars) {
+        btnConfirmBatchPinChars.textContent = t(isDelete ? 'batch_btn_delete' : 'batch_btn_pin');
+        if (isDelete) {
+          btnConfirmBatchPinChars.style.background = '#ef4444';
+          btnConfirmBatchPinChars.style.color = '#fff';
+        } else {
+          btnConfirmBatchPinChars.style.background = 'linear-gradient(135deg, var(--amber), var(--amber-dark))';
+          btnConfirmBatchPinChars.style.color = '#000';
+        }
+      }
+      if (btnToggleAllBatchChars) {
+        btnToggleAllBatchChars.classList.toggle('hidden', !isDelete);
+      }
+
       batchCharactersPinChecklist.innerHTML = chars.map(c => `
         <label class="pdf-scene-check-item">
-          <input type="checkbox" class="batch-char-pin-checkbox" value="${c.id}" ${c.pinned ? 'checked' : ''}>
+          <input type="checkbox" class="batch-char-pin-checkbox" value="${c.id}" ${!isDelete && c.pinned ? 'checked' : ''}>
           ${c.photo
             ? `<img src="${c.photo}" alt="${escapeHtml(c.name)}" style="width:36px; height:36px; border-radius:8px; object-fit:cover; flex-shrink:0;">`
             : `<div style="width:36px; height:36px; border-radius:8px; background:var(--bg-850); border:1px solid var(--border-700); display:flex; align-items:center; justify-content:center; flex-shrink:0;">${ICON_USER_SVG}</div>`
@@ -9854,10 +11549,20 @@
           </div>
         </label>
       `).join('');
+      updateBatchCharsToggleAllLabel();
       batchCharactersPinModal.classList.remove('hidden');
     }
 
-    btnOpenBatchPinCharacters?.addEventListener('click', openBatchCharactersPinModal);
+    btnOpenBatchPinCharacters?.addEventListener('click', () => openBatchCharactersModal('pin'));
+    btnOpenBatchDeleteCharacters?.addEventListener('click', () => openBatchCharactersModal('delete'));
+    batchCharactersPinChecklist?.addEventListener('change', updateBatchCharsToggleAllLabel);
+    btnToggleAllBatchChars?.addEventListener('click', () => {
+      const checkboxes = Array.from(document.querySelectorAll('.batch-char-pin-checkbox'));
+      const allChecked = checkboxes.length > 0 && checkboxes.every(cb => cb.checked);
+      checkboxes.forEach(cb => { cb.checked = !allChecked; });
+      updateBatchCharsToggleAllLabel();
+    });
+
     btnCloseBatchPinChars?.addEventListener('click', () => batchCharactersPinModal?.classList.add('hidden'));
     btnCancelBatchPinChars?.addEventListener('click', () => batchCharactersPinModal?.classList.add('hidden'));
     batchCharactersPinModal?.addEventListener('click', (e) => {
@@ -9866,13 +11571,37 @@
 
     btnConfirmBatchPinChars?.addEventListener('click', async () => {
       if (!activeProjectId) return;
-      const selectedIds = new Set(
-        Array.from(document.querySelectorAll('.batch-char-pin-checkbox:checked')).map(cb => cb.value)
-      );
+      const selectedIds = Array.from(document.querySelectorAll('.batch-char-pin-checkbox:checked')).map(cb => cb.value);
+
+      if (currentBatchCharsMode === 'delete') {
+        if (selectedIds.length === 0) {
+          showToast(t('toast_select_at_least_one_char'));
+          return;
+        }
+        const chars = await getEntitiesForProject(STORE_CHARACTERS, activeProjectId);
+        const count = selectedIds.length;
+        const singleTarget = count === 1 ? chars.find(c => c.id === selectedIds[0]) : null;
+        const label = singleTarget ? (singleTarget.actor ? `${singleTarget.name} (${singleTarget.actor})` : singleTarget.name) : '';
+        const confirmMsg = singleTarget
+          ? t('confirm_delete_char', { label })
+          : t('confirm_delete_chars_plural', { count });
+
+        askConfirmation(confirmMsg, async () => {
+          await deleteCharacterIdsFromDB(selectedIds);
+          batchCharactersPinModal?.classList.add('hidden');
+          const toastMsg = singleTarget
+            ? t('toast_char_deleted', { name: singleTarget.name })
+            : t('toast_chars_deleted_plural', { count });
+          showToast(toastMsg);
+        });
+        return;
+      }
+
+      const selectedIdSet = new Set(selectedIds);
       const chars = await getEntitiesForProject(STORE_CHARACTERS, activeProjectId);
       const now = Date.now();
       for (const c of chars) {
-        const nextPinned = selectedIds.has(c.id);
+        const nextPinned = selectedIdSet.has(c.id);
         if (Boolean(c.pinned) !== nextPinned) {
           c.pinned = nextPinned;
           c.updatedAt = Math.max(now, (Number(c.updatedAt) || 0) + 1);
@@ -9885,59 +11614,97 @@
       showToast(t('toast_pinned_chars_updated'));
     });
 
+    let isSavingCharacterRecord = false;
+
+    async function saveCharacterRecord({ existingId = '', name, actor = '', photo = null, pinned = false }) {
+      const trimmedName = String(name || '').trim();
+      const trimmedActor = String(actor || '').trim();
+      const charKey = normalizeCharacterKey(trimmedName);
+      if (!trimmedName || !charKey) return { error: 'empty', record: null };
+      if (isSavingCharacterRecord) return { error: 'busy', record: null };
+
+      isSavingCharacterRecord = true;
+      try {
+        const existingChars = await getEntitiesForProject(STORE_CHARACTERS, activeProjectId);
+        const duplicateChar = findDuplicateEntityByKey(existingChars, normalizeCharacterKey, 'name', trimmedName, existingId);
+        if (duplicateChar) {
+          return { error: 'duplicate', record: duplicateChar };
+        }
+
+        const existingCharObj = existingId ? existingChars.find(c => c.id === existingId) : null;
+        const nowChar = Date.now();
+        const record = {
+          ...(existingCharObj || {}),
+          id: existingId || ('char_' + nowChar + '_' + Math.random().toString(36).slice(2, 7)),
+          projectId: activeProjectId,
+          name: trimmedName,
+          actor: trimmedActor,
+          photo: photo || null,
+          pinned: Boolean(pinned),
+          createdAt: existingCharObj?.createdAt || nowChar,
+          updatedAt: Math.max(nowChar, (Number(existingCharObj?.updatedAt) || 0) + 1)
+        };
+        await saveEntityToDB(STORE_CHARACTERS, record);
+
+        if (existingCharObj && String(existingCharObj.name || '').trim() !== trimmedName) {
+          const oldNameLower = String(existingCharObj.name || '').trim().toLowerCase();
+          const oldCharKey = normalizeCharacterKey(existingCharObj.name);
+          const projectTakes = await getAllTakesForProject(activeProjectId);
+          for (const tk of projectTakes) {
+            const entries = getNormalizedPhotos(tk);
+            let changed = false;
+            const nextEntries = entries.map(p => {
+              const entryChar = String(p && p.character || '').trim();
+              if (entryChar && (
+                entryChar.toLowerCase() === oldNameLower ||
+                (oldCharKey && normalizeCharacterKey(entryChar) === oldCharKey)
+              )) {
+                changed = true;
+                return { ...p, character: trimmedName, updatedAt: nowChar };
+              }
+              return p;
+            });
+            if (changed) {
+              tk.photos = nextEntries;
+              delete tk.photo;
+              tk.updatedAt = Math.max(nowChar, (Number(tk.updatedAt) || 0) + 1);
+              await saveTakeToDB(tk);
+            }
+          }
+        }
+
+        return { error: null, record };
+      } finally {
+        isSavingCharacterRecord = false;
+      }
+    }
+
     charactersForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const name = document.getElementById('new-character-name').value.trim();
+      const nameInput = document.getElementById('new-character-name');
+      const name = nameInput.value.trim();
       const actor = document.getElementById('new-actor-name').value.trim();
       if (!name) return;
 
       const existingId = editCharacterId.value;
       const isPinned = charPinnedCheck ? Boolean(charPinnedCheck.checked) : Boolean(editingCharacterPinned);
-      const existingChars = await getEntitiesForProject(STORE_CHARACTERS, activeProjectId);
-      const duplicateChar = existingChars.find(c =>
-        c.id !== existingId &&
-        String(c.name || '').trim().toLowerCase() === name.toLowerCase()
-      );
-      if (duplicateChar) {
-        showToast(t('toast_char_name_exists', { name }));
-        document.getElementById('new-character-name').focus();
-        return;
-      }
-      const existingCharObj = existingId ? existingChars.find(c => c.id === existingId) : null;
-      const nowChar = Date.now();
-
-      await saveEntityToDB(STORE_CHARACTERS, {
-        ...(existingCharObj || {}),
-        id: existingId || ('char_' + nowChar),
-        projectId: activeProjectId,
+      const res = await saveCharacterRecord({
+        existingId,
         name,
         actor,
         photo: currentActorPhotoBase64 || null,
-        pinned: isPinned,
-        createdAt: existingCharObj?.createdAt || nowChar,
-        updatedAt: Math.max(nowChar, (Number(existingCharObj?.updatedAt) || 0) + 1)
+        pinned: isPinned
       });
-
-      if (existingCharObj && String(existingCharObj.name || '').trim() !== name) {
-        const oldNameLower = String(existingCharObj.name || '').trim().toLowerCase();
-        const projectTakes = await getAllTakesForProject(activeProjectId);
-        for (const tk of projectTakes) {
-          const entries = getNormalizedPhotos(tk);
-          let changed = false;
-          const nextEntries = entries.map(p => {
-            if (p && String(p.character || '').trim().toLowerCase() === oldNameLower) {
-              changed = true;
-              return { ...p, character: name, updatedAt: nowChar };
-            }
-            return p;
-          });
-          if (changed) {
-            tk.photos = nextEntries;
-            delete tk.photo;
-            tk.updatedAt = Math.max(nowChar, (Number(tk.updatedAt) || 0) + 1);
-            await saveTakeToDB(tk);
-          }
-        }
+      if (res.error === 'busy') return;
+      if (res.error === 'empty') {
+        showToast(t('toast_enter_char_name'));
+        nameInput.focus();
+        return;
+      }
+      if (res.error === 'duplicate') {
+        showToast(t('toast_char_name_exists', { name: res.record?.name || name }));
+        nameInput.focus();
+        return;
       }
 
       resetCharacterForm();
@@ -9988,11 +11755,7 @@
 
       const label = target.actor ? `${target.name} (${target.actor})` : target.name;
       askConfirmation(t('confirm_delete_char', { label }), async () => {
-        await deleteEntityFromDB(STORE_CHARACTERS, id);
-        if (editCharacterId.value === id) resetCharacterForm();
-        await renderCharactersList();
-        await updateCatalogCaches();
-        await renderTakes();
+        await deleteCharacterIdsFromDB([id]);
         showToast(t('toast_char_deleted', { name: target.name }));
       });
     };
@@ -10345,29 +12108,32 @@
     /* ==========================================================================
        ACTUALIZACIÓN DE CACHÉS Y SELECTOR SIN ESCENAS DUPLICADAS
        ========================================================================== */
-    async function updateCatalogCaches(allowedSceneNum = null) {
-      cachedScenesForProject = await getEntitiesForProject(STORE_SCENES, activeProjectId);
-      cachedScenesForProject.sort((a, b) => compareSceneNumbers(a.sceneNum, b.sceneNum));
-
+    async function refreshCharacterCatalogCache() {
       cachedCharactersForProject = await getEntitiesForProject(STORE_CHARACTERS, activeProjectId);
       sortCharactersWithPinnedFirst(cachedCharactersForProject);
 
-      const countScenes = document.getElementById('menu-count-scenes');
       const countChars = document.getElementById('menu-count-characters');
-      
-      if(cachedScenesForProject.length > 0) {
-        countScenes.textContent = cachedScenesForProject.length;
-        countScenes.classList.remove('hidden');
-      } else {
-        countScenes.classList.add('hidden');
-      }
-      
-      if(cachedCharactersForProject.length > 0) {
+      if (cachedCharactersForProject.length > 0) {
         countChars.textContent = cachedCharactersForProject.length;
         countChars.classList.remove('hidden');
       } else {
         countChars.classList.add('hidden');
       }
+    }
+
+    async function updateCatalogCaches(allowedSceneNum = null) {
+      cachedScenesForProject = await getEntitiesForProject(STORE_SCENES, activeProjectId);
+      cachedScenesForProject.sort((a, b) => compareSceneNumbers(a.sceneNum, b.sceneNum));
+
+      const countScenes = document.getElementById('menu-count-scenes');
+      if (cachedScenesForProject.length > 0) {
+        countScenes.textContent = cachedScenesForProject.length;
+        countScenes.classList.remove('hidden');
+      } else {
+        countScenes.classList.add('hidden');
+      }
+
+      await refreshCharacterCatalogCache();
 
       const existingTakes = await getAllTakesForProject(activeProjectId);
       const usedScenesSet = new Set(
@@ -11477,6 +13243,164 @@
     const entriesFormGroup = document.getElementById('entries-form-group');
     const deleteSubentryContainer = document.getElementById('delete-subentry-container');
 
+    const btnQuickAddChar = document.getElementById('btn-quick-add-char');
+    const subentryQuickCharBox = document.getElementById('subentry-quick-char-box');
+    const btnCloseQuickCharModal = document.getElementById('btn-close-quick-char-modal');
+    const quickCharNameInput = document.getElementById('quick-char-name');
+    const quickCharActorInput = document.getElementById('quick-char-actor');
+    const quickCharPinnedCheck = document.getElementById('quick-char-pinned-check');
+    const inputQuickActorPhoto = document.getElementById('input-quick-actor-photo');
+    const quickActorPhotoPreviewBox = document.getElementById('quick-actor-photo-preview-box');
+    const quickActorPhotoPreviewImg = document.getElementById('quick-actor-photo-preview-img');
+    const btnTriggerQuickActorPhoto = document.getElementById('btn-trigger-quick-actor-photo');
+    const btnRemoveQuickActorPhoto = document.getElementById('btn-remove-quick-actor-photo');
+    const btnCancelQuickChar = document.getElementById('btn-cancel-quick-char');
+    const btnSaveQuickChar = document.getElementById('btn-save-quick-char');
+
+    function setQuickActorPhotoPreview(base64) {
+      currentQuickActorPhotoBase64 = base64;
+      updateActorPhotoPreviewUi(quickActorPhotoPreviewBox, quickActorPhotoPreviewImg, btnTriggerQuickActorPhoto, base64);
+    }
+
+    function setSubentryModalLocked(isLocked) {
+      if (!subentryModal) return;
+      const shouldLock = Boolean(isLocked);
+      const currentlyLocked = subentryModal.classList.contains('is-quick-char-locked');
+      if (shouldLock === currentlyLocked) return;
+
+      subentryModal.classList.toggle('is-quick-char-locked', shouldLock);
+      if (shouldLock) {
+        subentryModal.setAttribute('inert', '');
+        subentryModal.setAttribute('aria-hidden', 'true');
+      } else {
+        subentryModal.removeAttribute('inert');
+        subentryModal.removeAttribute('aria-hidden');
+      }
+
+      const bgControls = subentryModal.querySelectorAll('button, select, textarea, input');
+      bgControls.forEach((el) => {
+        if (shouldLock) {
+          el.dataset.wasDisabledBeforeQuickChar = el.disabled ? '1' : '0';
+          el.disabled = true;
+        } else {
+          el.disabled = el.dataset.wasDisabledBeforeQuickChar === '1';
+          delete el.dataset.wasDisabledBeforeQuickChar;
+        }
+      });
+    }
+
+    function resetQuickCharBox({ restoreFocus = '' } = {}) {
+      quickCharNameInput.value = '';
+      quickCharActorInput.value = '';
+      quickCharPinnedCheck.checked = false;
+      inputQuickActorPhoto.value = '';
+      setQuickActorPhotoPreview(null);
+      subentryQuickCharBox.classList.add('hidden');
+      btnQuickAddChar.classList.remove('is-open');
+      btnQuickAddChar.setAttribute('aria-expanded', 'false');
+      setSubentryModalLocked(false);
+      if (restoreFocus === 'select') {
+        requestAnimationFrame(() => subentryCharacterSelect.focus());
+      } else if (restoreFocus === 'button') {
+        requestAnimationFrame(() => btnQuickAddChar.focus());
+      }
+    }
+
+    function openQuickCharBox() {
+      resetQuickCharBox();
+      setSubentryModalLocked(true);
+      subentryQuickCharBox.classList.remove('hidden');
+      btnQuickAddChar.classList.add('is-open');
+      btnQuickAddChar.setAttribute('aria-expanded', 'true');
+      requestAnimationFrame(() => quickCharNameInput.focus());
+    }
+
+    async function saveQuickCharFromSubentry() {
+      const name = quickCharNameInput.value.trim();
+      const actor = quickCharActorInput.value.trim();
+      if (btnSaveQuickChar) btnSaveQuickChar.disabled = true;
+      if (btnCancelQuickChar) btnCancelQuickChar.disabled = true;
+      if (btnCloseQuickCharModal) btnCloseQuickCharModal.disabled = true;
+      let res;
+      try {
+        res = await saveCharacterRecord({
+          name,
+          actor,
+          photo: currentQuickActorPhotoBase64 || null,
+          pinned: Boolean(quickCharPinnedCheck.checked)
+        });
+      } finally {
+        if (btnSaveQuickChar) btnSaveQuickChar.disabled = false;
+        if (btnCancelQuickChar) btnCancelQuickChar.disabled = false;
+        if (btnCloseQuickCharModal) btnCloseQuickCharModal.disabled = false;
+      }
+      if (res.error === 'busy') return;
+      if (res.error === 'empty') {
+        showToast(t('toast_enter_char_name'));
+        quickCharNameInput.focus();
+        return;
+      }
+      if (res.error === 'duplicate') {
+        showToast(t('toast_char_name_exists', { name: res.record?.name || name }));
+        quickCharNameInput.focus();
+        return;
+      }
+
+      await refreshCharacterCatalogCache();
+      subentryCharacterSelect.innerHTML = buildCharacterSelectOptions(res.record.name);
+      subentryCharacterSelect.value = res.record.name;
+      resetQuickCharBox({ restoreFocus: 'select' });
+      showToast(t('toast_char_added', { name: res.record.name }));
+    }
+
+    btnQuickAddChar.addEventListener('click', () => {
+      if (subentryQuickCharBox.classList.contains('hidden')) {
+        openQuickCharBox();
+      }
+    });
+    btnCancelQuickChar.addEventListener('click', () => resetQuickCharBox({ restoreFocus: 'button' }));
+    if (btnCloseQuickCharModal) {
+      btnCloseQuickCharModal.addEventListener('click', () => resetQuickCharBox({ restoreFocus: 'button' }));
+    }
+    btnSaveQuickChar.addEventListener('click', saveQuickCharFromSubentry);
+
+    [quickCharNameInput, quickCharActorInput].forEach(inp => {
+      inp.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          e.stopPropagation();
+          saveQuickCharFromSubentry();
+        }
+      });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !subentryQuickCharBox.classList.contains('hidden')) {
+        e.preventDefault();
+        resetQuickCharBox({ restoreFocus: 'button' });
+      }
+    });
+
+    btnTriggerQuickActorPhoto.addEventListener('click', () => {
+      inputQuickActorPhoto.value = '';
+      inputQuickActorPhoto.click();
+    });
+    btnRemoveQuickActorPhoto.addEventListener('click', () => {
+      inputQuickActorPhoto.value = '';
+      setQuickActorPhotoPreview(null);
+    });
+    inputQuickActorPhoto.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      showToast(t('toast_processing_actor_photo'));
+      try {
+        const compressed = await compressImageFile(file, 600, 600, 0.8);
+        setQuickActorPhotoPreview(compressed);
+      } catch (err) {
+        showToast(t('toast_error_actor_photo'));
+      }
+    });
+
     document.getElementById('btn-add-entry').addEventListener('click', async () => {
       await updateCatalogCaches(null);
       document.getElementById('modal-title').textContent = t('modal_new_continuity');
@@ -11545,6 +13469,7 @@
     function openNewSubentryModal(fromViewer = false) {
       addingSubentryDirectlyToViewer = fromViewer;
       editingSubentryDirectlyInViewer = false;
+      resetQuickCharBox();
       document.getElementById('subentry-modal-title').textContent = t('modal_new_entry');
       subentryIdInput.value = '';
       subentryCharacterSelect.innerHTML = buildCharacterSelectOptions('');
@@ -11570,6 +13495,7 @@
 
       addingSubentryDirectlyToViewer = false;
       editingSubentryDirectlyInViewer = false;
+      resetQuickCharBox();
       document.getElementById('subentry-modal-title').textContent = t('modal_edit_entry');
       subentryIdInput.value = target.id;
       subentryCharacterSelect.innerHTML = buildCharacterSelectOptions(target.character || '');
@@ -11592,6 +13518,7 @@
 
       addingSubentryDirectlyToViewer = false;
       editingSubentryDirectlyInViewer = true;
+      resetQuickCharBox();
       document.getElementById('subentry-modal-title').textContent = t('modal_edit_entry');
       subentryIdInput.value = target.id;
       subentryCharacterSelect.innerHTML = buildCharacterSelectOptions(target.character || '');
@@ -11627,7 +13554,7 @@
             updatedAt: now
           });
           editingSubentryDirectlyInViewer = false;
-          subentryModal.classList.add('hidden');
+          closeSubentryModal();
           await renderTakes();
           await openContinuityViewer(activeViewerTakeId);
           showToast(t('toast_entry_deleted'));
@@ -11640,7 +13567,7 @@
 
       askConfirmation(t('confirm_delete_entry', { name: target.character || t('no_char') }), () => {
         currentPhotoItems = currentPhotoItems.filter(p => p.id !== targetEntryId);
-        subentryModal.classList.add('hidden');
+        closeSubentryModal();
         renderFormPhotoItems();
         showToast(t('toast_entry_deleted'));
       });
@@ -11679,11 +13606,17 @@
       }
     });
 
-    document.getElementById('btn-close-subentry-modal').addEventListener('click', () => subentryModal.classList.add('hidden'));
-    document.getElementById('btn-cancel-subentry').addEventListener('click', () => subentryModal.classList.add('hidden'));
+    function closeSubentryModal() {
+      resetQuickCharBox();
+      subentryModal.classList.add('hidden');
+    }
+
+    document.getElementById('btn-close-subentry-modal').addEventListener('click', closeSubentryModal);
+    document.getElementById('btn-cancel-subentry').addEventListener('click', closeSubentryModal);
 
     subentryForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      if (!subentryQuickCharBox.classList.contains('hidden')) return;
       const charName = subentryCharacterSelect.value.trim();
       const note = subentryNoteInput.value.trim();
       if (!charName) {
@@ -11719,7 +13652,7 @@
             updatedAt: nowTs
           });
           editingSubentryDirectlyInViewer = false;
-          subentryModal.classList.add('hidden');
+          closeSubentryModal();
           await renderTakes();
           await openContinuityViewer(activeViewerTakeId);
           showToast(t('toast_entry_updated'));
@@ -11740,7 +13673,7 @@
             updatedAt: nowTs
           });
           addingSubentryDirectlyToViewer = false;
-          subentryModal.classList.add('hidden');
+          closeSubentryModal();
           await renderTakes();
           await openContinuityViewer(activeViewerTakeId);
           showToast(t('toast_entry_added'));
@@ -11761,7 +13694,7 @@
       addingSubentryDirectlyToViewer = false;
       editingSubentryDirectlyInViewer = false;
       renderFormPhotoItems();
-      subentryModal.classList.add('hidden');
+      closeSubentryModal();
     });
 
     // Validar en base de datos para prohibir escenas duplicadas antes de guardar la Continuidad
@@ -12611,8 +14544,9 @@
       if (screenProfileDept) screenProfileDept.value = '';
       if (authUserEmailEl) authUserEmailEl.textContent = '—';
 
+      if (typeof resetQuickCharBox === 'function') resetQuickCharBox();
       [
-        'project-modal', 'take-modal', 'subentry-modal', 'continuity-viewer-modal',
+        'project-modal', 'take-modal', 'subentry-modal', 'subentry-quick-char-box', 'continuity-viewer-modal',
         'characters-modal', 'character-edit-modal', 'scenes-modal', 'scene-edit-modal',
         'duplicate-take-modal', 'batch-projects-modal', 'pdf-preview-modal', 'photo-lightbox-modal'
       ].forEach((mId) => {
@@ -13454,8 +15388,9 @@
         const allCharsAfterSync = await getAllLocalEntities(STORE_CHARACTERS);
         const charsByProjectName = new Map();
         for (const ch of allCharsAfterSync) {
-          if (!ch || !ch.projectId || !ch.name) continue;
-          const key = `${ch.projectId}::${String(ch.name).trim().toUpperCase()}`;
+          const normName = normalizeCharacterKey(ch && ch.name);
+          if (!ch || !ch.projectId || !normName) continue;
+          const key = `${ch.projectId}::${normName}`;
           if (!charsByProjectName.has(key)) {
             charsByProjectName.set(key, [ch]);
           } else {
@@ -13506,8 +15441,9 @@
         const allScenesAfterSync = await getAllLocalEntities(STORE_SCENES);
         const scenesByProjectNum = new Map();
         for (const sc of allScenesAfterSync) {
-          if (!sc || !sc.projectId || !sc.sceneNum) continue;
-          const key = `${sc.projectId}::${String(sc.sceneNum).trim().toUpperCase()}`;
+          const normNum = normalizeSceneKey(sc && sc.sceneNum);
+          if (!sc || !sc.projectId || !normNum) continue;
+          const key = `${sc.projectId}::${normNum}`;
           if (!scenesByProjectNum.has(key)) {
             scenesByProjectNum.set(key, [sc]);
           } else {
