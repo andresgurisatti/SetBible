@@ -270,13 +270,13 @@
       text-align: center;
     }
 
-    .raccords-counter-center-box {
+    .continuities-counter-center-box {
       display: flex;
       justify-content: center;
       margin: 0 0 10px 0;
     }
 
-    .raccords-count-pill {
+    .continuities-count-pill {
       font-size: 12px;
       font-family: monospace;
       font-weight: 900;
@@ -775,7 +775,7 @@
       gap: 10px;
     }
 
-    .raccord-card {
+    .continuity-card {
       background: var(--bg-850);
       border: 1px solid rgba(245, 158, 11, 0.5);
       border-radius: 12px;
@@ -789,11 +789,11 @@
       transition: border-color 0.15s;
     }
 
-    .raccord-card:active {
+    .continuity-card:active {
       border-color: var(--amber);
     }
 
-    .raccord-scene-header {
+    .continuity-scene-header {
       background: rgba(245, 158, 11, 0.15);
       border-bottom: 1px solid rgba(245, 158, 11, 0.35);
       padding: 9px 12px;
@@ -802,18 +802,18 @@
       gap: 3px;
     }
 
-    .raccord-card-body {
+    .continuity-card-body {
       padding: 9px 12px;
     }
 
-    .raccord-scene-top-row {
+    .continuity-scene-top-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
     }
 
-    .raccord-scene-badge {
+    .continuity-scene-badge {
       display: block;
       color: var(--amber);
       font-family: monospace;
@@ -845,7 +845,7 @@
       background: rgba(245, 158, 11, 0.28);
     }
 
-    .raccord-scene-desc {
+    .continuity-scene-desc {
       font-size: 14px;
       font-weight: 800;
       color: #fff;
@@ -853,7 +853,7 @@
       margin: 0;
     }
 
-    .raccord-char-row {
+    .continuity-char-row {
       background: #0c1017;
       border: 1px solid var(--border-700);
       border-radius: 9px;
@@ -861,18 +861,18 @@
       margin-bottom: 6px;
     }
 
-    .raccord-char-row:last-child {
+    .continuity-char-row:last-child {
       margin-bottom: 0;
     }
 
-    .raccord-char-top {
+    .continuity-char-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
     }
 
-    .raccord-char-name {
+    .continuity-char-name {
       font-size: 14px;
       font-weight: 800;
       color: #fff;
@@ -899,7 +899,7 @@
       flex-shrink: 0;
     }
 
-    .raccord-photo-chip {
+    .continuity-photo-chip {
       font-size: 12px;
       font-weight: 800;
       color: var(--amber);
@@ -913,7 +913,7 @@
       white-space: nowrap;
     }
 
-    .raccord-char-note-preview {
+    .continuity-char-note-preview {
       font-size: 13px;
       color: #d1d5db;
       margin: 4px 0 0 0;
@@ -924,7 +924,7 @@
       overflow: hidden;
     }
 
-    .raccord-general-note {
+    .continuity-general-note {
       font-size: 13px;
       color: #d1d5db;
       background: rgba(255, 255, 255, 0.03);
@@ -1407,23 +1407,23 @@
       background: rgba(245, 158, 11, 0.22);
     }
 
-    #raccord-viewer-modal {
+    #continuity-viewer-modal {
       padding-left: 8px;
       padding-right: 8px;
       padding-top: calc(10px + env(safe-area-inset-top, 0px));
       padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
     }
 
-    #raccord-viewer-modal .modal-card {
+    #continuity-viewer-modal .modal-card {
       max-width: 680px;
       border-radius: 14px;
     }
 
-    #raccord-viewer-modal .modal-header {
+    #continuity-viewer-modal .modal-header {
       padding: 7px 14px;
     }
 
-    #raccord-viewer-modal .modal-body {
+    #continuity-viewer-modal .modal-body {
       padding: 10px 12px;
     }
 
@@ -1754,7 +1754,7 @@
       background: rgba(245, 158, 11, 0.18);
     }
 
-    .rp-switch {
+    .sb-switch {
       position: relative;
       display: inline-flex;
       align-items: center;
@@ -1764,14 +1764,14 @@
       cursor: pointer;
     }
 
-    .rp-switch input {
+    .sb-switch input {
       position: absolute;
       opacity: 0;
       width: 0;
       height: 0;
     }
 
-    .rp-switch-track {
+    .sb-switch-track {
       width: 46px;
       height: 26px;
       border-radius: 999px;
@@ -1781,7 +1781,7 @@
       transition: background 0.18s ease, border-color 0.18s ease;
     }
 
-    .rp-switch-track::after {
+    .sb-switch-track::after {
       content: '';
       position: absolute;
       top: 2px;
@@ -1793,12 +1793,12 @@
       transition: transform 0.18s ease, background 0.18s ease;
     }
 
-    .rp-switch input:checked + .rp-switch-track {
+    .sb-switch input:checked + .sb-switch-track {
       background: rgba(245, 158, 11, 0.25);
       border-color: var(--amber);
     }
 
-    .rp-switch input:checked + .rp-switch-track::after {
+    .sb-switch input:checked + .sb-switch-track::after {
       transform: translateX(20px);
       background: var(--amber);
     }
@@ -3495,7 +3495,7 @@
   </div>
 
   <!-- ========================================== -->
-  <!-- MODAL PRINCIPAL: REGISTRO DE RACCORD       -->
+  <!-- MODAL PRINCIPAL: REGISTRO DE CONTINUIDAD   -->
   <!-- ========================================== -->
   <div id="entry-modal" class="modal-backdrop hidden">
     <div class="modal-card">
@@ -3506,7 +3506,7 @@
         </button>
       </div>
 
-      <form id="raccord-form" class="modal-form-wrapper">
+      <form id="continuity-form" class="modal-form-wrapper">
         <div class="modal-body">
           <input type="hidden" id="entry-id" value="">
 
@@ -3531,8 +3531,8 @@
             <textarea id="input-notes" rows="2" placeholder="Observaciones generales de continuidad para esta escena..." class="form-control" style="font-size:15px; line-height:1.4; min-height:70px;" data-i18n-placeholder="form_general_notes_placeholder"></textarea>
           </div>
 
-          <div id="delete-raccord-container" class="delete-project-box hidden">
-            <button type="button" id="btn-delete-raccord-modal" class="btn-delete-project-full">
+          <div id="delete-continuity-container" class="delete-project-box hidden">
+            <button type="button" id="btn-delete-continuity-modal" class="btn-delete-project-full">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
               <span data-i18n="btn_delete_continuity">Eliminar Continuidad</span>
             </button>
@@ -3607,9 +3607,9 @@
   </div>
 
   <!-- ========================================== -->
-  <!-- MODAL: VISOR COMPLETO DE RACCORD           -->
+  <!-- MODAL: VISOR COMPLETO DE CONTINUIDAD       -->
   <!-- ========================================== -->
-  <div id="raccord-viewer-modal" class="modal-backdrop hidden" style="z-index: 55;">
+  <div id="continuity-viewer-modal" class="modal-backdrop hidden" style="z-index: 55;">
     <div class="modal-card">
       <div class="modal-header">
         <div style="min-width:0; flex:1;">
@@ -3733,16 +3733,16 @@
           </div>
           <label class="pdf-menu-row" style="cursor:pointer; user-select:none;">
             <span class="pdf-menu-label" data-i18n="pdf_separate_pages">Separar Continuidades por página</span>
-            <span class="rp-switch">
-              <input type="checkbox" id="pdf-per-raccord-checkbox">
-              <span class="rp-switch-track"></span>
+            <span class="sb-switch">
+              <input type="checkbox" id="pdf-per-continuity-checkbox">
+              <span class="sb-switch-track"></span>
             </span>
           </label>
           <label class="pdf-menu-row" style="cursor:pointer; user-select:none;">
             <span class="pdf-menu-label" data-i18n="pdf_include_profile">Incluir nombre y departamento</span>
-            <span class="rp-switch">
+            <span class="sb-switch">
               <input type="checkbox" id="pdf-include-profile-checkbox" checked>
-              <span class="rp-switch-track"></span>
+              <span class="sb-switch-track"></span>
             </span>
           </label>
         </div>
@@ -3987,7 +3987,7 @@
         <div style="width:100%; border-top:1px solid var(--border-700); padding-top:14px; display:flex; flex-direction:column; gap:6px; font-size:13px; color:var(--text-muted);">
           <div>
             <span data-i18n="app_info_version_label">Versión</span>:
-            <strong id="app-info-version-val" style="color:#fff;">1.1</strong>
+            <strong id="app-info-version-val" style="color:#fff;">1.4</strong>
           </div>
           <div>
             <span data-i18n="app_info_created_by">Creado por</span>:
@@ -6464,7 +6464,7 @@
     }
 
     function getInitialLanguage() {
-      const saved = localStorage.getItem('setbible_app_lang') || localStorage.getItem('rp_app_lang');
+      const saved = localStorage.getItem('setbible_app_lang');
       if (saved && I18N[saved]) return saved;
       return detectDeviceLanguage();
     }
@@ -6552,7 +6552,7 @@
     const ICON_EYE_SVG = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>`;
     const ICON_DUPLICATE_SVG = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>`;
 
-    const DB_NAME = 'RaccordProDB';
+    const STORAGE_DB_PREFIX = 'SetBibleDB';
     const DB_VERSION = 5;
     const STORE_PROJECTS = 'projects';
     const STORE_TAKES = 'takes';
@@ -6562,6 +6562,7 @@
 
     const REQUIRED_STORES = [STORE_PROJECTS, STORE_TAKES, STORE_SCENES, STORE_CHARACTERS, STORE_DIR_HANDLES];
 
+    let activeStorageScope = null;
     let dbInstance = null;
     let useFallbackStorage = false;
     let activeProjectId = null;
@@ -6575,6 +6576,27 @@
     let cachedScenesForProject = [];
     let cachedCharactersForProject = [];
     let activeViewerTakeId = null;
+
+    function getStorageScopeForUid(uid) {
+      return uid ? ('user_' + String(uid)) : 'guest';
+    }
+
+    function getDBNameForScope(scope) {
+      return `${STORAGE_DB_PREFIX}_${scope || 'guest'}`;
+    }
+
+    function getScopedStorageKey(baseKey, scope = activeStorageScope) {
+      return `sb_scope__${scope || 'guest'}__${baseKey}`;
+    }
+
+    function closeActiveDB() {
+      if (dbInstance) {
+        try { dbInstance.close(); } catch (e) {}
+        dbInstance = null;
+      }
+      activeStorageScope = null;
+      useFallbackStorage = false;
+    }
 
     function compareSceneNumbers(a, b) {
       const strA = String(a || '').trim();
@@ -6597,9 +6619,9 @@
       return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua) || isTouchMac;
     }
 
-    function openDBConnection(version) {
+    function openDBConnection(version, dbName = getDBNameForScope(activeStorageScope)) {
       return new Promise((resolve, reject) => {
-        const request = indexedDB.open(DB_NAME, version);
+        const request = indexedDB.open(dbName, version);
 
         request.onupgradeneeded = (e) => {
           const db = e.target.result;
@@ -6629,20 +6651,37 @@
       });
     }
 
-    async function initDB() {
+    async function initDB(scope = 'guest') {
+      const targetScope = scope || 'guest';
+      if (activeStorageScope === targetScope && dbInstance && !useFallbackStorage) {
+        return;
+      }
+      if (dbInstance) {
+        try { dbInstance.close(); } catch (e) {}
+        dbInstance = null;
+      }
+      activeStorageScope = targetScope;
+      useFallbackStorage = false;
+
       if (!window.indexedDB) {
         useFallbackStorage = true;
         return;
       }
 
+      const dbName = getDBNameForScope(targetScope);
       try {
-        let db = await openDBConnection(DB_VERSION);
+        let db = await openDBConnection(DB_VERSION, dbName);
         const missingStore = REQUIRED_STORES.some(name => !db.objectStoreNames.contains(name));
 
         if (missingStore) {
           const nextVer = db.version + 1;
           db.close();
-          db = await openDBConnection(nextVer);
+          db = await openDBConnection(nextVer, dbName);
+        }
+
+        if (activeStorageScope !== targetScope) {
+          try { db.close(); } catch (e) {}
+          return;
         }
 
         dbInstance = db;
@@ -6651,7 +6690,9 @@
           useFallbackStorage = true;
         }
       } catch (err) {
-        useFallbackStorage = true;
+        if (activeStorageScope === targetScope) {
+          useFallbackStorage = true;
+        }
       }
     }
 
@@ -6770,25 +6811,28 @@
     }
 
     function getFallbackList(key) {
+      if (!activeStorageScope) return [];
       try {
-        return JSON.parse(localStorage.getItem(key) || '[]');
+        return JSON.parse(localStorage.getItem(getScopedStorageKey(key)) || '[]');
       } catch (e) {
         return [];
       }
     }
 
     function setFallbackList(key, list) {
+      if (!activeStorageScope) return;
       try {
-        localStorage.setItem(key, JSON.stringify(list));
+        localStorage.setItem(getScopedStorageKey(key), JSON.stringify(list));
       } catch (e) {}
     }
 
-    const BACKUP_STATE_KEY = 'rp_project_backup_state';
+    const BACKUP_STATE_KEY = 'sb_project_backup_state';
     let suppressBackupDirtyTracking = false;
 
     function getBackupStateMap() {
+      if (!activeStorageScope) return {};
       try {
-        const raw = localStorage.getItem(BACKUP_STATE_KEY);
+        const raw = localStorage.getItem(getScopedStorageKey(BACKUP_STATE_KEY));
         const parsed = raw ? JSON.parse(raw) : {};
         return (parsed && typeof parsed === 'object') ? parsed : {};
       } catch (e) {
@@ -6797,8 +6841,9 @@
     }
 
     function saveBackupStateMap(map) {
+      if (!activeStorageScope) return;
       try {
-        localStorage.setItem(BACKUP_STATE_KEY, JSON.stringify(map));
+        localStorage.setItem(getScopedStorageKey(BACKUP_STATE_KEY), JSON.stringify(map));
       } catch (e) {}
     }
 
@@ -6943,9 +6988,9 @@
       }
 
       const mirrorToFallback = () => {
-        const list = getFallbackList('rp_' + storeName).filter(x => x.id !== item.id);
+        const list = getFallbackList('sb_' + storeName).filter(x => x.id !== item.id);
         list.push(item);
-        setFallbackList('rp_' + storeName, list);
+        setFallbackList('sb_' + storeName, list);
       };
 
       if (storeName !== STORE_TAKES) {
@@ -6974,7 +7019,7 @@
     }
 
     function getEntitiesForProject(storeName, projId) {
-      const fallbackItems = getFallbackList('rp_' + storeName).filter(x => x.projectId === projId);
+      const fallbackItems = getFallbackList('sb_' + storeName).filter(x => x.projectId === projId);
 
       if (useFallbackStorage || !dbInstance || !dbInstance.objectStoreNames.contains(storeName)) {
         return Promise.resolve(fallbackItems);
@@ -6998,11 +7043,12 @@
       });
     }
 
-    const CLOUD_DELETES_KEY = 'rp_cloud_deletes';
+    const CLOUD_DELETES_KEY = 'sb_cloud_deletes';
 
     function getCloudDeletes() {
+      if (!activeStorageScope) return [];
       try {
-        const list = JSON.parse(localStorage.getItem(CLOUD_DELETES_KEY) || '[]');
+        const list = JSON.parse(localStorage.getItem(getScopedStorageKey(CLOUD_DELETES_KEY)) || '[]');
         return Array.isArray(list) ? list : [];
       } catch (e) {
         return [];
@@ -7010,8 +7056,9 @@
     }
 
     function setCloudDeletes(list) {
+      if (!activeStorageScope) return;
       try {
-        localStorage.setItem(CLOUD_DELETES_KEY, JSON.stringify(list || []));
+        localStorage.setItem(getScopedStorageKey(CLOUD_DELETES_KEY), JSON.stringify(list || []));
       } catch (e) {}
     }
 
@@ -7028,7 +7075,7 @@
       if (options.skipCloudDelete !== true) {
         recordCloudDelete(storeName, id, activeProjectId || null);
       }
-      setFallbackList('rp_' + storeName, getFallbackList('rp_' + storeName).filter(x => x.id !== id));
+      setFallbackList('sb_' + storeName, getFallbackList('sb_' + storeName).filter(x => x.id !== id));
 
       if (useFallbackStorage || !dbInstance || !dbInstance.objectStoreNames.contains(storeName)) {
         return Promise.resolve();
@@ -7047,9 +7094,9 @@
     }
 
     function deleteAllEntitiesForProject(storeName, projId) {
-      const fbItems = getFallbackList('rp_' + storeName).filter(x => x.projectId === projId);
+      const fbItems = getFallbackList('sb_' + storeName).filter(x => x.projectId === projId);
       fbItems.forEach(x => recordCloudDelete(storeName, x.id, projId));
-      setFallbackList('rp_' + storeName, getFallbackList('rp_' + storeName).filter(x => x.projectId !== projId));
+      setFallbackList('sb_' + storeName, getFallbackList('sb_' + storeName).filter(x => x.projectId !== projId));
 
       if (useFallbackStorage || !dbInstance || !dbInstance.objectStoreNames.contains(storeName)) {
         return Promise.resolve();
@@ -7079,7 +7126,7 @@
     }
 
     function getAllProjectsFromDB() {
-      const fallbackProjects = getFallbackList('rp_projects');
+      const fallbackProjects = getFallbackList('sb_projects');
       if (useFallbackStorage || !dbInstance || !dbInstance.objectStoreNames.contains(STORE_PROJECTS)) {
         return Promise.resolve(fallbackProjects);
       }
@@ -7106,10 +7153,10 @@
       if (options.skipCloudDelete !== true) {
         recordCloudDelete(STORE_PROJECTS, projId, projId);
       }
-      setFallbackList('rp_projects', getFallbackList('rp_projects').filter(p => p.id !== projId));
-      setFallbackList('rp_takes', getFallbackList('rp_takes').filter(t => t.projectId !== projId));
-      setFallbackList('rp_scenes', getFallbackList('rp_scenes').filter(s => s.projectId !== projId));
-      setFallbackList('rp_characters', getFallbackList('rp_characters').filter(c => c.projectId !== projId));
+      setFallbackList('sb_projects', getFallbackList('sb_projects').filter(p => p.id !== projId));
+      setFallbackList('sb_takes', getFallbackList('sb_takes').filter(t => t.projectId !== projId));
+      setFallbackList('sb_scenes', getFallbackList('sb_scenes').filter(s => s.projectId !== projId));
+      setFallbackList('sb_characters', getFallbackList('sb_characters').filter(c => c.projectId !== projId));
 
       if (useFallbackStorage || !dbInstance) {
         return Promise.resolve();
@@ -7335,7 +7382,18 @@
       });
     }
 
-    let projectsSortMode = localStorage.getItem('rp_projects_sort') || 'date';
+    let projectsSortMode = 'date';
+
+    function reloadScopedPreferences() {
+      if (!activeStorageScope) {
+        projectsSortMode = 'date';
+      } else {
+        projectsSortMode = localStorage.getItem(getScopedStorageKey('sb_projects_sort')) || 'date';
+      }
+      if (typeof updateSortButtonsUI === 'function') {
+        updateSortButtonsUI();
+      }
+    }
 
     const ICON_PIN_SVG = `<svg width="17" height="17" viewBox="0 0 24 24" fill="rgba(245,158,11,0.25)" stroke="#f59e0b" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg>`;
     const ICON_COMPLETED_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`;
@@ -7868,7 +7926,7 @@
             const bin = dataUrlToBinary(entry.photo);
             if (bin) {
               photoCounter++;
-              const relPath = `photos/raccord_${photoCounter}.${bin.ext}`;
+              const relPath = `photos/continuity_${photoCounter}.${bin.ext}`;
               zipMap[relPath] = bin.bytes;
               eCopy.photo = `@setbible:${relPath}`;
             }
@@ -7879,7 +7937,7 @@
           const bin = dataUrlToBinary(t.photo);
           if (bin) {
             photoCounter++;
-            const relPath = `photos/raccord_${photoCounter}.${bin.ext}`;
+            const relPath = `photos/continuity_${photoCounter}.${bin.ext}`;
             zipMap[relPath] = bin.bytes;
             copy.photo = `@setbible:${relPath}`;
           }
@@ -8395,20 +8453,20 @@
 
           <main class="scroll-area" style="flex:1; padding-bottom:16px;">
             <div class="takes-grid">
-              <div class="raccord-card">
+              <div class="continuity-card">
                 <div>
-                  <div class="raccord-scene-header">
-                    <div class="raccord-scene-top-row">
-                      <span class="raccord-scene-badge">${t('scene_prefix')} 12</span>
+                  <div class="continuity-scene-header">
+                    <div class="continuity-scene-top-row">
+                      <span class="continuity-scene-badge">${t('scene_prefix')} 12</span>
                       <button type="button" class="btn-duplicate-take">${ICON_DUPLICATE_SVG}</button>
                     </div>
-                    <p class="raccord-scene-desc">${t('help_demo_scene_desc')}</p>
+                    <p class="continuity-scene-desc">${t('help_demo_scene_desc')}</p>
                   </div>
-                  <div class="raccord-card-body">
-                    <div class="raccord-char-row">
-                      <div class="raccord-char-top">
-                        <div class="raccord-char-name"><span>ELENA</span></div>
-                        <span class="raccord-photo-chip">${ICON_PHOTO_SVG}<span>1</span></span>
+                  <div class="continuity-card-body">
+                    <div class="continuity-char-row">
+                      <div class="continuity-char-top">
+                        <div class="continuity-char-name"><span>ELENA</span></div>
+                        <span class="continuity-photo-chip">${ICON_PHOTO_SVG}<span>1</span></span>
                       </div>
                     </div>
                   </div>
@@ -8622,12 +8680,12 @@
           spotAlign: 'center',
           spotHtml: `
             <div class="tour-spotlight-box" style="width:100%; max-width:360px; padding:12px; display:flex; flex-direction:column; gap:8px;">
-              <div class="raccord-scene-header" style="margin:0; border:1px solid var(--border-700); border-radius:10px; padding:8px 10px; background:var(--bg-800);">
-                <div class="raccord-scene-top-row">
-                  <span class="raccord-scene-badge">${t('scene_prefix')} 12</span>
+              <div class="continuity-scene-header" style="margin:0; border:1px solid var(--border-700); border-radius:10px; padding:8px 10px; background:var(--bg-800);">
+                <div class="continuity-scene-top-row">
+                  <span class="continuity-scene-badge">${t('scene_prefix')} 12</span>
                   <button type="button" class="btn-duplicate-take" style="border-color:var(--amber); background:rgba(245,158,11,0.18); color:var(--amber);">${ICON_DUPLICATE_SVG}</button>
                 </div>
-                <p class="raccord-scene-desc" style="margin-bottom:0;">${t('help_demo_scene_desc')}</p>
+                <p class="continuity-scene-desc" style="margin-bottom:0;">${t('help_demo_scene_desc')}</p>
               </div>
               <div style="display:flex; align-items:center; gap:8px;">
                 <select class="form-control" style="flex:1; min-height:42px; padding:8px 10px; font-size:13px; font-weight:800; color:var(--amber);">
@@ -8809,8 +8867,10 @@
       }
 
       projectsSortMode = mode;
-      localStorage.setItem('rp_projects_sort', mode);
-      localStorage.setItem('rp_projects_sort_updated_at', String(Date.now()));
+      if (activeStorageScope) {
+        localStorage.setItem(getScopedStorageKey('sb_projects_sort'), mode);
+        localStorage.setItem(getScopedStorageKey('sb_projects_sort_updated_at'), String(Date.now()));
+      }
       if (typeof scheduleCloudSync === 'function') scheduleCloudSync();
       updateSortButtonsUI();
       await renderProjects();
@@ -10381,7 +10441,7 @@
               <strong style="color:var(--amber); font-size:15px; display:block;">${t('scene_prefix')} ${escapeHtml(tk.scene)}</strong>
               ${tk.sceneDesc ? `<span style="color:#d1d5db; font-size:13px; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(tk.sceneDesc)}</span>` : ''}
             </div>
-            <span class="raccord-photo-chip">${ICON_PHOTO_SVG}<span>${photosCount}</span></span>
+            <span class="continuity-photo-chip">${ICON_PHOTO_SVG}<span>${photosCount}</span></span>
           </label>
         `;
       }).join('');
@@ -10518,16 +10578,16 @@
     const pdfPreviewModal = document.getElementById('pdf-preview-modal');
     const pdfPreviewStage = document.getElementById('pdf-preview-stage');
     const pdfPreviewPageCount = document.getElementById('pdf-preview-page-count');
-    const pdfPerRaccordCheckbox = document.getElementById('pdf-per-raccord-checkbox');
+    const pdfPerContinuityCheckbox = document.getElementById('pdf-per-continuity-checkbox');
     const pdfFontScalePreviewLabel = document.getElementById('pdf-font-scale-preview-label');
     const pdfPhotoScalePreviewLabel = document.getElementById('pdf-photo-scale-preview-label');
 
-    const storedFontScale = parseInt(localStorage.getItem('rp_pdf_font_scale') || '100', 10);
-    const storedPhotoScale = parseInt(localStorage.getItem('rp_pdf_photo_scale') || '100', 10);
+    const storedFontScale = parseInt(localStorage.getItem('sb_pdf_font_scale') || '100', 10);
+    const storedPhotoScale = parseInt(localStorage.getItem('sb_pdf_photo_scale') || '100', 10);
     let pdfFontScalePct = Number.isFinite(storedFontScale) ? Math.max(75, Math.min(150, storedFontScale)) : 100;
     let pdfPhotoScalePct = Number.isFinite(storedPhotoScale) ? Math.max(60, Math.min(140, storedPhotoScale)) : 100;
-    let pdfLayoutMode = localStorage.getItem('rp_pdf_layout_mode') === 'per-raccord' ? 'per-raccord' : 'flow';
-    let pdfLang = localStorage.getItem('rp_pdf_lang') || (currentAppLang || 'es').toUpperCase();
+    let pdfLayoutMode = localStorage.getItem('sb_pdf_layout_mode') === 'per-continuity' ? 'per-continuity' : 'flow';
+    let pdfLang = localStorage.getItem('sb_pdf_lang') || (currentAppLang || 'es').toUpperCase();
 
     function renderPdfLangSelectorUI() {
       const container = document.getElementById('pdf-lang-selector-grid');
@@ -10568,7 +10628,7 @@
       container.querySelectorAll('input[name="pdf-lang"]').forEach(r => {
         r.addEventListener('change', (e) => {
           pdfLang = e.target.value;
-          localStorage.setItem('rp_pdf_lang', pdfLang);
+          localStorage.setItem('sb_pdf_lang', pdfLang);
           scheduleLivePdfPreviewUpdate();
         });
       });
@@ -10577,7 +10637,7 @@
     function syncPdfTuningControlsUI() {
       if (pdfFontScalePreviewLabel) pdfFontScalePreviewLabel.textContent = `${pdfFontScalePct}%`;
       if (pdfPhotoScalePreviewLabel) pdfPhotoScalePreviewLabel.textContent = `${pdfPhotoScalePct}%`;
-      if (pdfPerRaccordCheckbox) pdfPerRaccordCheckbox.checked = (pdfLayoutMode === 'per-raccord');
+      if (pdfPerContinuityCheckbox) pdfPerContinuityCheckbox.checked = (pdfLayoutMode === 'per-continuity');
       renderPdfLangSelectorUI();
     }
     syncPdfTuningControlsUI();
@@ -10593,14 +10653,14 @@
 
     function setPdfFontScale(val) {
       pdfFontScalePct = Math.max(75, Math.min(150, Math.round(val / 5) * 5));
-      localStorage.setItem('rp_pdf_font_scale', String(pdfFontScalePct));
+      localStorage.setItem('sb_pdf_font_scale', String(pdfFontScalePct));
       syncPdfTuningControlsUI();
       scheduleLivePdfPreviewUpdate();
     }
 
     function setPdfPhotoScale(val) {
       pdfPhotoScalePct = Math.max(60, Math.min(140, Math.round(val / 5) * 5));
-      localStorage.setItem('rp_pdf_photo_scale', String(pdfPhotoScalePct));
+      localStorage.setItem('sb_pdf_photo_scale', String(pdfPhotoScalePct));
       syncPdfTuningControlsUI();
       scheduleLivePdfPreviewUpdate();
     }
@@ -10615,19 +10675,19 @@
     });
 
     const pdfIncludeProfileCheckbox = document.getElementById('pdf-include-profile-checkbox');
-    let pdfIncludeProfile = localStorage.getItem('rp_pdf_include_profile') !== '0';
+    let pdfIncludeProfile = localStorage.getItem('sb_pdf_include_profile') !== '0';
     if (pdfIncludeProfileCheckbox) {
       pdfIncludeProfileCheckbox.checked = pdfIncludeProfile;
       pdfIncludeProfileCheckbox.addEventListener('change', () => {
         pdfIncludeProfile = pdfIncludeProfileCheckbox.checked;
-        localStorage.setItem('rp_pdf_include_profile', pdfIncludeProfile ? '1' : '0');
+        localStorage.setItem('sb_pdf_include_profile', pdfIncludeProfile ? '1' : '0');
         scheduleLivePdfPreviewUpdate();
       });
     }
 
-    pdfPerRaccordCheckbox.addEventListener('change', () => {
-      pdfLayoutMode = pdfPerRaccordCheckbox.checked ? 'per-raccord' : 'flow';
-      localStorage.setItem('rp_pdf_layout_mode', pdfLayoutMode);
+    pdfPerContinuityCheckbox.addEventListener('change', () => {
+      pdfLayoutMode = pdfPerContinuityCheckbox.checked ? 'per-continuity' : 'flow';
+      localStorage.setItem('sb_pdf_layout_mode', pdfLayoutMode);
       scheduleLivePdfPreviewUpdate();
     });
 
@@ -10726,7 +10786,7 @@
 
       const fontScale = pdfFontScalePct / 100;
       const photoScale = pdfPhotoScalePct / 100;
-      const separateByPage = (pdfLayoutMode === 'per-raccord');
+      const separateByPage = (pdfLayoutMode === 'per-continuity');
 
       const clapperPng = await getExactAppClapperboardPng();
       const { jsPDF } = window.jspdf;
@@ -11158,7 +11218,7 @@
     });
 
     /* ==========================================================================
-       BÚSQUEDA, LISTADO Y TARJETAS DE RACCORDS POR ESCENA
+       BÚSQUEDA, LISTADO Y TARJETAS DE CONTINUIDADES POR ESCENA
        ========================================================================== */
     const recordsGrid = document.getElementById('records-grid');
     const emptyState = document.getElementById('empty-state');
@@ -11222,19 +11282,19 @@
 
         const entriesHtml = entries.length > 0
           ? entries.map(p => `
-              <div class="raccord-char-row">
-                <div class="raccord-char-top">
-                  <div class="raccord-char-name">
+              <div class="continuity-char-row">
+                <div class="continuity-char-top">
+                  <div class="continuity-char-name">
                     <span>${escapeHtml(p.character || t('no_char'))}</span>
                   </div>
-                  ${p.photo ? `<span class="raccord-photo-chip">${ICON_PHOTO_SVG}<span>1</span></span>` : ''}
+                  ${p.photo ? `<span class="continuity-photo-chip">${ICON_PHOTO_SVG}<span>1</span></span>` : ''}
                 </div>
               </div>
             `).join('')
           : `
-              <div class="raccord-char-row">
-                <div class="raccord-char-top">
-                  <div class="raccord-char-name" style="font-style:italic; color:var(--text-muted); font-weight:600;">
+              <div class="continuity-char-row">
+                <div class="continuity-char-top">
+                  <div class="continuity-char-name" style="font-style:italic; color:var(--text-muted); font-weight:600;">
                     <span>${t('no_entries_paren')}</span>
                   </div>
                 </div>
@@ -11242,18 +11302,18 @@
             `;
 
         return `
-          <div class="raccord-card" data-action="open-viewer" data-id="${take.id}">
+          <div class="continuity-card" data-action="open-viewer" data-id="${take.id}">
             <div>
-              <div class="raccord-scene-header">
-                <div class="raccord-scene-top-row">
-                  <span class="raccord-scene-badge">${t('scene_prefix')} ${escapeHtml(take.scene)}</span>
+              <div class="continuity-scene-header">
+                <div class="continuity-scene-top-row">
+                  <span class="continuity-scene-badge">${t('scene_prefix')} ${escapeHtml(take.scene)}</span>
                   <button type="button" class="btn-duplicate-take" data-action="duplicate-take" data-id="${take.id}" title="${t('duplicate_take_title')}">
                     ${ICON_DUPLICATE_SVG}
                   </button>
                 </div>
-                ${take.sceneDesc ? `<p class="raccord-scene-desc">${escapeHtml(take.sceneDesc)}</p>` : ''}
+                ${take.sceneDesc ? `<p class="continuity-scene-desc">${escapeHtml(take.sceneDesc)}</p>` : ''}
               </div>
-              <div class="raccord-card-body">${entriesHtml}</div>
+              <div class="continuity-card-body">${entriesHtml}</div>
             </div>
           </div>
         `;
@@ -11390,15 +11450,15 @@
       const card = e.target.closest('[data-action="open-viewer"]');
       if (card) {
         const id = card.getAttribute('data-id');
-        openRaccordViewer(id);
+        openContinuityViewer(id);
       }
     });
 
     /* ==========================================================================
-       MODAL DE RACCORD Y SUB-ENTRADAS POR PERSONAJE
+       MODAL DE CONTINUIDAD Y SUB-ENTRADAS POR PERSONAJE
        ========================================================================== */
     const entryModal = document.getElementById('entry-modal');
-    const form = document.getElementById('raccord-form');
+    const form = document.getElementById('continuity-form');
     const photosEntriesList = document.getElementById('photos-entries-list');
 
     const subentryModal = document.getElementById('subentry-modal');
@@ -11412,7 +11472,7 @@
     const subentryPhotoPreviewImg = document.getElementById('subentry-photo-preview-img');
     const btnRemoveSubentryPhoto = document.getElementById('btn-remove-subentry-photo');
 
-    const deleteRaccordContainer = document.getElementById('delete-raccord-container');
+    const deleteContinuityContainer = document.getElementById('delete-continuity-container');
     const btnOpenSubentryModal = document.getElementById('btn-open-subentry-modal');
     const entriesFormGroup = document.getElementById('entries-form-group');
     const deleteSubentryContainer = document.getElementById('delete-subentry-container');
@@ -11427,7 +11487,7 @@
       renderFormPhotoItems();
       entriesFormGroup.classList.remove('hidden');
       btnOpenSubentryModal.classList.remove('hidden');
-      deleteRaccordContainer.classList.add('hidden');
+      deleteContinuityContainer.classList.add('hidden');
       entryModal.classList.remove('hidden');
     });
 
@@ -11435,7 +11495,7 @@
       const editingId = document.getElementById('entry-id').value;
       entryModal.classList.add('hidden');
       if (editingId) {
-        await openRaccordViewer(editingId);
+        await openContinuityViewer(editingId);
       }
     }
 
@@ -11569,7 +11629,7 @@
           editingSubentryDirectlyInViewer = false;
           subentryModal.classList.add('hidden');
           await renderTakes();
-          await openRaccordViewer(activeViewerTakeId);
+          await openContinuityViewer(activeViewerTakeId);
           showToast(t('toast_entry_deleted'));
         });
         return;
@@ -11661,7 +11721,7 @@
           editingSubentryDirectlyInViewer = false;
           subentryModal.classList.add('hidden');
           await renderTakes();
-          await openRaccordViewer(activeViewerTakeId);
+          await openContinuityViewer(activeViewerTakeId);
           showToast(t('toast_entry_updated'));
           return;
         }
@@ -11682,7 +11742,7 @@
           addingSubentryDirectlyToViewer = false;
           subentryModal.classList.add('hidden');
           await renderTakes();
-          await openRaccordViewer(activeViewerTakeId);
+          await openContinuityViewer(activeViewerTakeId);
           showToast(t('toast_entry_added'));
           return;
         }
@@ -11767,7 +11827,7 @@
       await updateCatalogCaches();
       await renderTakes();
       if (existingId) {
-        await openRaccordViewer(existingId);
+        await openContinuityViewer(existingId);
       }
       showToast(t('toast_take_saved', { scene }));
     });
@@ -11789,12 +11849,12 @@
       renderFormPhotoItems();
       entriesFormGroup.classList.add('hidden');
       btnOpenSubentryModal.classList.add('hidden');
-      deleteRaccordContainer.classList.remove('hidden');
+      deleteContinuityContainer.classList.remove('hidden');
 
       entryModal.classList.remove('hidden');
     }
 
-    document.getElementById('btn-delete-raccord-modal').addEventListener('click', async () => {
+    document.getElementById('btn-delete-continuity-modal').addEventListener('click', async () => {
       const id = document.getElementById('entry-id').value;
       if (!id) return;
 
@@ -11812,9 +11872,9 @@
     });
 
     /* ==========================================================================
-       VISOR DETALLADO DE RACCORD Y LIGHTBOX DE FOTO ORIGINAL
+       VISOR DETALLADO DE CONTINUIDAD Y LIGHTBOX DE FOTO ORIGINAL
        ========================================================================== */
-    const raccordViewerModal = document.getElementById('raccord-viewer-modal');
+    const continuityViewerModal = document.getElementById('continuity-viewer-modal');
     const photoLightboxModal = document.getElementById('photo-lightbox-modal');
     const lightboxStage = document.getElementById('lightbox-stage');
     const lightboxImg = document.getElementById('lightbox-img');
@@ -12146,7 +12206,7 @@
       });
     }
 
-    async function openRaccordViewer(id) {
+    async function openContinuityViewer(id) {
       const all = await getAllTakesForProject(activeProjectId);
       const item = all.find(t => t.id === id);
       if (!item) return;
@@ -12204,7 +12264,7 @@
       }
 
       document.getElementById('viewer-body').innerHTML = htmlContent;
-      raccordViewerModal.classList.remove('hidden');
+      continuityViewerModal.classList.remove('hidden');
     }
 
     document.getElementById('viewer-body').addEventListener('click', (e) => {
@@ -12229,14 +12289,14 @@
 
     document.getElementById('btn-close-viewer').addEventListener('click', () => {
       activeViewerTakeId = null;
-      raccordViewerModal.classList.add('hidden');
+      continuityViewerModal.classList.add('hidden');
     });
 
     document.getElementById('btn-edit-from-viewer').addEventListener('click', async () => {
       if (!activeViewerTakeId) return;
       const targetId = activeViewerTakeId;
       await openEditTake(targetId);
-      raccordViewerModal.classList.add('hidden');
+      continuityViewerModal.classList.add('hidden');
     });
 
     let toastTimer = null;
@@ -12263,7 +12323,7 @@
       appId: "1:377022914307:web:9247eac49fc56aa9809336"
     };
 
-    const USER_PROFILE_KEY = 'rp_user_profile';
+    const USER_PROFILE_KEY = 'sb_user_profile';
     let firebaseAuth = null;
     let firebaseDb = null;
     let currentCloudUser = null;
@@ -12271,8 +12331,11 @@
     let cloudSyncDebounceTimer = null;
 
     function getLocalUserProfile() {
+      if (!activeStorageScope) {
+        return { name: '', department: '', updatedAt: 0 };
+      }
       try {
-        const p = JSON.parse(localStorage.getItem(USER_PROFILE_KEY) || '{}');
+        const p = JSON.parse(localStorage.getItem(getScopedStorageKey(USER_PROFILE_KEY)) || '{}');
         return {
           name: (p && p.name) ? String(p.name) : '',
           department: (p && p.department) ? String(p.department) : '',
@@ -12284,8 +12347,9 @@
     }
 
     function saveLocalUserProfile(profile) {
+      if (!activeStorageScope) return;
       try {
-        localStorage.setItem(USER_PROFILE_KEY, JSON.stringify({
+        localStorage.setItem(getScopedStorageKey(USER_PROFILE_KEY), JSON.stringify({
           name: profile.name || '',
           department: profile.department || '',
           updatedAt: profile.updatedAt || Date.now()
@@ -12492,9 +12556,10 @@
       await handleCloudSyncAction();
     });
 
-    const AUTH_SKIPPED_KEY = 'rp_auth_skipped';
-    const AUTH_HAS_SESSION_KEY = 'rp_has_auth_session';
-    const AUTH_PENDING_TS_KEY = 'rp_auth_pending_ts';
+    const AUTH_SKIPPED_KEY = 'sb_auth_skipped';
+    const AUTH_HAS_SESSION_KEY = 'sb_has_auth_session';
+    const AUTH_LAST_UID_KEY = 'sb_last_auth_uid';
+    const AUTH_PENDING_TS_KEY = 'sb_auth_pending_ts';
     const authLoadingOverlay = document.getElementById('auth-loading-overlay');
     const authLoadingText = document.getElementById('auth-loading-text');
 
@@ -12507,63 +12572,233 @@
       updateCloudSyncingPill();
     }
 
+    function resetSessionRuntimeState() {
+      clearTimeout(cloudSyncDebounceTimer);
+      clearTimeout(remotePullTimer);
+      isCloudSyncPending = false;
+      activeProjectId = null;
+      activeProjectData = null;
+      currentPhotoItems = [];
+      currentSubentryPhotoBase64 = null;
+      currentActorPhotoBase64 = null;
+      searchProjectsQuery = '';
+      searchQuery = '';
+      pendingConfirmAction = null;
+      cachedScenesForProject = [];
+      cachedCharactersForProject = [];
+      activeViewerTakeId = null;
+      cachedTakesForPdf = [];
+      viewerPhotosCache = [];
+      duplicatingSourceTake = null;
+      addingSubentryDirectlyToViewer = false;
+      editingSubentryDirectlyInViewer = false;
+      editingCharacterPinned = false;
+      projectsSortMode = 'date';
+
+      const spInput = document.getElementById('search-projects-input');
+      if (spInput) spInput.value = '';
+      document.getElementById('btn-reset-project-search')?.classList.add('hidden');
+      const sInput = document.getElementById('search-input');
+      if (sInput) sInput.value = '';
+
+      if (typeof projectsList !== 'undefined' && projectsList) projectsList.innerHTML = '';
+      if (typeof takesList !== 'undefined' && takesList) takesList.innerHTML = '';
+      refreshUnsavedBackupsBanner([]);
+
+      if (profileNameInput) profileNameInput.value = '';
+      if (profileDeptSelect) profileDeptSelect.value = '';
+      if (screenProfileName) screenProfileName.value = '';
+      if (screenProfileDept) screenProfileDept.value = '';
+      if (authUserEmailEl) authUserEmailEl.textContent = '—';
+
+      [
+        'project-modal', 'take-modal', 'subentry-modal', 'continuity-viewer-modal',
+        'characters-modal', 'character-edit-modal', 'scenes-modal', 'scene-edit-modal',
+        'duplicate-take-modal', 'batch-projects-modal', 'pdf-preview-modal', 'photo-lightbox-modal'
+      ].forEach((mId) => {
+        document.getElementById(mId)?.classList.add('hidden');
+      });
+      if (typeof updateSortButtonsUI === 'function') {
+        updateSortButtonsUI();
+      }
+    }
+
+    async function migrateLegacyGuestDataIfNeeded() {
+      if (localStorage.getItem('sb_legacy_guest_migrated') === '1') return;
+      if (localStorage.getItem(AUTH_SKIPPED_KEY) !== '1' || localStorage.getItem(AUTH_HAS_SESSION_KEY) === '1') {
+        return;
+      }
+      try {
+        const guestScope = 'guest';
+        const legacyKeys = [
+          USER_PROFILE_KEY,
+          BACKUP_STATE_KEY,
+          CLOUD_DELETES_KEY,
+          'sb_projects_sort',
+          'sb_projects_sort_updated_at',
+          'sb_' + STORE_PROJECTS,
+          'sb_' + STORE_SCENES,
+          'sb_' + STORE_CHARACTERS,
+          'sb_' + STORE_TAKES
+        ];
+        legacyKeys.forEach((k) => {
+          const val = localStorage.getItem(k);
+          const scopedK = getScopedStorageKey(k, guestScope);
+          if (val !== null && localStorage.getItem(scopedK) === null) {
+            localStorage.setItem(scopedK, val);
+          }
+        });
+
+        if (window.indexedDB && typeof indexedDB.databases === 'function') {
+          const dbs = await indexedDB.databases();
+          const hasLegacy = dbs.some(d => d && d.name === STORAGE_DB_PREFIX);
+          if (hasLegacy) {
+            const legacyDb = await openDBConnection(DB_VERSION, STORAGE_DB_PREFIX);
+            const guestDb = await openDBConnection(DB_VERSION, getDBNameForScope(guestScope));
+            for (const sName of REQUIRED_STORES) {
+              if (!legacyDb.objectStoreNames.contains(sName) || !guestDb.objectStoreNames.contains(sName)) continue;
+              const items = await new Promise((res) => {
+                const tx = legacyDb.transaction([sName], 'readonly');
+                const req = tx.objectStore(sName).getAll();
+                req.onsuccess = () => res(req.result || []);
+                req.onerror = () => res([]);
+              });
+              if (items.length > 0) {
+                await new Promise((res) => {
+                  const tx = guestDb.transaction([sName], 'readwrite');
+                  const store = tx.objectStore(sName);
+                  items.forEach(item => { try { store.put(item); } catch (e) {} });
+                  tx.oncomplete = () => res();
+                  tx.onerror = () => res();
+                });
+              }
+            }
+            legacyDb.close();
+            guestDb.close();
+          }
+        }
+      } catch (e) {
+        console.warn('Legacy guest migration warning:', e);
+      } finally {
+        localStorage.setItem('sb_legacy_guest_migrated', '1');
+      }
+    }
+
     let handlingAuthUid = null;
+    let handlingAuthPromise = null;
+    let activeCloudSyncPromise = null;
 
     async function handleAuthenticatedUser(user, { isInitialStartup = false } = {}) {
       if (!user) return;
-      currentCloudUser = user;
-      localStorage.setItem(AUTH_HAS_SESSION_KEY, '1');
-      localStorage.removeItem(AUTH_PENDING_TS_KEY);
-      localStorage.removeItem(AUTH_SKIPPED_KEY);
-      authModal?.classList.add('hidden');
-      updateCloudAccountUI();
-
-      if (handlingAuthUid === user.uid) return;
-      handlingAuthUid = user.uid;
-
-      try {
-        attachRealtimeCloudListeners(user.uid);
-        // Ensure background view is rendered behind the blurred loading overlay
-        await enterAppFromAuth();
-
-        if (navigator.onLine) {
-          setAuthLoading(true, isInitialStartup ? 'app_loading_startup' : 'auth_signing_in_loading');
-          await Promise.race([
-            syncAllWithCloud({ silent: true }),
-            new Promise((resolve) => setTimeout(resolve, 4500))
-          ]);
-        }
-
-        const prof = getLocalUserProfile();
-        if (!prof.name && !prof.department) {
-          showAuthScreen('profile');
-        } else {
-          await enterAppFromAuth();
-        }
-      } finally {
-        handlingAuthUid = null;
-        setAuthLoading(false);
+      if (handlingAuthPromise && handlingAuthUid === user.uid) {
+        return handlingAuthPromise;
       }
+
+      const run = async () => {
+        handlingAuthUid = user.uid;
+        try {
+          const targetScope = getStorageScopeForUid(user.uid);
+          const scopeChanged = (activeStorageScope !== targetScope || !dbInstance);
+
+          if (scopeChanged) {
+            detachRealtimeCloudListeners();
+            resetSessionRuntimeState();
+            await initDB(targetScope);
+            reloadScopedPreferences();
+            refreshBackupFolderLabel().catch(() => {});
+          }
+
+          currentCloudUser = user;
+          localStorage.setItem(AUTH_HAS_SESSION_KEY, '1');
+          localStorage.setItem(AUTH_LAST_UID_KEY, user.uid);
+          localStorage.removeItem(AUTH_PENDING_TS_KEY);
+          localStorage.removeItem(AUTH_SKIPPED_KEY);
+          authModal?.classList.add('hidden');
+          ['auth-email-input', 'auth-password-input', 'screen-auth-email', 'screen-auth-password'].forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) el.value = '';
+          });
+          updateCloudAccountUI();
+
+          attachRealtimeCloudListeners(user.uid);
+          // Ensure background view is rendered behind the blurred loading overlay
+          await enterAppFromAuth();
+
+          if (activeCloudSyncPromise) {
+            try { await activeCloudSyncPromise; } catch (e) {}
+          }
+
+          if (navigator.onLine) {
+            setAuthLoading(true, isInitialStartup ? 'app_loading_startup' : 'auth_signing_in_loading');
+            await Promise.race([
+              syncAllWithCloud({ silent: true }),
+              new Promise((resolve) => setTimeout(resolve, 4500))
+            ]);
+          }
+
+          const prof = getLocalUserProfile();
+          if (!prof.name && !prof.department) {
+            showAuthScreen('profile');
+          } else {
+            await enterAppFromAuth();
+          }
+        } finally {
+          if (handlingAuthUid === user.uid) {
+            handlingAuthUid = null;
+            handlingAuthPromise = null;
+          }
+          setAuthLoading(false);
+        }
+      };
+
+      handlingAuthPromise = run();
+      return handlingAuthPromise;
+    }
+
+    function setGoogleAuthButtonsDisabled(disabled) {
+      ['btn-auth-google', 'btn-screen-auth-google'].forEach((id) => {
+        const btn = document.getElementById(id);
+        if (btn) {
+          btn.disabled = Boolean(disabled);
+          btn.style.opacity = disabled ? '0.65' : '';
+        }
+      });
     }
 
     async function handleGoogleSignIn() {
       if (!firebaseAuth) { showToast(t('toast_firebase_unavailable')); return; }
-      localStorage.setItem(AUTH_PENDING_TS_KEY, String(Date.now()));
-      setAuthLoading(true, 'auth_signing_in_loading');
       const provider = new firebase.auth.GoogleAuthProvider();
       provider.setCustomParameters({ prompt: 'select_account' });
+      setGoogleAuthButtonsDisabled(true);
+
+      let restoreOnFocusTimer = null;
+      const handleReturnFocus = () => {
+        clearTimeout(restoreOnFocusTimer);
+        restoreOnFocusTimer = setTimeout(() => {
+          if (!currentCloudUser && !handlingAuthPromise) {
+            setGoogleAuthButtonsDisabled(false);
+          }
+        }, 400);
+      };
+      window.addEventListener('focus', handleReturnFocus);
+
       try {
         const cred = await firebaseAuth.signInWithPopup(provider);
         if (cred && cred.user) {
+          setAuthLoading(true, 'auth_signing_in_loading');
           await handleAuthenticatedUser(cred.user, { isInitialStartup: false });
+        } else {
+          localStorage.removeItem(AUTH_PENDING_TS_KEY);
+          setAuthLoading(false);
         }
       } catch (err) {
         const code = err?.code || '';
         if (
           code === 'auth/popup-blocked' ||
-          code === 'auth/operation-not-supported-in-this-environment' ||
-          code === 'auth/cancelled-popup-request'
+          code === 'auth/operation-not-supported-in-this-environment'
         ) {
+          localStorage.setItem(AUTH_PENDING_TS_KEY, String(Date.now()));
+          setAuthLoading(true, 'auth_signing_in_loading');
           try {
             await firebaseAuth.signInWithRedirect(provider);
           } catch (redirErr) {
@@ -12573,13 +12808,31 @@
           }
         } else {
           localStorage.removeItem(AUTH_PENDING_TS_KEY);
-          setAuthLoading(false);
-          if (code !== 'auth/popup-closed-by-user') {
+          if (!handlingAuthPromise && !currentCloudUser) {
+            setAuthLoading(false);
+          }
+          if (
+            code !== 'auth/popup-closed-by-user' &&
+            code !== 'auth/cancelled-popup-request' &&
+            code !== 'auth/user-cancelled'
+          ) {
             showToast(err?.message || t('toast_google_login_error'));
           }
         }
+      } finally {
+        window.removeEventListener('focus', handleReturnFocus);
+        clearTimeout(restoreOnFocusTimer);
+        setGoogleAuthButtonsDisabled(false);
       }
     }
+
+    window.addEventListener('pageshow', (e) => {
+      setGoogleAuthButtonsDisabled(false);
+      if (e.persisted && !currentCloudUser && !handlingAuthPromise) {
+        localStorage.removeItem(AUTH_PENDING_TS_KEY);
+        setAuthLoading(false);
+      }
+    });
 
     document.getElementById('btn-auth-google')?.addEventListener('click', handleGoogleSignIn);
 
@@ -12687,7 +12940,17 @@
     });
 
     document.getElementById('btn-screen-auth-skip')?.addEventListener('click', async () => {
+      detachRealtimeCloudListeners();
+      currentCloudUser = null;
+      localStorage.removeItem(AUTH_HAS_SESSION_KEY);
+      localStorage.removeItem(AUTH_LAST_UID_KEY);
       localStorage.setItem(AUTH_SKIPPED_KEY, '1');
+      await migrateLegacyGuestDataIfNeeded();
+      resetSessionRuntimeState();
+      await initDB('guest');
+      reloadScopedPreferences();
+      refreshBackupFolderLabel().catch(() => {});
+      updateCloudAccountUI();
       await enterAppFromAuth();
     });
 
@@ -12711,12 +12974,24 @@
     document.getElementById('btn-auth-logout')?.addEventListener('click', async () => {
       if (!firebaseAuth) return;
       detachRealtimeCloudListeners();
+      currentCloudUser = null;
+      handlingAuthUid = null;
+      handlingAuthPromise = null;
       localStorage.removeItem(AUTH_SKIPPED_KEY);
       localStorage.removeItem(AUTH_HAS_SESSION_KEY);
+      localStorage.removeItem(AUTH_LAST_UID_KEY);
       localStorage.removeItem(AUTH_PENDING_TS_KEY);
-      await firebaseAuth.signOut();
+      try {
+        await firebaseAuth.signOut();
+      } catch (e) {}
+      closeActiveDB();
+      resetSessionRuntimeState();
+      ['auth-email-input', 'auth-password-input', 'screen-auth-email', 'screen-auth-password'].forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
       authModal?.classList.add('hidden');
-      activeProjectId = null;
+      updateCloudAccountUI();
       showAuthScreen('login');
       showToast(t('toast_signed_out'));
     });
@@ -12764,7 +13039,7 @@
     }
 
     async function getAllLocalEntities(storeName) {
-      const fallbackItems = getFallbackList('rp_' + storeName);
+      const fallbackItems = getFallbackList('sb_' + storeName);
       if (useFallbackStorage || !dbInstance || !dbInstance.objectStoreNames.contains(storeName)) {
         return fallbackItems;
       }
@@ -12823,18 +13098,31 @@
 
     async function syncAllWithCloud({ silent = false } = {}) {
       if (!currentCloudUser || !firebaseDb || !navigator.onLine || isCloudSyncing) return;
+      const syncUid = currentCloudUser.uid;
+      const expectedScope = getStorageScopeForUid(syncUid);
+      if (activeStorageScope !== expectedScope || !dbInstance) return;
+      const isSameActiveSession = () => Boolean(
+        currentCloudUser &&
+        currentCloudUser.uid === syncUid &&
+        activeStorageScope === expectedScope
+      );
+
       isCloudSyncing = true;
       isCloudSyncPending = false;
       updateCloudAccountUI();
-      const userRef = firebaseDb.collection('users').doc(currentCloudUser.uid);
+      const userRef = firebaseDb.collection('users').doc(syncUid);
 
+      const syncPromise = (async () => {
       try {
         let anyChange = false;
 
         // 1. Sync user profile & project sort mode
         const localProfile = getLocalUserProfile();
-        const localSortUpdatedAt = Number(localStorage.getItem('rp_projects_sort_updated_at') || 0);
+        const sortUpdatedAtKey = getScopedStorageKey('sb_projects_sort_updated_at', expectedScope);
+        const sortModeKey = getScopedStorageKey('sb_projects_sort', expectedScope);
+        const localSortUpdatedAt = Number(localStorage.getItem(sortUpdatedAtKey) || 0);
         const profSnap = await userRef.collection('profile').doc('main').get();
+        if (!isSameActiveSession()) return;
         if (profSnap.exists) {
           const cloudProf = profSnap.data() || {};
           if ((cloudProf.updatedAt || 0) > (localProfile.updatedAt || 0)) {
@@ -12845,8 +13133,8 @@
           }
           if (cloudProf.sortMode && (cloudProf.sortUpdatedAt || 0) > localSortUpdatedAt) {
             projectsSortMode = cloudProf.sortMode;
-            localStorage.setItem('rp_projects_sort', projectsSortMode);
-            localStorage.setItem('rp_projects_sort_updated_at', String(cloudProf.sortUpdatedAt));
+            localStorage.setItem(sortModeKey, projectsSortMode);
+            localStorage.setItem(sortUpdatedAtKey, String(cloudProf.sortUpdatedAt));
             updateSortButtonsUI();
             anyChange = true;
           } else if (localSortUpdatedAt > (cloudProf.sortUpdatedAt || 0)) {
@@ -12869,6 +13157,7 @@
         const pendingDeletes = getCloudDeletes();
         const remainingDeletes = [];
         for (const del of pendingDeletes) {
+          if (!isSameActiveSession()) return;
           try {
             lastCloudWriteTs = Date.now();
             await userRef.collection(del.store).doc(del.id).set({
@@ -12881,6 +13170,7 @@
             remainingDeletes.push(del);
           }
         }
+        if (!isSameActiveSession()) return;
         setCloudDeletes(remainingDeletes);
 
         const deletedMap = new Map();
@@ -12891,10 +13181,12 @@
         const syncTs = Date.now();
 
         for (const storeName of stores) {
+          if (!isSameActiveSession()) return;
           const [localList, cloudSnap] = await Promise.all([
             getAllLocalEntities(storeName),
             userRef.collection(storeName).get()
           ]);
+          if (!isSameActiveSession()) return;
 
           const localMap = new Map(localList.map(item => [item.id, item]));
           const cloudMap = new Map();
@@ -13088,10 +13380,12 @@
                 delete mergedTake.photo;
 
                 if (needLocalSave) {
+                  if (!isSameActiveSession()) return;
                   await saveEntityToDB(STORE_TAKES, mergedTake, { markDirty: false });
                   anyChange = true;
                 }
                 if (needCloudPush) {
+                  if (!isSameActiveSession()) return;
                   const cloudPhotosPayload = [];
                   for (const entry of mergedPhotos) {
                     if (entry && entry.photo) {
@@ -13103,6 +13397,7 @@
                       cloudPhotosPayload.push({ ...entry, photo: null, photoId: null });
                     }
                   }
+                  if (!isSameActiveSession()) return;
                   lastCloudWriteTs = Date.now();
                   await userRef.collection(STORE_TAKES).doc(mergedTake.id).set({
                     ...mergedTake,
@@ -13147,12 +13442,14 @@
                 itemToSave.photos = resolvedEntries;
                 delete itemToSave.photo;
               }
+              if (!isSameActiveSession()) return;
               await saveEntityToDB(storeName, itemToSave, { markDirty: false });
               anyChange = true;
             }
           }
         }
 
+        if (!isSameActiveSession()) return;
         // 4a. Deduplicate characters created/imported offline on two devices for the same project + character name
         const allCharsAfterSync = await getAllLocalEntities(STORE_CHARACTERS);
         const charsByProjectName = new Map();
@@ -13333,6 +13630,7 @@
         }
 
         // Mark all local projects as synced
+        if (!isSameActiveSession()) return;
         const allProjects = await getAllProjectsFromDB();
         allProjects.forEach(p => markProjectCloudSynced(p.id, syncTs));
         refreshUnsavedBackupsBanner(allProjects);
@@ -13359,8 +13657,8 @@
             if (scenesModal && !scenesModal.classList.contains('hidden')) {
               await renderScenesList();
             }
-            if (raccordViewerModal && !raccordViewerModal.classList.contains('hidden') && activeViewerTakeId) {
-              await openRaccordViewer(activeViewerTakeId);
+            if (continuityViewerModal && !continuityViewerModal.classList.contains('hidden') && activeViewerTakeId) {
+              await openContinuityViewer(activeViewerTakeId);
             }
           }
           if (!viewProjects.classList.contains('hidden')) {
@@ -13372,6 +13670,7 @@
         if (!silent) showToast(t('toast_cloud_synced'));
         cloudConnectionFailed = false;
       } catch (err) {
+        if (!isSameActiveSession()) return;
         console.error('Cloud sync error:', err);
         cloudConnectionFailed = true;
         isCloudSyncPending = false;
@@ -13382,16 +13681,21 @@
         if (!silent) showToast(t('toast_cloud_sync_error'));
       } finally {
         isCloudSyncing = false;
+        activeCloudSyncPromise = null;
         updateCloudAccountUI();
-        if (isCloudSyncPending && navigator.onLine && !cloudConnectionFailed) {
+        if (isSameActiveSession() && isCloudSyncPending && navigator.onLine && !cloudConnectionFailed) {
           syncAllWithCloud({ silent: true });
         }
       }
+      })();
+      activeCloudSyncPromise = syncPromise;
+      return syncPromise;
     }
 
     function initFirebaseCloud() {
       const skipped = localStorage.getItem(AUTH_SKIPPED_KEY) === '1';
       const hadSession = localStorage.getItem(AUTH_HAS_SESSION_KEY) === '1';
+      const lastUid = localStorage.getItem(AUTH_LAST_UID_KEY) || '';
       const pendingTs = Number(localStorage.getItem(AUTH_PENDING_TS_KEY) || 0);
       const isPendingRedirect = pendingTs > 0 && (Date.now() - pendingTs < 120000);
 
@@ -13400,12 +13704,22 @@
       }
 
       if (typeof firebase === 'undefined') {
-        if (skipped || hadSession) {
-          enterAppFromAuth().finally(() => setAuthLoading(false));
-        } else {
-          showAuthScreen('login');
-          setAuthLoading(false);
-        }
+        (async () => {
+          if (skipped) {
+            await migrateLegacyGuestDataIfNeeded();
+            await initDB('guest');
+            reloadScopedPreferences();
+            await enterAppFromAuth();
+          } else if (hadSession && lastUid) {
+            await initDB(getStorageScopeForUid(lastUid));
+            reloadScopedPreferences();
+            await enterAppFromAuth();
+          } else {
+            closeActiveDB();
+            resetSessionRuntimeState();
+            showAuthScreen('login');
+          }
+        })().finally(() => setAuthLoading(false));
         return;
       }
 
@@ -13421,10 +13735,21 @@
           if (initialResolved) return;
           initialResolved = true;
           cloudConnectionFailed = true;
-          const prof = getLocalUserProfile();
-          if (skipped || hadSession || prof.name || prof.department) {
+          const isSkippedNow = localStorage.getItem(AUTH_SKIPPED_KEY) === '1';
+          const hasSessNow = localStorage.getItem(AUTH_HAS_SESSION_KEY) === '1';
+          const lastUidNow = localStorage.getItem(AUTH_LAST_UID_KEY) || '';
+          if (isSkippedNow) {
+            await migrateLegacyGuestDataIfNeeded();
+            await initDB('guest');
+            reloadScopedPreferences();
+            await enterAppFromAuth();
+          } else if (hasSessNow && lastUidNow) {
+            await initDB(getStorageScopeForUid(lastUidNow));
+            reloadScopedPreferences();
             await enterAppFromAuth();
           } else {
+            closeActiveDB();
+            resetSessionRuntimeState();
             showAuthScreen('login');
           }
           updateOfflineBanner();
@@ -13439,6 +13764,7 @@
               await handleAuthenticatedUser(res.user, { isInitialStartup: false });
               return res.user;
             }
+            localStorage.removeItem(AUTH_PENDING_TS_KEY);
             return null;
           })
           .catch((err) => {
@@ -13469,26 +13795,36 @@
           }
 
           if (isPendingRedirect) {
-            await new Promise((r) => setTimeout(r, 1200));
-            if (firebaseAuth.currentUser) {
-              clearTimeout(startupTimeout);
-              initialResolved = true;
-              await handleAuthenticatedUser(firebaseAuth.currentUser, { isInitialStartup: false });
-              return;
-            }
             localStorage.removeItem(AUTH_PENDING_TS_KEY);
           }
 
           clearTimeout(startupTimeout);
+          detachRealtimeCloudListeners();
           currentCloudUser = null;
           localStorage.removeItem(AUTH_HAS_SESSION_KEY);
-          updateCloudAccountUI();
+          localStorage.removeItem(AUTH_LAST_UID_KEY);
 
-          if (!initialResolved) {
-            initialResolved = true;
-            if (localStorage.getItem(AUTH_SKIPPED_KEY) === '1') {
+          if (localStorage.getItem(AUTH_SKIPPED_KEY) === '1') {
+            if (activeStorageScope !== 'guest' || !dbInstance) {
+              await migrateLegacyGuestDataIfNeeded();
+              resetSessionRuntimeState();
+              await initDB('guest');
+              reloadScopedPreferences();
+              refreshBackupFolderLabel().catch(() => {});
+            }
+            updateCloudAccountUI();
+            if (!initialResolved) {
+              initialResolved = true;
               await enterAppFromAuth();
-            } else {
+            }
+          } else {
+            closeActiveDB();
+            resetSessionRuntimeState();
+            updateCloudAccountUI();
+            if (!initialResolved) {
+              initialResolved = true;
+              showAuthScreen('login');
+            } else if (viewAuth && viewAuth.classList.contains('hidden')) {
               showAuthScreen('login');
             }
           }
@@ -13595,13 +13931,23 @@
       const isPendingRedirect = pendingTs > 0 && (Date.now() - pendingTs < 120000);
       setAuthLoading(true, isPendingRedirect ? 'auth_signing_in_loading' : 'app_loading_startup');
       try {
-        await initDB();
-        refreshBackupFolderLabel().catch(() => {});
         const hadSession = localStorage.getItem(AUTH_HAS_SESSION_KEY) === '1';
+        const lastUid = localStorage.getItem(AUTH_LAST_UID_KEY) || '';
         const skipped = localStorage.getItem(AUTH_SKIPPED_KEY) === '1';
-        if (hadSession || skipped) {
+        if (hadSession && lastUid) {
+          await initDB(getStorageScopeForUid(lastUid));
+          reloadScopedPreferences();
+          refreshBackupFolderLabel().catch(() => {});
+          await enterAppFromAuth();
+        } else if (skipped) {
+          await migrateLegacyGuestDataIfNeeded();
+          await initDB('guest');
+          reloadScopedPreferences();
+          refreshBackupFolderLabel().catch(() => {});
           await enterAppFromAuth();
         } else {
+          closeActiveDB();
+          resetSessionRuntimeState();
           showAuthScreen('login');
         }
         initFirebaseCloud();
