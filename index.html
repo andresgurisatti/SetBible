@@ -316,7 +316,55 @@
       justify-content: center;
     }
 
+    #projects-list {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .list-section-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 2px 2px 2px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      will-change: transform;
+      transition: opacity 0.2s ease, color 0.2s ease;
+    }
+
+    .list-section-header.is-pinned-section {
+      color: var(--amber);
+    }
+
+    .list-section-header .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border-700);
+      transition: background-color 0.2s ease;
+    }
+
+    .list-section-header.is-pinned-section .section-line {
+      background: rgba(245, 158, 11, 0.35);
+    }
+
+    .empty-pinned-hint {
+      border: 1.5px dashed rgba(245, 158, 11, 0.28);
+      border-radius: 12px;
+      padding: 11px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-align: center;
+      background: rgba(245, 158, 11, 0.04);
+    }
+
     .project-card {
+      position: relative;
       background: var(--bg-850);
       border: 1px solid var(--border-700);
       border-radius: 12px;
@@ -331,6 +379,12 @@
       transition: border-color 0.15s, opacity 0.2s, transform 0.15s, box-shadow 0.15s;
     }
 
+    #projects-list .project-card {
+      margin-bottom: 0;
+      will-change: transform;
+      transition: border-color 0.15s, opacity 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+
     .project-card.is-pinned {
       border-color: rgba(245, 158, 11, 0.55);
       background: linear-gradient(135deg, rgba(245, 158, 11, 0.07), var(--bg-850));
@@ -342,12 +396,94 @@
     }
 
     .project-card.is-dragging {
-      opacity: 0.96 !important;
-      border-color: var(--amber) !important;
-      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.75), 0 0 16px rgba(245, 158, 11, 0.28);
-      transform: scale(1.02);
-      z-index: 30;
       position: relative;
+      z-index: 52;
+      opacity: 0.97 !important;
+      border-color: var(--amber) !important;
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.8), 0 0 18px rgba(245, 158, 11, 0.3);
+      transition: box-shadow 0.16s ease, border-color 0.16s ease, opacity 0.16s ease;
+    }
+
+    .project-card.is-dragging.is-will-pin {
+      border-color: #fbbf24 !important;
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.85), 0 0 22px rgba(245, 158, 11, 0.45);
+    }
+
+    .project-card.is-dragging.is-will-unpin {
+      border-color: #93c5fd !important;
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.85), 0 0 18px rgba(147, 197, 253, 0.3);
+    }
+
+    .project-card.is-dropping {
+      pointer-events: none;
+    }
+
+    .drag-follow-pill {
+      position: absolute;
+      left: 50%;
+      top: calc(100% + 7px);
+      transform: translateX(-50%) translateY(-4px) scale(0.94);
+      z-index: 5;
+      pointer-events: none;
+      white-space: nowrap;
+      font-size: 12px;
+      font-weight: 900;
+      padding: 6px 13px;
+      border-radius: 999px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.78);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.14s ease, transform 0.14s ease, visibility 0.14s;
+    }
+
+    .drag-follow-pill.is-above {
+      top: auto;
+      bottom: calc(100% + 7px);
+      transform: translateX(-50%) translateY(4px) scale(0.94);
+    }
+
+    .drag-follow-pill.is-visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0) scale(1);
+    }
+
+    .drag-follow-pill.is-pin {
+      color: #111827;
+      background: var(--amber);
+    }
+
+    .drag-follow-pill.is-unpin {
+      color: #eff6ff;
+      background: #1d3b66;
+      border: 1px solid rgba(147, 197, 253, 0.65);
+    }
+
+    .project-drag-placeholder {
+      border-radius: 12px;
+      border: 1.5px dashed rgba(96, 165, 250, 0.72);
+      background: rgba(96, 165, 250, 0.1);
+      transition: border-color 0.18s ease, background-color 0.18s ease;
+    }
+
+    .project-drag-placeholder.is-zone-pinned {
+      border-color: rgba(245, 158, 11, 0.72);
+      background: rgba(245, 158, 11, 0.1);
+    }
+
+    .project-drag-placeholder.is-zone-unpinned {
+      border-color: rgba(96, 165, 250, 0.72);
+      background: rgba(96, 165, 250, 0.1);
+    }
+
+    .project-drag-placeholder.is-will-pin {
+      border-color: var(--amber);
+      background: rgba(245, 158, 11, 0.17);
+    }
+
+    .project-drag-placeholder.is-will-unpin {
+      border-color: #60a5fa;
+      background: rgba(96, 165, 250, 0.16);
     }
 
     .project-card:active {
@@ -4574,7 +4710,7 @@
         <div style="width:100%; border-top:1px solid var(--border-700); padding-top:14px; display:flex; flex-direction:column; gap:6px; font-size:13px; color:var(--text-muted);">
           <div>
             <span data-i18n="app_info_version_label">Versión</span>:
-            <strong id="app-info-version-val" style="color:#fff;">1.19</strong>
+            <strong id="app-info-version-val" style="color:#fff;">1.20</strong>
           </div>
           <div>
             <span data-i18n="app_info_created_by">Creado por</span>:
@@ -4936,6 +5072,11 @@
         summary_backup_pending: 'Cambios sin respaldar',
         summary_photos_count: '{n} fotos',
         drag_to_sort_title: 'Arrastrar para ordenar',
+        projects_section_pinned: 'FIJADOS',
+        projects_section_other: 'OTROS PROYECTOS',
+        projects_empty_pinned_hint: 'Arrastra un proyecto aquí arriba para fijarlo',
+        drag_drop_to_pin: 'Soltar para fijar proyecto',
+        drag_drop_to_unpin: 'Soltar para quitar de fijados',
         pinned_project_title: 'Proyecto fijado',
         completed_project_title: 'Proyecto terminado',
         dirty_project_title: 'Cambios sin respaldar',
@@ -5385,6 +5526,11 @@
         summary_backup_pending: 'Unsaved changes',
         summary_photos_count: '{n} photos',
         drag_to_sort_title: 'Drag to reorder',
+        projects_section_pinned: 'PINNED',
+        projects_section_other: 'OTHER PROJECTS',
+        projects_empty_pinned_hint: 'Drag a project up here to pin it',
+        drag_drop_to_pin: 'Drop to pin project',
+        drag_drop_to_unpin: 'Drop to unpin project',
         pinned_project_title: 'Pinned project',
         completed_project_title: 'Completed project',
         dirty_project_title: 'Unsaved changes',
@@ -5834,6 +5980,11 @@
         summary_backup_pending: 'Alterações sem backup',
         summary_photos_count: '{n} fotos',
         drag_to_sort_title: 'Arrastar para ordenar',
+        projects_section_pinned: 'FIXADOS',
+        projects_section_other: 'OUTROS PROJETOS',
+        projects_empty_pinned_hint: 'Arraste um projeto para cá para fixá-lo',
+        drag_drop_to_pin: 'Solte para fixar o projeto',
+        drag_drop_to_unpin: 'Solte para desafixar o projeto',
         pinned_project_title: 'Projeto fixado',
         completed_project_title: 'Projeto concluído',
         dirty_project_title: 'Alterações não salvas',
@@ -6283,6 +6434,11 @@
         summary_backup_pending: 'Modifiche non salvate',
         summary_photos_count: '{n} foto',
         drag_to_sort_title: 'Trascina per ordinare',
+        projects_section_pinned: 'FISSATI',
+        projects_section_other: 'ALTRI PROGETTI',
+        projects_empty_pinned_hint: 'Trascina un progetto qui sopra per fissarlo',
+        drag_drop_to_pin: 'Rilascia per fissare il progetto',
+        drag_drop_to_unpin: 'Rilascia per rimuovere dai fissati',
         pinned_project_title: 'Progetto fissato',
         completed_project_title: 'Progetto completato',
         dirty_project_title: 'Modifiche non salvate',
@@ -6732,6 +6888,11 @@
         summary_backup_pending: 'Ungesicherte Änderungen',
         summary_photos_count: '{n} Fotos',
         drag_to_sort_title: 'Ziehen zum Sortieren',
+        projects_section_pinned: 'ANGEHEFTET',
+        projects_section_other: 'WEITERE PROJEKTE',
+        projects_empty_pinned_hint: 'Ziehe ein Projekt hier hoch, um es anzuheften',
+        drag_drop_to_pin: 'Loslassen zum Anheften',
+        drag_drop_to_unpin: 'Loslassen zum Lösen',
         pinned_project_title: 'Angeheftetes Projekt',
         completed_project_title: 'Abgeschlossenes Projekt',
         dirty_project_title: 'Ungesicherte Änderungen',
@@ -7181,6 +7342,11 @@
         summary_backup_pending: 'Modifications non sauvegardées',
         summary_photos_count: '{n} photos',
         drag_to_sort_title: 'Glisser pour réorganiser',
+        projects_section_pinned: 'ÉPINGLÉS',
+        projects_section_other: 'AUTRES PROJETS',
+        projects_empty_pinned_hint: 'Glissez un projet ici pour l’épingler',
+        drag_drop_to_pin: 'Relâcher pour épingler le projet',
+        drag_drop_to_unpin: 'Relâcher pour désépingler',
         pinned_project_title: 'Projet épinglé',
         completed_project_title: 'Projet terminé',
         dirty_project_title: 'Modifications non enregistrées',
@@ -8497,7 +8663,58 @@
       return list;
     }
 
+    const PROJECT_DRAG_ANIM_MS = 220;
+    const PROJECT_DRAG_EASING = 'cubic-bezier(0.22, 1, 0.36, 1)';
+
+    let projectDragState = null;
+    let activeProjectDropCleanup = null;
+    let projectAutoScrollRaf = null;
+    let projectSiblingCleanupTimer = null;
+    let suppressNextProjectClick = false;
+    let projectClickSuppressTimer = null;
+    let deferredRenderProjects = false;
+    let activeProjectOrderWrites = 0;
+    let projectOrderSaveQueue = Promise.resolve();
+
+    function buildProjectCardHtml(proj, showCustomOrderControls, takesCountMap) {
+      const prodValue = proj.producer || proj.director || '';
+      const takesCount = takesCountMap.get(proj.id) || 0;
+      const takesLabel = `${takesCount} ${takesCount === 1 ? t('unit_continuity_singular') : t('unit_continuity_plural')}`;
+      const classes = ['project-card'];
+      if (proj.pinned) classes.push('is-pinned');
+      if (proj.completed) classes.push('is-completed');
+
+      return `
+        <div class="${classes.join(' ')}" data-action="open-project" data-id="${proj.id}" data-pinned="${proj.pinned ? '1' : '0'}">
+          ${showCustomOrderControls ? `
+            <div class="project-drag-handle" data-action="drag-project" title="${t('drag_to_sort_title')}">
+              ${ICON_DRAG_GRIP_SVG}
+            </div>
+          ` : ''}
+          <div class="project-card-info">
+            <div class="project-card-title">
+              ${proj.pinned ? `<span class="project-pin-icon" title="${t('pinned_project_title')}">${ICON_PIN_SVG}</span>` : ''}
+              <span>${escapeHtml(proj.name)}</span>
+              ${proj.completed ? `<span class="project-completed-badge" title="${t('completed_project_title')}">${ICON_COMPLETED_SVG}<span>${t('badge_completed')}</span></span>` : ''}
+              ${shouldShowDirtyCloudIndicators() && isProjectModifiedSinceBackup(proj) ? `<span class="project-dirty-badge" title="${t('dirty_project_title')}">${t('menu_dirty_backup_badge')}</span>` : ''}
+            </div>
+            <p class="project-card-meta">
+              ${prodValue ? escapeHtml(prodValue) + ' • ' : ''}${t('created_label')}: ${new Date(proj.createdAt).toLocaleDateString(currentAppLang === 'es' ? 'es-ES' : currentAppLang)} • <span style="color:var(--amber); font-weight:700; font-size:12.5px; white-space:nowrap;"><span class="takes-count-short">${takesCount} ${t('unit_continuity_abbr')}</span><span class="takes-count-full">${takesLabel}</span></span>
+            </p>
+          </div>
+          <button type="button" class="btn-edit-square" data-action="edit-project" data-id="${proj.id}" title="${t('edit_project_title')}">
+            ${ICON_EDIT_SVG}
+          </button>
+        </div>
+      `;
+    }
+
     async function renderProjects() {
+      if (projectDragState || activeProjectDropCleanup || activeProjectOrderWrites > 0) {
+        deferredRenderProjects = true;
+        return;
+      }
+
       const rawProjects = await getAllProjectsFromDB();
       refreshUnsavedBackupsBanner(rawProjects);
       const projects = sortProjectsArray(rawProjects);
@@ -8518,7 +8735,13 @@
         searchProjectsInput?.classList.remove('has-counter');
       }
 
+      if (projectDragState || activeProjectDropCleanup || activeProjectOrderWrites > 0) {
+        deferredRenderProjects = true;
+        return;
+      }
+
       if (filteredProjects.length === 0) {
+        deferredRenderProjects = false;
         projectsList.innerHTML = '';
         emptyProjects.classList.remove('hidden');
         return;
@@ -8527,6 +8750,11 @@
       emptyProjects.classList.add('hidden');
 
       const allTakes = await getAllLocalEntities(STORE_TAKES);
+      if (projectDragState || activeProjectDropCleanup || activeProjectOrderWrites > 0) {
+        deferredRenderProjects = true;
+        return;
+      }
+
       const takesCountMap = new Map();
       for (const tk of allTakes) {
         if (!tk || !tk.projectId) continue;
@@ -8534,39 +8762,45 @@
       }
 
       const showCustomOrderControls = (projectsSortMode === 'custom' && !q && filteredProjects.length > 1);
+      deferredRenderProjects = false;
 
-      projectsList.innerHTML = filteredProjects.map((proj) => {
-        const prodValue = proj.producer || proj.director || '';
-        const takesCount = takesCountMap.get(proj.id) || 0;
-        const takesLabel = `${takesCount} ${takesCount === 1 ? t('unit_continuity_singular') : t('unit_continuity_plural')}`;
-        const classes = ['project-card'];
-        if (proj.pinned) classes.push('is-pinned');
-        if (proj.completed) classes.push('is-completed');
+      if (!showCustomOrderControls) {
+        projectsList.innerHTML = filteredProjects.map(proj => buildProjectCardHtml(proj, false, takesCountMap)).join('');
+        return;
+      }
 
-        return `
-          <div class="${classes.join(' ')}" data-action="open-project" data-id="${proj.id}">
-            ${showCustomOrderControls ? `
-              <div class="project-drag-handle" data-action="drag-project" title="${t('drag_to_sort_title')}">
-                ${ICON_DRAG_GRIP_SVG}
-              </div>
-            ` : ''}
-            <div class="project-card-info">
-              <div class="project-card-title">
-                ${proj.pinned ? `<span class="project-pin-icon" title="${t('pinned_project_title')}">${ICON_PIN_SVG}</span>` : ''}
-                <span>${escapeHtml(proj.name)}</span>
-                ${proj.completed ? `<span class="project-completed-badge" title="${t('completed_project_title')}">${ICON_COMPLETED_SVG}<span>${t('badge_completed')}</span></span>` : ''}
-                ${shouldShowDirtyCloudIndicators() && isProjectModifiedSinceBackup(proj) ? `<span class="project-dirty-badge" title="${t('dirty_project_title')}">${t('menu_dirty_backup_badge')}</span>` : ''}
-              </div>
-              <p class="project-card-meta">
-                ${prodValue ? escapeHtml(prodValue) + ' • ' : ''}${t('created_label')}: ${new Date(proj.createdAt).toLocaleDateString(currentAppLang === 'es' ? 'es-ES' : currentAppLang)} • <span style="color:var(--amber); font-weight:700; font-size:12.5px; white-space:nowrap;"><span class="takes-count-short">${takesCount} ${t('unit_continuity_abbr')}</span><span class="takes-count-full">${takesLabel}</span></span>
-              </p>
-            </div>
-            <button type="button" class="btn-edit-square" data-action="edit-project" data-id="${proj.id}" title="${t('edit_project_title')}">
-              ${ICON_EDIT_SVG}
-            </button>
-          </div>
-        `;
-      }).join('');
+      const pinnedProjects = filteredProjects.filter(p => p.pinned);
+      const otherProjects = filteredProjects.filter(p => !p.pinned);
+      const parts = [];
+
+      parts.push(`
+        <div id="section-pinned-header" class="list-section-header is-pinned-section">
+          ${ICON_PIN_SVG}
+          <span>${escapeHtml(t('projects_section_pinned'))}</span>
+          <div class="section-line"></div>
+        </div>
+      `);
+
+      if (pinnedProjects.length > 0) {
+        for (const p of pinnedProjects) {
+          parts.push(buildProjectCardHtml(p, true, takesCountMap));
+        }
+      } else {
+        parts.push(`<div id="empty-pinned-hint" class="empty-pinned-hint">${escapeHtml(t('projects_empty_pinned_hint'))}</div>`);
+      }
+
+      parts.push(`
+        <div id="section-other-header" class="list-section-header">
+          <span>${escapeHtml(t('projects_section_other'))}</span>
+          <div class="section-line"></div>
+        </div>
+      `);
+
+      for (const p of otherProjects) {
+        parts.push(buildProjectCardHtml(p, true, takesCountMap));
+      }
+
+      projectsList.innerHTML = parts.join('');
     }
 
     const projectModal = document.getElementById('project-modal');
@@ -8578,100 +8812,409 @@
     const projCompletedCheck = document.getElementById('proj-completed-check');
 
     /* ==========================================================================
-       ARRASTRAR Y SOLTAR (DRAG & DROP) PARA ORDEN PERSONALIZADO DE PROYECTOS
+       ARRASTRAR Y SOLTAR (DRAG & DROP ANIMADO FLIP + CRUZAR PARA FIJAR)
        ========================================================================== */
-    let draggingProjectCard = null;
-    let draggingPointerId = null;
-    let suppressNextProjectClick = false;
+    function settleProjectDragAnimationsSync() {
+      if (activeProjectDropCleanup) activeProjectDropCleanup();
+      if (projectSiblingCleanupTimer) {
+        clearTimeout(projectSiblingCleanupTimer);
+        projectSiblingCleanupTimer = null;
+      }
+      for (const el of projectsList.children) {
+        el.style.transition = '';
+        el.style.transform = '';
+      }
+    }
+
+    function stopProjectAutoScroll() {
+      if (projectAutoScrollRaf) {
+        cancelAnimationFrame(projectAutoScrollRaf);
+        projectAutoScrollRaf = null;
+      }
+    }
+
+    function getProjectElLayoutCenterY(el) {
+      const listTop = projectsList.getBoundingClientRect().top;
+      return listTop + el.offsetTop + el.offsetHeight / 2;
+    }
+
+    function isProjectAnchorInPinnedZone(anchor) {
+      const otherHeader = document.getElementById('section-other-header');
+      if (!otherHeader) return projectDragState ? projectDragState.originalPinned : false;
+      const children = Array.from(projectsList.children);
+      return children.indexOf(anchor) < children.indexOf(otherHeader);
+    }
+
+    function updateProjectCrossSectionIndicators(anchor) {
+      if (!projectDragState) return;
+      const inPinnedZone = isProjectAnchorInPinnedZone(anchor);
+
+      if (projectDragState.placeholder) {
+        projectDragState.placeholder.classList.toggle('is-zone-pinned', inPinnedZone);
+        projectDragState.placeholder.classList.toggle('is-zone-unpinned', !inPinnedZone);
+      }
+
+      const changedToPin = (!projectDragState.originalPinned && inPinnedZone);
+      const changedToUnpin = (projectDragState.originalPinned && !inPinnedZone);
+
+      projectDragState.card.classList.toggle('is-will-pin', changedToPin);
+      projectDragState.card.classList.toggle('is-will-unpin', changedToUnpin);
+
+      if (projectDragState.placeholder) {
+        projectDragState.placeholder.classList.toggle('is-will-pin', changedToPin);
+        projectDragState.placeholder.classList.toggle('is-will-unpin', changedToUnpin);
+      }
+
+      const pill = projectDragState.followPill;
+      if (pill) {
+        pill.classList.toggle('is-visible', changedToPin || changedToUnpin);
+        pill.classList.toggle('is-pin', changedToPin);
+        pill.classList.toggle('is-unpin', changedToUnpin);
+        if (changedToPin) {
+          pill.textContent = t('drag_drop_to_pin');
+        } else if (changedToUnpin) {
+          pill.textContent = t('drag_drop_to_unpin');
+        } else {
+          pill.textContent = '';
+        }
+      }
+    }
+
+    function updateProjectFollowPillPlacement() {
+      if (!projectDragState || !projectDragState.followPill) return;
+      const cRect = projectDragState.card.getBoundingClientRect();
+      projectDragState.followPill.classList.toggle('is-above', cRect.bottom > window.innerHeight - 64);
+    }
+
+    function reorderProjectsWithFlip(clientY) {
+      if (!projectDragState) return;
+      const anchor = projectDragState.placeholder;
+      const pinnedHeader = document.getElementById('section-pinned-header');
+      const emptyHint = document.getElementById('empty-pinned-hint');
+
+      const thresholdItems = Array.from(projectsList.children).filter((el) => {
+        if (el === anchor || el === projectDragState.card || el === pinnedHeader || el === emptyHint) return false;
+        return el.classList.contains('project-card') || el.id === 'section-other-header';
+      });
+      if (thresholdItems.length === 0) return;
+
+      let targetBeforeEl = null;
+      let passedLast = true;
+      for (const item of thresholdItems) {
+        if (clientY < getProjectElLayoutCenterY(item)) {
+          targetBeforeEl = item;
+          passedLast = false;
+          break;
+        }
+      }
+
+      if (passedLast) {
+        const lastItem = thresholdItems[thresholdItems.length - 1];
+        targetBeforeEl = lastItem.nextElementSibling;
+        if (targetBeforeEl === anchor) return;
+      }
+
+      if (targetBeforeEl === anchor || anchor.nextElementSibling === targetBeforeEl) {
+        return;
+      }
+
+      // 1. FIRST: capturar posición visual actual de tarjetas y del divisor
+      const flipTargets = Array.from(projectsList.children).filter(
+        el => el !== anchor && el !== projectDragState.card && (el.classList.contains('project-card') || el.id === 'section-other-header')
+      );
+      const firstTops = new Map();
+      for (const el of flipTargets) {
+        firstTops.set(el, el.getBoundingClientRect().top);
+      }
+
+      // 2. Limpiar transforms previos antes de medir LAST
+      for (const el of flipTargets) {
+        el.style.transition = 'none';
+        el.style.transform = '';
+      }
+
+      // 3. Mover placeholder y actualizar indicadores de sección
+      if (targetBeforeEl) {
+        projectsList.insertBefore(anchor, targetBeforeEl);
+      } else {
+        projectsList.appendChild(anchor);
+      }
+      updateProjectCrossSectionIndicators(anchor);
+
+      // 4. LAST + INVERT
+      const movedEls = [];
+      for (const el of flipTargets) {
+        const deltaY = firstTops.get(el) - el.getBoundingClientRect().top;
+        if (Math.abs(deltaY) > 0.5) {
+          el.style.transform = `translate3d(0, ${deltaY}px, 0)`;
+          movedEls.push(el);
+        }
+      }
+      if (movedEls.length === 0) return;
+
+      void projectsList.offsetHeight;
+
+      // 5. PLAY
+      requestAnimationFrame(() => {
+        for (const el of movedEls) {
+          el.style.transition = `transform ${PROJECT_DRAG_ANIM_MS}ms ${PROJECT_DRAG_EASING}`;
+          el.style.transform = 'translate3d(0, 0, 0)';
+        }
+        if (projectSiblingCleanupTimer) clearTimeout(projectSiblingCleanupTimer);
+        projectSiblingCleanupTimer = setTimeout(() => {
+          for (const el of movedEls) {
+            if (el.style.transform === 'translate3d(0, 0, 0)') {
+              el.style.transition = '';
+              el.style.transform = '';
+            }
+          }
+        }, PROJECT_DRAG_ANIM_MS + 35);
+      });
+    }
+
+    function startProjectAutoScrollLoop() {
+      if (projectAutoScrollRaf) return;
+      const scrollArea = projectsList.closest('.scroll-area');
+      if (!scrollArea) return;
+      const bottomBarEl = viewProjects ? viewProjects.querySelector('.bottom-bar-center') : null;
+
+      const tick = () => {
+        if (!projectDragState) {
+          projectAutoScrollRaf = null;
+          return;
+        }
+        const rect = scrollArea.getBoundingClientRect();
+        const bottomBarRect = bottomBarEl ? bottomBarEl.getBoundingClientRect() : null;
+        const effectiveBottom = (bottomBarRect && bottomBarRect.height > 0)
+          ? Math.min(rect.bottom, bottomBarRect.top)
+          : rect.bottom;
+        const edgeZone = 70;
+        let speed = 0;
+
+        if (projectDragState.lastClientY < rect.top + edgeZone) {
+          const ratio = Math.min(1, (rect.top + edgeZone - projectDragState.lastClientY) / edgeZone);
+          speed = -Math.ceil(ratio * 10);
+        } else if (projectDragState.lastClientY > effectiveBottom - edgeZone) {
+          const ratio = Math.min(1, (projectDragState.lastClientY - (effectiveBottom - edgeZone)) / edgeZone);
+          speed = Math.ceil(ratio * 10);
+        }
+
+        if (speed !== 0) {
+          const prevScroll = scrollArea.scrollTop;
+          scrollArea.scrollTop += speed;
+          if (scrollArea.scrollTop !== prevScroll) {
+            reorderProjectsWithFlip(projectDragState.lastClientY);
+          }
+        }
+        projectAutoScrollRaf = requestAnimationFrame(tick);
+      };
+      projectAutoScrollRaf = requestAnimationFrame(tick);
+    }
+
+    function persistProjectDragResult(orderedIds, draggedId, finalPinned) {
+      activeProjectOrderWrites++;
+      projectOrderSaveQueue = projectOrderSaveQueue.then(async () => {
+        try {
+          const allProjects = await getAllProjectsFromDB();
+          const map = new Map(allProjects.map(p => [p.id, p]));
+          const now = Date.now();
+          let anySaved = false;
+
+          for (let i = 0; i < orderedIds.length; i++) {
+            const p = map.get(orderedIds[i]);
+            if (!p) continue;
+            const pinChanged = (p.id === draggedId) && (Boolean(p.pinned) !== finalPinned);
+            const orderChanged = p.customOrder !== i;
+            if (!pinChanged && !orderChanged) continue;
+
+            if (pinChanged) p.pinned = finalPinned;
+            p.customOrder = i;
+            p.updatedAt = Math.max(now + i, (Number(p.updatedAt) || 0) + 1);
+
+            if (pinChanged) {
+              await saveProjectToDB(p);
+              if (activeProjectId === p.id && activeProjectData) {
+                activeProjectData.pinned = finalPinned;
+              }
+            } else {
+              suppressBackupDirtyTracking = true;
+              try {
+                await saveProjectToDB(p, { markDirty: false });
+              } finally {
+                suppressBackupDirtyTracking = false;
+              }
+            }
+            anySaved = true;
+          }
+
+          if (anySaved && typeof scheduleCloudSync === 'function') {
+            scheduleCloudSync();
+          }
+        } finally {
+          activeProjectOrderWrites = Math.max(0, activeProjectOrderWrites - 1);
+        }
+        await renderProjects();
+      }).catch((err) => {
+        console.warn('Error persisting project drag order:', err);
+      });
+      return projectOrderSaveQueue;
+    }
 
     projectsList.addEventListener('pointerdown', (e) => {
       const handle = e.target.closest('[data-action="drag-project"]');
       if (!handle) return;
       const card = handle.closest('.project-card');
-      if (!card) return;
+      if (!card || card.classList.contains('is-dropping')) return;
 
       e.preventDefault();
       e.stopPropagation();
 
-      draggingProjectCard = card;
-      draggingPointerId = e.pointerId;
+      if (projectDragState) finishProjectDrag();
+      settleProjectDragAnimationsSync();
+
+      if (projectClickSuppressTimer) {
+        clearTimeout(projectClickSuppressTimer);
+        projectClickSuppressTimer = null;
+      }
       suppressNextProjectClick = true;
+
+      const originalPinned = card.getAttribute('data-pinned') === '1';
+      const cardRect = card.getBoundingClientRect();
+
+      document.getElementById('empty-pinned-hint')?.remove();
+
+      const placeholder = document.createElement('div');
+      placeholder.className = 'project-drag-placeholder';
+      placeholder.style.height = `${cardRect.height}px`;
+      projectsList.replaceChild(placeholder, card);
+      document.body.appendChild(card);
+
+      card.style.position = 'fixed';
+      card.style.left = `${cardRect.left}px`;
+      card.style.top = `${cardRect.top}px`;
+      card.style.width = `${cardRect.width}px`;
+      card.style.margin = '0';
+      card.style.pointerEvents = 'none';
+      card.style.zIndex = '52';
+      card.style.transform = 'translate3d(0, 0, 0) scale(1.025)';
+
+      const followPill = document.createElement('div');
+      followPill.className = 'drag-follow-pill';
+      card.appendChild(followPill);
+
       card.classList.add('is-dragging');
+
+      projectDragState = {
+        card,
+        cardId: card.getAttribute('data-id'),
+        placeholder,
+        followPill,
+        pointerId: e.pointerId,
+        originalPinned,
+        startClientY: e.clientY,
+        lastClientY: e.clientY,
+        startCardTop: cardRect.top
+      };
+
+      updateProjectCrossSectionIndicators(placeholder);
+      updateProjectFollowPillPlacement();
+
       try {
         handle.setPointerCapture(e.pointerId);
       } catch (err) {}
+
+      startProjectAutoScrollLoop();
     });
 
-    projectsList.addEventListener('pointermove', (e) => {
-      if (!draggingProjectCard || e.pointerId !== draggingPointerId) return;
+    function onProjectDragMove(e) {
+      if (!projectDragState || e.pointerId !== projectDragState.pointerId) return;
       e.preventDefault();
 
-      const clientY = e.clientY;
-      const scrollArea = draggingProjectCard.closest('.scroll-area');
-      if (scrollArea) {
-        const rect = scrollArea.getBoundingClientRect();
-        if (clientY < rect.top + 55) {
-          scrollArea.scrollTop -= 8;
-        } else if (clientY > rect.bottom - 55) {
-          scrollArea.scrollTop += 8;
-        }
-      }
-
-      const siblings = Array.from(projectsList.querySelectorAll('.project-card:not(.is-dragging)'));
-      let nextSibling = null;
-      for (const sib of siblings) {
-        const box = sib.getBoundingClientRect();
-        const midY = box.top + box.height / 2;
-        if (clientY < midY) {
-          nextSibling = sib;
-          break;
-        }
-      }
-
-      if (nextSibling) {
-        if (draggingProjectCard.nextElementSibling !== nextSibling) {
-          projectsList.insertBefore(draggingProjectCard, nextSibling);
-        }
-      } else {
-        projectsList.appendChild(draggingProjectCard);
-      }
-    });
-
-    async function finishProjectDrag(e) {
-      if (!draggingProjectCard) return;
-      if (e && draggingPointerId !== null && e.pointerId !== draggingPointerId) return;
-
-      const card = draggingProjectCard;
-      draggingProjectCard = null;
-      draggingPointerId = null;
-      card.classList.remove('is-dragging');
-
-      const orderedIds = Array.from(projectsList.querySelectorAll('.project-card')).map(el => el.getAttribute('data-id'));
-      const allProjects = await getAllProjectsFromDB();
-      const map = new Map(allProjects.map(p => [p.id, p]));
-      const now = Date.now();
-
-      suppressBackupDirtyTracking = true;
-      try {
-        for (let i = 0; i < orderedIds.length; i++) {
-          const p = map.get(orderedIds[i]);
-          if (p && p.customOrder !== i) {
-            p.customOrder = i;
-            p.updatedAt = Math.max(now, (Number(p.updatedAt) || 0) + 1);
-            await saveProjectToDB(p, { markDirty: false });
-          }
-        }
-      } finally {
-        suppressBackupDirtyTracking = false;
-      }
-      if (typeof scheduleCloudSync === 'function') scheduleCloudSync();
-
-      await renderProjects();
-      setTimeout(() => { suppressNextProjectClick = false; }, 80);
+      projectDragState.lastClientY = e.clientY;
+      const dy = e.clientY - projectDragState.startClientY;
+      projectDragState.card.style.transform = `translate3d(0, ${dy}px, 0) scale(1.025)`;
+      updateProjectFollowPillPlacement();
+      reorderProjectsWithFlip(e.clientY);
     }
 
-    projectsList.addEventListener('pointerup', finishProjectDrag);
-    projectsList.addEventListener('pointercancel', finishProjectDrag);
+    function finishProjectDrag(e) {
+      if (!projectDragState) return;
+      if (e && projectDragState.pointerId !== null && e.pointerId !== projectDragState.pointerId) return;
+
+      const state = projectDragState;
+      projectDragState = null;
+      stopProjectAutoScroll();
+
+      if (state.followPill) {
+        state.followPill.classList.remove('is-visible');
+      }
+
+      const finalPinned = isProjectAnchorInPinnedZone(state.placeholder);
+      const { card, placeholder, followPill, startCardTop, cardId } = state;
+      const targetRect = placeholder.getBoundingClientRect();
+      const dyFinal = targetRect.top - startCardTop;
+
+      card.classList.add('is-dropping');
+
+      let cleaned = false;
+      let timerId = null;
+
+      const finalizeDrop = () => {
+        if (cleaned) return;
+        cleaned = true;
+        activeProjectDropCleanup = null;
+        if (timerId) clearTimeout(timerId);
+        card.removeEventListener('transitionend', onTransitionEnd);
+        if (followPill) followPill.remove();
+
+        card.classList.remove('is-dragging', 'is-dropping', 'is-will-pin', 'is-will-unpin');
+        card.setAttribute('data-pinned', finalPinned ? '1' : '0');
+        card.classList.toggle('is-pinned', finalPinned);
+        card.style.transition = '';
+        card.style.transform = '';
+        card.style.position = '';
+        card.style.left = '';
+        card.style.top = '';
+        card.style.width = '';
+        card.style.margin = '';
+        card.style.pointerEvents = '';
+        card.style.zIndex = '';
+
+        if (placeholder.parentNode === projectsList) {
+          projectsList.replaceChild(card, placeholder);
+        }
+
+        const orderedIds = Array.from(projectsList.querySelectorAll('.project-card')).map(el => el.getAttribute('data-id'));
+        if (projectClickSuppressTimer) clearTimeout(projectClickSuppressTimer);
+        projectClickSuppressTimer = setTimeout(() => {
+          projectClickSuppressTimer = null;
+          if (!projectDragState) suppressNextProjectClick = false;
+        }, 80);
+
+        persistProjectDragResult(orderedIds, cardId, finalPinned);
+      };
+
+      const onTransitionEnd = (ev) => {
+        if (ev.target === card && ev.propertyName === 'transform') {
+          finalizeDrop();
+        }
+      };
+
+      activeProjectDropCleanup = finalizeDrop;
+      card.addEventListener('transitionend', onTransitionEnd);
+
+      void card.offsetHeight;
+      card.style.transition = `transform ${PROJECT_DRAG_ANIM_MS}ms ${PROJECT_DRAG_EASING}, box-shadow ${PROJECT_DRAG_ANIM_MS}ms ease, border-color ${PROJECT_DRAG_ANIM_MS}ms ease`;
+      card.style.transform = `translate3d(0, ${dyFinal}px, 0) scale(1)`;
+      timerId = setTimeout(finalizeDrop, PROJECT_DRAG_ANIM_MS + 50);
+    }
+
+    window.addEventListener('pointermove', onProjectDragMove, { passive: false });
+    window.addEventListener('pointerup', finishProjectDrag);
+    window.addEventListener('pointercancel', finishProjectDrag);
+    window.addEventListener('blur', () => {
+      if (projectDragState) finishProjectDrag();
+    });
 
     projectsList.addEventListener('click', async (e) => {
       if (suppressNextProjectClick) {
