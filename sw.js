@@ -1,4 +1,4 @@
-const CACHE_NAME = 'setbible-v1.0';
+const CACHE_NAME = 'setbible-v1.1';
 const LOCAL_ASSETS = [
   './',
   './index.html',
@@ -20,7 +20,13 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then(async (cache) => {
-      await cache.addAll(LOCAL_ASSETS);
+      await Promise.all(
+        LOCAL_ASSETS.map((url) =>
+          fetch(url, { cache: 'reload' }).then((res) => {
+            if (res && res.ok) return cache.put(url, res);
+          })
+        )
+      );
       await Promise.allSettled(CDN_ASSETS.map((url) => cache.add(url)));
     })
   );
