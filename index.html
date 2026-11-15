@@ -2789,21 +2789,210 @@
     }
 
     .auth-screen {
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       padding: calc(20px + env(safe-area-inset-top, 0px)) 16px calc(24px + env(safe-area-inset-bottom, 0px)) 16px;
       overflow-y: auto;
       background: radial-gradient(circle at top center, rgba(245, 158, 11, 0.08), transparent 55%), var(--bg-900);
     }
 
+    .auth-screen.has-install-banner {
+      padding-bottom: calc(98px + env(safe-area-inset-bottom, 0px));
+    }
+
     .auth-card {
       width: 100%;
       max-width: 400px;
+      margin: auto 0;
       background: var(--bg-850);
       border: 1px solid var(--border-700);
       border-radius: 18px;
       padding: 24px 20px;
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+
+    .pwa-install-banner {
+      position: fixed;
+      left: 12px;
+      right: 12px;
+      bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+      max-width: 440px;
+      margin: 0 auto;
+      z-index: 65;
+      background: rgba(19, 23, 29, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(245, 158, 11, 0.42);
+      border-radius: 16px;
+      padding: 10px 10px 10px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.72);
+    }
+
+    .pwa-install-banner-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: #372c24;
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .pwa-install-banner-copy {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .pwa-install-banner-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .pwa-install-banner-sub {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      line-height: 1.25;
+    }
+
+    .pwa-install-banner-btn {
+      background: var(--amber);
+      color: #111827;
+      border: none;
+      border-radius: 10px;
+      padding: 8px 12px;
+      min-height: 36px;
+      font-size: 12.5px;
+      font-weight: 900;
+      white-space: nowrap;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .pwa-install-banner-btn:active {
+      transform: scale(0.96);
+    }
+
+    .pwa-install-banner-close {
+      width: 30px;
+      height: 30px;
+      min-width: 30px;
+      min-height: 30px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .pwa-install-banner-close:active {
+      transform: scale(0.92);
+    }
+
+    .pwa-guide-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      width: 100%;
+    }
+
+    .pwa-guide-card {
+      background: var(--bg-850);
+      border: 1px solid var(--border-700);
+      border-radius: 13px;
+      padding: 10px 12px;
+      text-align: left;
+    }
+
+    .pwa-guide-card.is-current-device {
+      border-color: rgba(245, 158, 11, 0.58);
+      background: rgba(245, 158, 11, 0.07);
+    }
+
+    .pwa-guide-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 7px;
+    }
+
+    .pwa-guide-card-os {
+      font-size: 12.5px;
+      font-weight: 900;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pwa-guide-device-pill {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #111827;
+      background: var(--amber);
+      border-radius: 999px;
+      padding: 2px 7px;
+      flex-shrink: 0;
+    }
+
+    .pwa-guide-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .pwa-guide-step-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+      line-height: 1.35;
+      color: #e5e7eb;
+    }
+
+    .pwa-guide-step-row strong {
+      color: var(--amber);
+      font-weight: 800;
+    }
+
+    .pwa-guide-step-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 7px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--amber);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .pwa-guide-tip {
+      margin: 6px 0 0 32px;
+      font-size: 11px;
+      line-height: 1.3;
+      color: var(--text-muted);
     }
 
     .auth-brand-head {
@@ -3026,6 +3215,31 @@
         </div>
         <button type="button" id="btn-screen-profile-save" class="btn-primary" style="width:100%;" data-i18n="auth_btn_save_continue">Guardar y continuar</button>
       </div>
+    </div>
+
+    <div id="pwa-install-banner" class="pwa-install-banner hidden" role="region" aria-label="Instalar SetBible">
+      <div class="pwa-install-banner-icon" aria-hidden="true">
+        <svg width="24" height="24" viewBox="88 86 336 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="114" y="112" width="284" height="284" rx="44" ry="44" fill="none" stroke="#f59e0b" stroke-width="21"/>
+          <rect x="167" y="112" width="21" height="284" fill="#f59e0b"/>
+          <circle cx="145.5" cy="175" r="10.5" fill="#f59e0b"/>
+          <circle cx="145.5" cy="254" r="10.5" fill="#f59e0b"/>
+          <circle cx="145.5" cy="333" r="10.5" fill="#f59e0b"/>
+          <polygon points="289,101.5 351,101.5 351,197 320,164 289,197" fill="#ffffff"/>
+          <rect x="222" y="228" width="95" height="21" rx="10.5" fill="#f59e0b"/>
+          <rect x="222" y="275" width="127" height="21" rx="10.5" fill="#f59e0b"/>
+          <rect x="222" y="322" width="50" height="21" rx="10.5" fill="#f59e0b"/>
+          <rect x="288" y="322" width="36" height="21" rx="10.5" fill="#f59e0b"/>
+        </svg>
+      </div>
+      <div class="pwa-install-banner-copy">
+        <strong class="pwa-install-banner-title" data-i18n="pwa_banner_title">Instalar SetBible</strong>
+        <span class="pwa-install-banner-sub" data-i18n="pwa_banner_subtitle">Úsala como app en pantalla completa</span>
+      </div>
+      <button type="button" id="btn-pwa-install-action" class="pwa-install-banner-btn">Cómo instalar</button>
+      <button type="button" id="btn-dismiss-pwa-banner" class="pwa-install-banner-close" title="Cerrar" data-i18n-title="close_title">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
     </div>
   </div>
 
@@ -4150,7 +4364,7 @@
             <button type="button" id="btn-help-prev" class="tour-nav-circle" title="Anterior" data-i18n-title="btn_prev">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
             </button>
-            <span id="help-tour-step-badge" class="tour-step-pill">1 de 9</span>
+            <span id="help-tour-step-badge" class="tour-step-pill">1 de 10</span>
             <button type="button" id="btn-help-next" class="tour-nav-circle" title="Siguiente" data-i18n-title="btn_next">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
             </button>
@@ -4360,13 +4574,32 @@
         <div style="width:100%; border-top:1px solid var(--border-700); padding-top:14px; display:flex; flex-direction:column; gap:6px; font-size:13px; color:var(--text-muted);">
           <div>
             <span data-i18n="app_info_version_label">Versión</span>:
-            <strong id="app-info-version-val" style="color:#fff;">1.18</strong>
+            <strong id="app-info-version-val" style="color:#fff;">1.19</strong>
           </div>
           <div>
             <span data-i18n="app_info_created_by">Creado por</span>:
             <strong style="color:var(--amber);">Marziano</strong>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: CÓMO INSTALAR SETBIBLE (PWA)        -->
+  <!-- ========================================== -->
+  <div id="pwa-install-modal" class="modal-backdrop hidden" style="z-index: 92;">
+    <div class="modal-card" style="max-width:420px; position:relative;">
+      <button type="button" id="btn-close-pwa-install-modal" class="btn-close-touch" title="Cerrar" data-i18n-title="close_title" style="position:absolute; top:10px; right:10px; z-index:2;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <div class="modal-body" style="padding:22px 18px 18px 18px; display:flex; flex-direction:column; gap:12px;">
+        <div style="padding-right:34px;">
+          <h3 class="help-tour-title" style="font-size:19px;" data-i18n="pwa_modal_title">Instalar SetBible</h3>
+          <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted); line-height:1.4;" data-i18n="pwa_modal_subtitle">Agrégala a tu pantalla de inicio para abrirla rápido y a pantalla completa.</p>
+        </div>
+        <div id="pwa-install-guide-body"></div>
+        <button type="button" id="btn-understood-pwa-install-modal" class="btn-primary" style="width:100%; margin-top:2px;" data-i18n="btn_understood">¡Entendido!</button>
       </div>
     </div>
   </div>
@@ -4553,24 +4786,40 @@
         help_demo_proj_2: 'NOCHE EN SUR',
         help_demo_scene_desc: 'CAFETERÍA CENTRAL - MESAS JUNTO A VENTANAL',
         help_demo_entry_note: 'Chaqueta de cuero marrón abotonada hasta arriba, reloj en muñeca izquierda.',
-        help_step_1_title: 'Inicio de sesión y sincronización',
-        help_step_1_desc: 'Inicia sesión con <strong>Continuar con Google</strong> o con tu correo para sincronizar tus proyectos en la nube (o elige <strong>Continuar sin cuenta</strong>). También puedes gestionarlo desde <strong>Nube / Cuenta</strong> y <strong>Subir a la nube</strong>.',
-        help_step_2_title: 'Creación de proyectos',
-        help_step_2_desc: 'Pulsa el botón <strong>+ NUEVO PROYECTO</strong> en la barra inferior para crear un proyecto ingresando <strong>Nombre del Proyecto *</strong> y <strong>Productora (Opcional)</strong>, o usa <strong>Importar Proyectos</strong> debajo para cargar respaldos.',
-        help_step_3_title: 'Menú de proyectos',
-        help_step_3_desc: 'Toca el botón de herramientas (llave inglesa arriba a la derecha) para <strong>Ordenar proyectos</strong>, <strong>Fijar proyectos</strong>, <strong>Terminar proyectos</strong>, <strong>Guardar Respaldos</strong> o <strong>Borrar proyectos</strong>, o toca el lápiz en cada tarjeta para editarlo.',
-        help_step_4_title: '1. Importar guion (Escenas y Personajes)',
-        help_step_4_desc: 'Dentro del proyecto, abre el menú de herramientas arriba a la derecha y pulsa <strong>Importar Guion (PDF)</strong> para detectar automáticamente tus <strong>Escenas</strong> y <strong>Personajes</strong>, o adminístralos manualmente.',
-        help_step_5_title: '2. Creación de continuidades',
-        help_step_5_desc: 'Pulsa el botón <strong>+ NUEVA CONTINUIDAD</strong> en la barra inferior del proyecto, selecciona la <strong>Escena *</strong>, escribe las <strong>Notas Generales de la Escena</strong> y pulsa <strong>Guardar Continuidad</strong>.',
-        help_step_6_title: '3. Creación de entradas',
-        help_step_6_desc: 'Dentro de una continuidad, pulsa <strong>+ Añadir Entrada</strong>, elige el <strong>Personaje *</strong>, toca <strong>Seleccionar Foto</strong> para la foto de continuidad, escribe la <strong>Nota de Continuidad</strong> y pulsa <strong>Guardar Entrada</strong>.',
-        help_step_7_title: '4. Duplicar continuidades',
-        help_step_7_desc: 'En la esquina superior derecha de cada tarjeta de continuidad, toca el botón de <strong>Duplicar continuidad</strong>, elige la <strong>Escena de destino *</strong>, marca las <strong>Entradas a incluir</strong> y pulsa <strong>Duplicar</strong>.',
-        help_step_8_title: '5. Guardar respaldo',
-        help_step_8_desc: 'Desde el menú de herramientas del proyecto, pulsa <strong>Guardar Respaldo</strong> (o <strong>Guardar Respaldos</strong> en el menú de inicio) para descargar el archivo de respaldo con todas tus escenas, personajes y fotos.',
-        help_step_9_title: '6. Exportar PDF',
-        help_step_9_desc: 'Selecciona <strong>Exportar Reporte PDF</strong> en el menú del proyecto para ajustar idioma, escenas, tamaño de fuentes y fotos en la vista previa y pulsar <strong>Generar PDF</strong>.',
+        pwa_banner_title: 'Instalar SetBible',
+        pwa_banner_subtitle: 'Úsala como app en pantalla completa',
+        pwa_btn_install: 'Instalar',
+        pwa_btn_how: 'Cómo instalar',
+        pwa_modal_title: 'Instalar SetBible',
+        pwa_modal_subtitle: 'Agrégala a tu pantalla de inicio para abrirla rápido y a pantalla completa.',
+        pwa_device_badge: 'Tu dispositivo',
+        pwa_ios_heading: 'iPhone / iPad (Safari)',
+        pwa_ios_step_1: 'Toca el botón <strong>Compartir</strong> (cuadrado con flecha arriba).',
+        pwa_ios_step_2: 'Elige <strong>Añadir a la pantalla de inicio</strong> y toca <strong>Añadir</strong>.',
+        pwa_ios_inapp_tip: 'Si la abriste desde WhatsApp u otra app, ábrela primero en Safari.',
+        pwa_android_heading: 'Android (Chrome)',
+        pwa_android_step_1: 'Toca el menú <strong>⋮</strong> en la esquina superior derecha del navegador.',
+        pwa_android_step_2: 'Selecciona <strong>Instalar aplicación</strong> o <strong>Añadir a pantalla de inicio</strong>.',
+        help_step_1_title: 'Instalar SetBible como app',
+        help_step_1_desc: 'Instálala en tu celular o tableta antes de empezar. En <strong>iPhone / iPad (Safari)</strong> toca <strong>Compartir</strong> y elige <strong>Añadir a la pantalla de inicio</strong>. En <strong>Android (Chrome)</strong> pulsa <strong>Instalar</strong> o el menú <strong>⋮ → Instalar aplicación</strong>.',
+        help_step_2_title: 'Inicio de sesión y sincronización',
+        help_step_2_desc: 'Inicia sesión con <strong>Continuar con Google</strong> o con tu correo para sincronizar tus proyectos en la nube (o elige <strong>Continuar sin cuenta</strong>). También puedes gestionarlo desde <strong>Nube / Cuenta</strong> y <strong>Subir a la nube</strong>.',
+        help_step_3_title: 'Creación de proyectos',
+        help_step_3_desc: 'Pulsa el botón <strong>+ NUEVO PROYECTO</strong> en la barra inferior para crear un proyecto ingresando <strong>Nombre del Proyecto *</strong> y <strong>Productora (Opcional)</strong>, o usa <strong>Importar Proyectos</strong> debajo para cargar respaldos.',
+        help_step_4_title: 'Menú de proyectos',
+        help_step_4_desc: 'Toca el botón de herramientas (llave inglesa arriba a la derecha) para <strong>Ordenar proyectos</strong>, <strong>Fijar proyectos</strong>, <strong>Terminar proyectos</strong>, <strong>Guardar Respaldos</strong> o <strong>Borrar proyectos</strong>, o toca el lápiz en cada tarjeta para editarlo.',
+        help_step_5_title: '1. Importar guion (Escenas y Personajes)',
+        help_step_5_desc: 'Dentro del proyecto, abre el menú de herramientas arriba a la derecha y pulsa <strong>Importar Guion (PDF)</strong> para detectar automáticamente tus <strong>Escenas</strong> y <strong>Personajes</strong>, o adminístralos manualmente.',
+        help_step_6_title: '2. Creación de continuidades',
+        help_step_6_desc: 'Pulsa el botón <strong>+ NUEVA CONTINUIDAD</strong> en la barra inferior del proyecto, selecciona la <strong>Escena *</strong>, escribe las <strong>Notas Generales de la Escena</strong> y pulsa <strong>Guardar Continuidad</strong>.',
+        help_step_7_title: '3. Creación de entradas',
+        help_step_7_desc: 'Dentro de una continuidad, pulsa <strong>+ Añadir Entrada</strong>, elige el <strong>Personaje *</strong>, toca <strong>Seleccionar Foto</strong> para la foto de continuidad, escribe la <strong>Nota de Continuidad</strong> y pulsa <strong>Guardar Entrada</strong>.',
+        help_step_8_title: '4. Duplicar continuidades',
+        help_step_8_desc: 'En la esquina superior derecha de cada tarjeta de continuidad, toca el botón de <strong>Duplicar continuidad</strong>, elige la <strong>Escena de destino *</strong>, marca las <strong>Entradas a incluir</strong> y pulsa <strong>Duplicar</strong>.',
+        help_step_9_title: '5. Guardar respaldo',
+        help_step_9_desc: 'Desde el menú de herramientas del proyecto, pulsa <strong>Guardar Respaldo</strong> (o <strong>Guardar Respaldos</strong> en el menú de inicio) para descargar el archivo de respaldo con todas tus escenas, personajes y fotos.',
+        help_step_10_title: '6. Exportar PDF',
+        help_step_10_desc: 'Selecciona <strong>Exportar Reporte PDF</strong> en el menú del proyecto para ajustar idioma, escenas, tamaño de fuentes y fotos en la vista previa y pulsar <strong>Generar PDF</strong>.',
         batch_title_default: 'SELECCIONAR PROYECTOS',
         batch_title_pin: 'FIJAR PROYECTOS',
         batch_title_complete: 'TERMINAR PROYECTOS',
@@ -4986,24 +5235,40 @@
         help_demo_proj_2: 'SOUTHERN NIGHT',
         help_demo_scene_desc: 'CENTRAL DINER - TABLES BY THE WINDOW',
         help_demo_entry_note: 'Brown leather jacket buttoned all the way up, watch on left wrist.',
-        help_step_1_title: 'Sign-In & Cloud Sync',
-        help_step_1_desc: 'Sign in with <strong>Continue with Google</strong> or email to sync your projects in the cloud (or choose <strong>Continue without account</strong>). You can also manage it via <strong>Cloud / Account</strong> and <strong>Upload to cloud</strong>.',
-        help_step_2_title: 'Creating Projects',
-        help_step_2_desc: 'Tap the <strong>+ NEW PROJECT</strong> button on the bottom bar to create a project with its <strong>Project Name *</strong> and <strong>Production Company (Optional)</strong>, or use <strong>Import Projects</strong> below it to load backups.',
-        help_step_3_title: 'Projects Menu',
-        help_step_3_desc: 'Tap the tools button (wrench icon at the top right) to <strong>Sort projects</strong>, <strong>Pin projects</strong>, <strong>Complete projects</strong>, <strong>Save Backups</strong>, or <strong>Delete projects</strong>, or tap the pencil button on a card to edit it.',
-        help_step_4_title: '1. Import Script (Scenes & Characters)',
-        help_step_4_desc: 'Inside your project, open the top-right tools menu and tap <strong>Import Script (PDF)</strong> to automatically detect your <strong>Scenes</strong> and <strong>Characters</strong>, or manage them manually.',
-        help_step_5_title: '2. Creating Continuities',
-        help_step_5_desc: 'Tap the <strong>+ NEW CONTINUITY</strong> button on the project bottom bar, select the <strong>Scene *</strong>, enter <strong>General Scene Notes</strong>, and tap <strong>Save Continuity</strong>.',
-        help_step_6_title: '3. Creating Entries',
-        help_step_6_desc: 'Inside a continuity, tap <strong>+ Add Entry</strong>, choose the <strong>Character *</strong>, tap <strong>Select Photo</strong> for the continuity photo, write the <strong>Continuity Note</strong>, and tap <strong>Save Entry</strong>.',
-        help_step_7_title: '4. Duplicating Continuities',
-        help_step_7_desc: 'At the top-right corner of any continuity card, tap the <strong>Duplicate continuity</strong> button, choose the <strong>Target scene *</strong>, check the <strong>Entries to include</strong>, and tap <strong>Duplicate</strong>.',
-        help_step_8_title: '5. Saving a Backup',
-        help_step_8_desc: 'From the project tools menu, tap <strong>Save Backup</strong> (or <strong>Save Backups</strong> in the home menu) to download a backup file containing all your scenes, characters, and photos.',
-        help_step_9_title: '6. Exporting PDF',
-        help_step_9_desc: 'Select <strong>Export PDF Report</strong> in the project menu to adjust language, scenes, font size, and photo size in the live preview, then tap <strong>Generate PDF</strong>.',
+        pwa_banner_title: 'Install SetBible',
+        pwa_banner_subtitle: 'Use it as a full-screen app',
+        pwa_btn_install: 'Install',
+        pwa_btn_how: 'How to install',
+        pwa_modal_title: 'Install SetBible',
+        pwa_modal_subtitle: 'Add it to your home screen for quick full-screen access.',
+        pwa_device_badge: 'Your device',
+        pwa_ios_heading: 'iPhone / iPad (Safari)',
+        pwa_ios_step_1: 'Tap the <strong>Share</strong> button (square with up arrow).',
+        pwa_ios_step_2: 'Select <strong>Add to Home Screen</strong> and tap <strong>Add</strong>.',
+        pwa_ios_inapp_tip: 'If opened from WhatsApp or another app, open it in Safari first.',
+        pwa_android_heading: 'Android (Chrome)',
+        pwa_android_step_1: 'Tap the <strong>⋮</strong> menu in the top-right corner of your browser.',
+        pwa_android_step_2: 'Select <strong>Install app</strong> or <strong>Add to Home screen</strong>.',
+        help_step_1_title: 'Install SetBible as an App',
+        help_step_1_desc: 'Install it on your phone or tablet before starting. On <strong>iPhone / iPad (Safari)</strong> tap <strong>Share</strong> and choose <strong>Add to Home Screen</strong>. On <strong>Android (Chrome)</strong> tap <strong>Install</strong> or <strong>⋮ → Install app</strong>.',
+        help_step_2_title: 'Sign-In & Cloud Sync',
+        help_step_2_desc: 'Sign in with <strong>Continue with Google</strong> or email to sync your projects in the cloud (or choose <strong>Continue without account</strong>). You can also manage it via <strong>Cloud / Account</strong> and <strong>Upload to cloud</strong>.',
+        help_step_3_title: 'Creating Projects',
+        help_step_3_desc: 'Tap the <strong>+ NEW PROJECT</strong> button on the bottom bar to create a project with its <strong>Project Name *</strong> and <strong>Production Company (Optional)</strong>, or use <strong>Import Projects</strong> below it to load backups.',
+        help_step_4_title: 'Projects Menu',
+        help_step_4_desc: 'Tap the tools button (wrench icon at the top right) to <strong>Sort projects</strong>, <strong>Pin projects</strong>, <strong>Complete projects</strong>, <strong>Save Backups</strong>, or <strong>Delete projects</strong>, or tap the pencil button on a card to edit it.',
+        help_step_5_title: '1. Import Script (Scenes & Characters)',
+        help_step_5_desc: 'Inside your project, open the top-right tools menu and tap <strong>Import Script (PDF)</strong> to automatically detect your <strong>Scenes</strong> and <strong>Characters</strong>, or manage them manually.',
+        help_step_6_title: '2. Creating Continuities',
+        help_step_6_desc: 'Tap the <strong>+ NEW CONTINUITY</strong> button on the project bottom bar, select the <strong>Scene *</strong>, enter <strong>General Scene Notes</strong>, and tap <strong>Save Continuity</strong>.',
+        help_step_7_title: '3. Creating Entries',
+        help_step_7_desc: 'Inside a continuity, tap <strong>+ Add Entry</strong>, choose the <strong>Character *</strong>, tap <strong>Select Photo</strong> for the continuity photo, write the <strong>Continuity Note</strong>, and tap <strong>Save Entry</strong>.',
+        help_step_8_title: '4. Duplicating Continuities',
+        help_step_8_desc: 'At the top-right corner of any continuity card, tap the <strong>Duplicate continuity</strong> button, choose the <strong>Target scene *</strong>, check the <strong>Entries to include</strong>, and tap <strong>Duplicate</strong>.',
+        help_step_9_title: '5. Saving a Backup',
+        help_step_9_desc: 'From the project tools menu, tap <strong>Save Backup</strong> (or <strong>Save Backups</strong> in the home menu) to download a backup file containing all your scenes, characters, and photos.',
+        help_step_10_title: '6. Exporting PDF',
+        help_step_10_desc: 'Select <strong>Export PDF Report</strong> in the project menu to adjust language, scenes, font size, and photo size in the live preview, then tap <strong>Generate PDF</strong>.',
         batch_title_default: 'SELECT PROJECTS',
         batch_title_pin: 'PIN PROJECTS',
         batch_title_complete: 'COMPLETE PROJECTS',
@@ -5419,24 +5684,40 @@
         help_demo_proj_2: 'NOITE NO SUL',
         help_demo_scene_desc: 'CAFETERIA CENTRAL - MESAS JUNTO À JANELA',
         help_demo_entry_note: 'Jaqueta de couro marrom abotoada até o topo, relógio no pulso esquerdo.',
-        help_step_1_title: 'Login e sincronização',
-        help_step_1_desc: 'Entre com <strong>Continuar com Google</strong> ou e-mail para sincronizar seus projetos na nuvem (ou escolha <strong>Continuar sem conta</strong>). Você também pode gerenciar isso em <strong>Nuvem / Conta</strong> e <strong>Enviar para a nuvem</strong>.',
-        help_step_2_title: 'Criação de projetos',
-        help_step_2_desc: 'Toque no botão <strong>+ NOVO PROJETO</strong> na barra inferior para criar um projeto informando <strong>Nome do Projeto *</strong> e <strong>Produtora (Opcional)</strong>, ou use <strong>Importar Projetos</strong> abaixo para carregar backups.',
-        help_step_3_title: 'Menu de projetos',
-        help_step_3_desc: 'Toque no botão de ferramentas (chave inglesa no canto superior direito) para <strong>Ordenar projetos</strong>, <strong>Fixar projetos</strong>, <strong>Concluir projetos</strong>, <strong>Salvar Backups</strong> ou <strong>Excluir projetos</strong>, ou toque no lápis de cada cartão para editá-lo.',
-        help_step_4_title: '1. Importar roteiro (Cenas e Personagens)',
-        help_step_4_desc: 'Dentro do projeto, abra o menu de ferramentas no canto superior direito e toque em <strong>Importar Roteiro (PDF)</strong> para detectar automaticamente suas <strong>Cenas</strong> e <strong>Personagens</strong>, ou gerencie-os manualmente.',
-        help_step_5_title: '2. Criação de continuidades',
-        help_step_5_desc: 'Toque no botão <strong>+ NOVA CONTINUIDADE</strong> na barra inferior do projeto, selecione a <strong>Cena *</strong>, escreva as <strong>Notas Gerais da Cena</strong> e toque em <strong>Salvar Continuidade</strong>.',
-        help_step_6_title: '3. Criação de entradas',
-        help_step_6_desc: 'Dentro de uma continuidade, toque em <strong>+ Adicionar Entrada</strong>, escolha o <strong>Personagem *</strong>, toque em <strong>Selecionar Foto</strong>, escreva a <strong>Nota de Continuidade</strong> e toque em <strong>Salvar Entrada</strong>.',
-        help_step_7_title: '4. Duplicar continuidades',
-        help_step_7_desc: 'No canto superior direito de cada cartão de continuidade, toque no botão <strong>Duplicar continuidade</strong>, escolha a <strong>Cena de destino *</strong>, marque as <strong>Entradas para incluir</strong> e toque em <strong>Duplicar</strong>.',
-        help_step_8_title: '5. Salvar backup',
-        help_step_8_desc: 'No menu de ferramentas do projeto, toque em <strong>Salvar Backup</strong> (ou <strong>Salvar Backups</strong> no menu inicial) para baixar o arquivo de backup com todas as suas cenas, personagens e fotos.',
-        help_step_9_title: '6. Exportar PDF',
-        help_step_9_desc: 'Selecione <strong>Exportar Relatório PDF</strong> no menu do projeto para ajustar idioma, cenas, tamanho de fontes e fotos na pré-visualização e tocar em <strong>Gerar PDF</strong>.',
+        pwa_banner_title: 'Instalar o SetBible',
+        pwa_banner_subtitle: 'Use como app em tela cheia',
+        pwa_btn_install: 'Instalar',
+        pwa_btn_how: 'Como instalar',
+        pwa_modal_title: 'Instalar o SetBible',
+        pwa_modal_subtitle: 'Adicione à tela inicial para abrir rápido e em tela cheia.',
+        pwa_device_badge: 'Seu dispositivo',
+        pwa_ios_heading: 'iPhone / iPad (Safari)',
+        pwa_ios_step_1: 'Toque no botão <strong>Compartilhar</strong> (quadrado com seta para cima).',
+        pwa_ios_step_2: 'Escolha <strong>Adicionar à Tela de Início</strong> e toque em <strong>Adicionar</strong>.',
+        pwa_ios_inapp_tip: 'Se abriu pelo WhatsApp ou outro app, abra primeiro no Safari.',
+        pwa_android_heading: 'Android (Chrome)',
+        pwa_android_step_1: 'Toque no menu <strong>⋮</strong> no canto superior direito do navegador.',
+        pwa_android_step_2: 'Selecione <strong>Instalar aplicativo</strong> ou <strong>Adicionar à tela inicial</strong>.',
+        help_step_1_title: 'Instalar o SetBible como app',
+        help_step_1_desc: 'Instale no celular ou tablet antes de começar. No <strong>iPhone / iPad (Safari)</strong> toque em <strong>Compartilhar</strong> e escolha <strong>Adicionar à Tela de Início</strong>. No <strong>Android (Chrome)</strong> toque em <strong>Instalar</strong> ou <strong>⋮ → Instalar aplicativo</strong>.',
+        help_step_2_title: 'Login e sincronização',
+        help_step_2_desc: 'Entre com <strong>Continuar com Google</strong> ou e-mail para sincronizar seus projetos na nuvem (ou escolha <strong>Continuar sem conta</strong>). Você também pode gerenciar isso em <strong>Nuvem / Conta</strong> e <strong>Enviar para a nuvem</strong>.',
+        help_step_3_title: 'Criação de projetos',
+        help_step_3_desc: 'Toque no botão <strong>+ NOVO PROJETO</strong> na barra inferior para criar um projeto informando <strong>Nome do Projeto *</strong> e <strong>Produtora (Opcional)</strong>, ou use <strong>Importar Projetos</strong> abaixo para carregar backups.',
+        help_step_4_title: 'Menu de projetos',
+        help_step_4_desc: 'Toque no botão de ferramentas (chave inglesa no canto superior direito) para <strong>Ordenar projetos</strong>, <strong>Fixar projetos</strong>, <strong>Concluir projetos</strong>, <strong>Salvar Backups</strong> ou <strong>Excluir projetos</strong>, ou toque no lápis de cada cartão para editá-lo.',
+        help_step_5_title: '1. Importar roteiro (Cenas e Personagens)',
+        help_step_5_desc: 'Dentro do projeto, abra o menu de ferramentas no canto superior direito e toque em <strong>Importar Roteiro (PDF)</strong> para detectar automaticamente suas <strong>Cenas</strong> e <strong>Personagens</strong>, ou gerencie-os manualmente.',
+        help_step_6_title: '2. Criação de continuidades',
+        help_step_6_desc: 'Toque no botão <strong>+ NOVA CONTINUIDADE</strong> na barra inferior do projeto, selecione a <strong>Cena *</strong>, escreva as <strong>Notas Gerais da Cena</strong> e toque em <strong>Salvar Continuidade</strong>.',
+        help_step_7_title: '3. Criação de entradas',
+        help_step_7_desc: 'Dentro de uma continuidade, toque em <strong>+ Adicionar Entrada</strong>, escolha o <strong>Personagem *</strong>, toque em <strong>Selecionar Foto</strong>, escreva a <strong>Nota de Continuidade</strong> e toque em <strong>Salvar Entrada</strong>.',
+        help_step_8_title: '4. Duplicar continuidades',
+        help_step_8_desc: 'No canto superior direito de cada cartão de continuidade, toque no botão <strong>Duplicar continuidade</strong>, escolha a <strong>Cena de destino *</strong>, marque as <strong>Entradas para incluir</strong> e toque em <strong>Duplicar</strong>.',
+        help_step_9_title: '5. Salvar backup',
+        help_step_9_desc: 'No menu de ferramentas do projeto, toque em <strong>Salvar Backup</strong> (ou <strong>Salvar Backups</strong> no menu inicial) para baixar o arquivo de backup com todas as suas cenas, personagens e fotos.',
+        help_step_10_title: '6. Exportar PDF',
+        help_step_10_desc: 'Selecione <strong>Exportar Relatório PDF</strong> no menu do projeto para ajustar idioma, cenas, tamanho de fontes e fotos na pré-visualização e tocar em <strong>Gerar PDF</strong>.',
         batch_title_default: 'SELECIONAR PROJETOS',
         batch_title_pin: 'FIXAR PROJETOS',
         batch_title_complete: 'CONCLUIR PROJETOS',
@@ -5852,24 +6133,40 @@
         help_demo_proj_2: 'NOTTE AL SUD',
         help_demo_scene_desc: 'CAFFETTERIA CENTRALE - TAVOLI VICINO ALLA VETRATA',
         help_demo_entry_note: 'Giacca di pelle marrone abbottonata fino in cima, orologio al polso sinistro.',
-        help_step_1_title: 'Accesso e sincronizzazione',
-        help_step_1_desc: 'Accedi con <strong>Continua con Google</strong> o con la tua email per sincronizzare i progetti nel cloud (oppure scegli <strong>Continua senza account</strong>). Puoi gestirlo anche da <strong>Cloud / Account</strong> e <strong>Carica nel cloud</strong>.',
-        help_step_2_title: 'Creazione di progetti',
-        help_step_2_desc: 'Tocca il pulsante <strong>+ NUOVO PROGETTO</strong> nella barra inferiore per creare un progetto inserendo <strong>Nome del Progetto *</strong> e <strong>Produzione (Opzionale)</strong>, oppure usa <strong>Importa Progetti</strong> sotto per caricare backup.',
-        help_step_3_title: 'Menu dei progetti',
-        help_step_3_desc: 'Tocca il pulsante strumenti (chiave inglese in alto a destra) per <strong>Ordina progetti</strong>, <strong>Fissa progetti</strong>, <strong>Completa progetti</strong>, <strong>Salva Backup</strong> o <strong>Elimina progetti</strong>, o tocca la matita su ogni scheda per modificarla.',
-        help_step_4_title: '1. Importa sceneggiatura (Scene e Personaggi)',
-        help_step_4_desc: 'Dentro il progetto, apri il menu strumenti in alto a destra e tocca <strong>Importa Sceneggiatura (PDF)</strong> per rilevare automaticamente <strong>Scene</strong> e <strong>Personaggi</strong>, o gestiscili manualmente.',
-        help_step_5_title: '2. Creazione di continuità',
-        help_step_5_desc: 'Tocca il pulsante <strong>+ NUOVA CONTINUITÀ</strong> nella barra inferiore del progetto, seleziona la <strong>Scena *</strong>, inserisci le <strong>Note Generali della Scena</strong> e tocca <strong>Salva Continuità</strong>.',
-        help_step_6_title: '3. Creazione di voci',
-        help_step_6_desc: 'Dentro una continuità, tocca <strong>+ Aggiungi Voce</strong>, scegli il <strong>Personaggio *</strong>, tocca <strong>Seleziona Foto</strong> per la foto di continuità, scrivi la <strong>Nota di Continuità</strong> e tocca <strong>Salva Voce</strong>.',
-        help_step_7_title: '4. Duplicare continuità',
-        help_step_7_desc: 'Nell\'angolo in alto a destra di ogni scheda di continuità, tocca il pulsante <strong>Duplica continuità</strong>, scegli la <strong>Scena di destinazione *</strong>, spunta le <strong>Voci da includere</strong> e tocca <strong>Duplica</strong>.',
-        help_step_8_title: '5. Salvare backup',
-        help_step_8_desc: 'Dal menu strumenti del progetto, tocca <strong>Salva Backup</strong> (o <strong>Salva Backup</strong> nel menu iniziale) per scaricare il file di backup con tutte le scene, i personaggi e le foto.',
-        help_step_9_title: '6. Esportare PDF',
-        help_step_9_desc: 'Seleziona <strong>Esporta Report PDF</strong> nel menu del progetto per regolare lingua, scene, dimensione font e foto nell\'anteprima e toccare <strong>Genera PDF</strong>.',
+        pwa_banner_title: 'Installa SetBible',
+        pwa_banner_subtitle: 'Usala come app a schermo intero',
+        pwa_btn_install: 'Installa',
+        pwa_btn_how: 'Come installare',
+        pwa_modal_title: 'Installa SetBible',
+        pwa_modal_subtitle: 'Aggiungila alla schermata Home per aprirla subito a schermo intero.',
+        pwa_device_badge: 'Il tuo dispositivo',
+        pwa_ios_heading: 'iPhone / iPad (Safari)',
+        pwa_ios_step_1: 'Tocca il pulsante <strong>Condividi</strong> (quadrato con freccia verso l’alto).',
+        pwa_ios_step_2: 'Scegli <strong>Aggiungi alla schermata Home</strong> e tocca <strong>Aggiungi</strong>.',
+        pwa_ios_inapp_tip: 'Se l’hai aperta da WhatsApp o un’altra app, aprila prima in Safari.',
+        pwa_android_heading: 'Android (Chrome)',
+        pwa_android_step_1: 'Tocca il menu <strong>⋮</strong> in alto a destra nel browser.',
+        pwa_android_step_2: 'Seleziona <strong>Installa app</strong> o <strong>Aggiungi a schermata Home</strong>.',
+        help_step_1_title: 'Installa SetBible come app',
+        help_step_1_desc: 'Installala sul telefono o tablet prima di iniziare. Su <strong>iPhone / iPad (Safari)</strong> tocca <strong>Condividi</strong> e scegli <strong>Aggiungi alla schermata Home</strong>. Su <strong>Android (Chrome)</strong> tocca <strong>Installa</strong> o <strong>⋮ → Installa app</strong>.',
+        help_step_2_title: 'Accesso e sincronizzazione',
+        help_step_2_desc: 'Accedi con <strong>Continua con Google</strong> o con la tua email per sincronizzare i progetti nel cloud (oppure scegli <strong>Continua senza account</strong>). Puoi gestirlo anche da <strong>Cloud / Account</strong> e <strong>Carica nel cloud</strong>.',
+        help_step_3_title: 'Creazione di progetti',
+        help_step_3_desc: 'Tocca il pulsante <strong>+ NUOVO PROGETTO</strong> nella barra inferiore per creare un progetto inserendo <strong>Nome del Progetto *</strong> e <strong>Produzione (Opzionale)</strong>, oppure usa <strong>Importa Progetti</strong> sotto per caricare backup.',
+        help_step_4_title: 'Menu dei progetti',
+        help_step_4_desc: 'Tocca il pulsante strumenti (chiave inglese in alto a destra) per <strong>Ordina progetti</strong>, <strong>Fissa progetti</strong>, <strong>Completa progetti</strong>, <strong>Salva Backup</strong> o <strong>Elimina progetti</strong>, o tocca la matita su ogni scheda per modificarla.',
+        help_step_5_title: '1. Importa sceneggiatura (Scene e Personaggi)',
+        help_step_5_desc: 'Dentro il progetto, apri il menu strumenti in alto a destra e tocca <strong>Importa Sceneggiatura (PDF)</strong> per rilevare automaticamente <strong>Scene</strong> e <strong>Personaggi</strong>, o gestiscili manualmente.',
+        help_step_6_title: '2. Creazione di continuità',
+        help_step_6_desc: 'Tocca il pulsante <strong>+ NUOVA CONTINUITÀ</strong> nella barra inferiore del progetto, seleziona la <strong>Scena *</strong>, inserisci le <strong>Note Generali della Scena</strong> e tocca <strong>Salva Continuità</strong>.',
+        help_step_7_title: '3. Creazione di voci',
+        help_step_7_desc: 'Dentro una continuità, tocca <strong>+ Aggiungi Voce</strong>, scegli il <strong>Personaggio *</strong>, tocca <strong>Seleziona Foto</strong> per la foto di continuità, scrivi la <strong>Nota di Continuità</strong> e tocca <strong>Salva Voce</strong>.',
+        help_step_8_title: '4. Duplicare continuità',
+        help_step_8_desc: 'Nell\'angolo in alto a destra di ogni scheda di continuità, tocca il pulsante <strong>Duplica continuità</strong>, scegli la <strong>Scena di destinazione *</strong>, spunta le <strong>Voci da includere</strong> e tocca <strong>Duplica</strong>.',
+        help_step_9_title: '5. Salvare backup',
+        help_step_9_desc: 'Dal menu strumenti del progetto, tocca <strong>Salva Backup</strong> (o <strong>Salva Backup</strong> nel menu iniziale) per scaricare il file di backup con tutte le scene, i personaggi e le foto.',
+        help_step_10_title: '6. Esportare PDF',
+        help_step_10_desc: 'Seleziona <strong>Esporta Report PDF</strong> nel menu del progetto per regolare lingua, scene, dimensione font e foto nell\'anteprima e toccare <strong>Genera PDF</strong>.',
         batch_title_default: 'SELEZIONA PROGETTI',
         batch_title_pin: 'FISSA PROGETTI',
         batch_title_complete: 'COMPLETA PROGETTI',
@@ -6285,24 +6582,40 @@
         help_demo_proj_2: 'NACHT IM SÜDEN',
         help_demo_scene_desc: 'ZENTRALES CAFÉ - TISCHE AM FENSTER',
         help_demo_entry_note: 'Braune Lederjacke bis oben zugeknöpft, Uhr am linken Handgelenk.',
-        help_step_1_title: 'Anmeldung & Synchronisierung',
-        help_step_1_desc: 'Melde dich über <strong>Mit Google fortfahren</strong> oder per E-Mail an, um deine Projekte in der Cloud zu synchronisieren (oder wähle <strong>Ohne Konto fortfahren</strong>). Du kannst dies auch unter <strong>Cloud / Konto</strong> und <strong>In die Cloud hochladen</strong> verwalten.',
-        help_step_2_title: 'Projekte erstellen',
-        help_step_2_desc: 'Tippe in der unteren Leiste auf <strong>+ NEUES PROJEKT</strong>, um ein Projekt mit <strong>Projektname *</strong> und <strong>Produktionsfirma (Optional)</strong> zu erstellen, oder nutze darunter <strong>Projekte importieren</strong>, um Backups zu laden.',
-        help_step_3_title: 'Projektmenü',
-        help_step_3_desc: 'Tippe oben rechts auf das Werkzeug-Symbol (Schraubenschlüssel), um <strong>Projekte sortieren</strong>, <strong>Projekte anheften</strong>, <strong>Projekte abschließen</strong>, <strong>Backups speichern</strong> oder <strong>Projekte löschen</strong> zu nutzen, oder tippe auf das Stiftsymbol einer Karte.',
-        help_step_4_title: '1. Drehbuch importieren (Szenen & Figuren)',
-        help_step_4_desc: 'Öffne im Projekt oben rechts das Werkzeugmenü und tippe auf <strong>Drehbuch importieren (PDF)</strong>, um deine <strong>Szenen</strong> und <strong>Figuren</strong> automatisch zu erkennen oder manuell zu verwalten.',
-        help_step_5_title: '2. Kontinuitäten erstellen',
-        help_step_5_desc: 'Tippe in der unteren Projektleiste auf <strong>+ NEUE KONTINUITÄT</strong>, wähle die <strong>Szene *</strong>, gib <strong>Allgemeine Szenennotizen</strong> ein und tippe auf <strong>Kontinuität speichern</strong>.',
-        help_step_6_title: '3. Einträge erstellen',
-        help_step_6_desc: 'Tippe innerhalb einer Kontinuität auf <strong>+ Eintrag hinzufügen</strong>, wähle die <strong>Figur *</strong>, tippe auf <strong>Foto auswählen</strong>, schreibe die <strong>Kontinuitätsnotiz</strong> und tippe auf <strong>Eintrag speichern</strong>.',
-        help_step_7_title: '4. Kontinuitäten duplizieren',
-        help_step_7_desc: 'Tippe oben rechts auf einer Kontinuitätskarte auf die Schaltfläche <strong>Kontinuität duplizieren</strong>, wähle die <strong>Zielszene *</strong>, markiere <strong>Einzuschließende Einträge</strong> und tippe auf <strong>Duplizieren</strong>.',
-        help_step_8_title: '5. Backup speichern',
-        help_step_8_desc: 'Tippe im Werkzeugmenü des Projekts auf <strong>Backup speichern</strong> (oder im Startmenü auf <strong>Backups speichern</strong>), um die Sicherungsdatei mit allen Szenen, Figuren und Fotos herunterzuladen.',
-        help_step_9_title: '6. PDF exportieren',
-        help_step_9_desc: 'Wähle im Projektmenü <strong>PDF-Bericht exportieren</strong>, um Sprache, Szenen, Schrift- und Fotogröße in der Live-Vorschau anzupassen, und tippe auf <strong>PDF erstellen</strong>.',
+        pwa_banner_title: 'SetBible installieren',
+        pwa_banner_subtitle: 'Als Vollbild-App nutzen',
+        pwa_btn_install: 'Installieren',
+        pwa_btn_how: 'So geht’s',
+        pwa_modal_title: 'SetBible installieren',
+        pwa_modal_subtitle: 'Füge die App zum Startbildschirm hinzu für schnellen Vollbild-Zugriff.',
+        pwa_device_badge: 'Dein Gerät',
+        pwa_ios_heading: 'iPhone / iPad (Safari)',
+        pwa_ios_step_1: 'Tippe auf <strong>Teilen</strong> (Quadrat mit Pfeil nach oben).',
+        pwa_ios_step_2: 'Wähle <strong>Zum Home-Bildschirm</strong> und tippe auf <strong>Hinzufügen</strong>.',
+        pwa_ios_inapp_tip: 'Falls in WhatsApp o. ä. geöffnet, zuerst in Safari öffnen.',
+        pwa_android_heading: 'Android (Chrome)',
+        pwa_android_step_1: 'Tippe oben rechts im Browser auf das Menü <strong>⋮</strong>.',
+        pwa_android_step_2: 'Wähle <strong>App installieren</strong> oder <strong>Zum Startbildschirm hinzufügen</strong>.',
+        help_step_1_title: 'SetBible als App installieren',
+        help_step_1_desc: 'Installiere die App auf Smartphone oder Tablet vor dem Start. Auf <strong>iPhone / iPad (Safari)</strong> tippe auf <strong>Teilen → Zum Home-Bildschirm</strong>. Auf <strong>Android (Chrome)</strong> tippe auf <strong>Installieren</strong> oder <strong>⋮ → App installieren</strong>.',
+        help_step_2_title: 'Anmeldung & Synchronisierung',
+        help_step_2_desc: 'Melde dich über <strong>Mit Google fortfahren</strong> oder per E-Mail an, um deine Projekte in der Cloud zu synchronisieren (oder wähle <strong>Ohne Konto fortfahren</strong>). Du kannst dies auch unter <strong>Cloud / Konto</strong> und <strong>In die Cloud hochladen</strong> verwalten.',
+        help_step_3_title: 'Projekte erstellen',
+        help_step_3_desc: 'Tippe in der unteren Leiste auf <strong>+ NEUES PROJEKT</strong>, um ein Projekt mit <strong>Projektname *</strong> und <strong>Produktionsfirma (Optional)</strong> zu erstellen, oder nutze darunter <strong>Projekte importieren</strong>, um Backups zu laden.',
+        help_step_4_title: 'Projektmenü',
+        help_step_4_desc: 'Tippe oben rechts auf das Werkzeug-Symbol (Schraubenschlüssel), um <strong>Projekte sortieren</strong>, <strong>Projekte anheften</strong>, <strong>Projekte abschließen</strong>, <strong>Backups speichern</strong> oder <strong>Projekte löschen</strong> zu nutzen, oder tippe auf das Stiftsymbol einer Karte.',
+        help_step_5_title: '1. Drehbuch importieren (Szenen & Figuren)',
+        help_step_5_desc: 'Öffne im Projekt oben rechts das Werkzeugmenü und tippe auf <strong>Drehbuch importieren (PDF)</strong>, um deine <strong>Szenen</strong> und <strong>Figuren</strong> automatisch zu erkennen oder manuell zu verwalten.',
+        help_step_6_title: '2. Kontinuitäten erstellen',
+        help_step_6_desc: 'Tippe in der unteren Projektleiste auf <strong>+ NEUE KONTINUITÄT</strong>, wähle die <strong>Szene *</strong>, gib <strong>Allgemeine Szenennotizen</strong> ein und tippe auf <strong>Kontinuität speichern</strong>.',
+        help_step_7_title: '3. Einträge erstellen',
+        help_step_7_desc: 'Tippe innerhalb einer Kontinuität auf <strong>+ Eintrag hinzufügen</strong>, wähle die <strong>Figur *</strong>, tippe auf <strong>Foto auswählen</strong>, schreibe die <strong>Kontinuitätsnotiz</strong> und tippe auf <strong>Eintrag speichern</strong>.',
+        help_step_8_title: '4. Kontinuitäten duplizieren',
+        help_step_8_desc: 'Tippe oben rechts auf einer Kontinuitätskarte auf die Schaltfläche <strong>Kontinuität duplizieren</strong>, wähle die <strong>Zielszene *</strong>, markiere <strong>Einzuschließende Einträge</strong> und tippe auf <strong>Duplizieren</strong>.',
+        help_step_9_title: '5. Backup speichern',
+        help_step_9_desc: 'Tippe im Werkzeugmenü des Projekts auf <strong>Backup speichern</strong> (oder im Startmenü auf <strong>Backups speichern</strong>), um die Sicherungsdatei mit allen Szenen, Figuren und Fotos herunterzuladen.',
+        help_step_10_title: '6. PDF exportieren',
+        help_step_10_desc: 'Wähle im Projektmenü <strong>PDF-Bericht exportieren</strong>, um Sprache, Szenen, Schrift- und Fotogröße in der Live-Vorschau anzupassen, und tippe auf <strong>PDF erstellen</strong>.',
         batch_title_default: 'PROJEKTE WÄHLEN',
         batch_title_pin: 'PROJEKTE ANHEFTEN',
         batch_title_complete: 'PROJEKTE ABSCHLIESSEN',
@@ -6718,24 +7031,40 @@
         help_demo_proj_2: 'NUIT DU SUD',
         help_demo_scene_desc: 'CAFÉTÉRIA CENTRALE - TABLES PRÈS DE LA VITRINE',
         help_demo_entry_note: 'Veste en cuir marron boutonnée jusqu\'en haut, montre au poignet gauche.',
-        help_step_1_title: 'Connexion et synchronisation',
-        help_step_1_desc: 'Connectez-vous avec <strong>Continuer avec Google</strong> ou par e-mail pour synchroniser vos projets dans le cloud (ou choisissez <strong>Continuer sans compte</strong>). Vous pouvez aussi le gérer depuis <strong>Cloud / Compte</strong> et <strong>Envoyer vers le cloud</strong>.',
-        help_step_2_title: 'Création de projets',
-        help_step_2_desc: 'Appuyez sur le bouton <strong>+ NOUVEAU PROJET</strong> dans la barre inférieure pour créer un projet en saisissant le <strong>Nom du Projet *</strong> et la <strong>Société de Production (Optionnel)</strong>, ou utilisez <strong>Importer des projets</strong> juste en dessous.',
-        help_step_3_title: 'Menu des projets',
-        help_step_3_desc: 'Appuyez sur le bouton d\'outils (clé à molette en haut à droite) pour <strong>Trier les projets</strong>, <strong>Épingler les projets</strong>, <strong>Terminer les projets</strong>, <strong>Enregistrer sauvegardes</strong> ou <strong>Supprimer des projets</strong>, ou sur le crayon d\'une carte.',
-        help_step_4_title: '1. Importer le scénario (Scènes et Personnages)',
-        help_step_4_desc: 'Dans le projet, ouvrez le menu d\'outils en haut à droite et appuyez sur <strong>Importer le scénario (PDF)</strong> pour détecter automatiquement vos <strong>Scènes</strong> et <strong>Personnages</strong>, ou gérez-les manuellement.',
-        help_step_5_title: '2. Création de continuités',
-        help_step_5_desc: 'Appuyez sur le bouton <strong>+ NOUVELLE CONTINUITÉ</strong> dans la barre inférieure du projet, sélectionnez la <strong>Scène *</strong>, saisissez les <strong>Notes Générales de la Scène</strong> et appuyez sur <strong>Enregistrer la continuité</strong>.',
-        help_step_6_title: '3. Création d\'entrées',
-        help_step_6_desc: 'Dans une continuité, appuyez sur <strong>+ Ajouter une entrée</strong>, choisissez le <strong>Personnage *</strong>, appuyez sur <strong>Choisir une photo</strong>, rédigez la <strong>Note de continuité</strong> et appuyez sur <strong>Enregistrer l\'entrée</strong>.',
-        help_step_7_title: '4. Dupliquer des continuités',
-        help_step_7_desc: 'Dans le coin supérieur droit de chaque carte de continuité, appuyez sur le bouton <strong>Dupliquer la continuité</strong>, choisissez la <strong>Scène de destination *</strong>, cochez les <strong>Entrées à inclure</strong> et appuyez sur <strong>Dupliquer</strong>.',
-        help_step_8_title: '5. Enregistrer une sauvegarde',
-        help_step_8_desc: 'Depuis le menu d\'outils du projet, appuyez sur <strong>Enregistrer sauvegarde</strong> (ou <strong>Enregistrer sauvegardes</strong> dans le menu d\'accueil) pour télécharger le fichier de sauvegarde complet.',
-        help_step_9_title: '6. Exporter en PDF',
-        help_step_9_desc: 'Sélectionnez <strong>Exporter rapport PDF</strong> dans le menu du projet pour ajuster la langue, les scènes, la taille des polices et des photos dans l\'aperçu, puis appuyez sur <strong>Générer le PDF</strong>.',
+        pwa_banner_title: 'Installer SetBible',
+        pwa_banner_subtitle: 'Utilisez-la en app plein écran',
+        pwa_btn_install: 'Installer',
+        pwa_btn_how: 'Comment installer',
+        pwa_modal_title: 'Installer SetBible',
+        pwa_modal_subtitle: 'Ajoutez-la à l’écran d’accueil pour l’ouvrir rapidement en plein écran.',
+        pwa_device_badge: 'Votre appareil',
+        pwa_ios_heading: 'iPhone / iPad (Safari)',
+        pwa_ios_step_1: 'Appuyez sur <strong>Partager</strong> (carré avec flèche vers le haut).',
+        pwa_ios_step_2: 'Choisissez <strong>Sur l’écran d’accueil</strong> puis appuyez sur <strong>Ajouter</strong>.',
+        pwa_ios_inapp_tip: 'Si ouverte depuis WhatsApp ou une autre app, ouvrez-la d’abord dans Safari.',
+        pwa_android_heading: 'Android (Chrome)',
+        pwa_android_step_1: 'Appuyez sur le menu <strong>⋮</strong> en haut à droite du navigateur.',
+        pwa_android_step_2: 'Sélectionnez <strong>Installer l’application</strong> ou <strong>Ajouter à l’écran d’accueil</strong>.',
+        help_step_1_title: 'Installer SetBible en tant qu’app',
+        help_step_1_desc: 'Installez-la sur mobile ou tablette avant de commencer. Sur <strong>iPhone / iPad (Safari)</strong> appuyez sur <strong>Partager → Sur l’écran d’accueil</strong>. Sur <strong>Android (Chrome)</strong> appuyez sur <strong>Installer</strong> ou <strong>⋮ → Installer l’application</strong>.',
+        help_step_2_title: 'Connexion et synchronisation',
+        help_step_2_desc: 'Connectez-vous avec <strong>Continuer avec Google</strong> ou par e-mail pour synchroniser vos projets dans le cloud (ou choisissez <strong>Continuer sans compte</strong>). Vous pouvez aussi le gérer depuis <strong>Cloud / Compte</strong> et <strong>Envoyer vers le cloud</strong>.',
+        help_step_3_title: 'Création de projets',
+        help_step_3_desc: 'Appuyez sur le bouton <strong>+ NOUVEAU PROJET</strong> dans la barre inférieure pour créer un projet en saisissant le <strong>Nom du Projet *</strong> et la <strong>Société de Production (Optionnel)</strong>, ou utilisez <strong>Importer des projets</strong> juste en dessous.',
+        help_step_4_title: 'Menu des projets',
+        help_step_4_desc: 'Appuyez sur le bouton d\'outils (clé à molette en haut à droite) pour <strong>Trier les projets</strong>, <strong>Épingler les projets</strong>, <strong>Terminer les projets</strong>, <strong>Enregistrer sauvegardes</strong> ou <strong>Supprimer des projets</strong>, ou sur le crayon d\'une carte.',
+        help_step_5_title: '1. Importer le scénario (Scènes et Personnages)',
+        help_step_5_desc: 'Dans le projet, ouvrez le menu d\'outils en haut à droite et appuyez sur <strong>Importer le scénario (PDF)</strong> pour détecter automatiquement vos <strong>Scènes</strong> et <strong>Personnages</strong>, ou gérez-les manuellement.',
+        help_step_6_title: '2. Création de continuités',
+        help_step_6_desc: 'Appuyez sur le bouton <strong>+ NOUVELLE CONTINUITÉ</strong> dans la barre inférieure du projet, sélectionnez la <strong>Scène *</strong>, saisissez les <strong>Notes Générales de la Scène</strong> et appuyez sur <strong>Enregistrer la continuité</strong>.',
+        help_step_7_title: '3. Création d\'entrées',
+        help_step_7_desc: 'Dans une continuité, appuyez sur <strong>+ Ajouter une entrée</strong>, choisissez le <strong>Personnage *</strong>, appuyez sur <strong>Choisir une photo</strong>, rédigez la <strong>Note de continuité</strong> et appuyez sur <strong>Enregistrer l\'entrée</strong>.',
+        help_step_8_title: '4. Dupliquer des continuités',
+        help_step_8_desc: 'Dans le coin supérieur droit de chaque carte de continuité, appuyez sur le bouton <strong>Dupliquer la continuité</strong>, choisissez la <strong>Scène de destination *</strong>, cochez les <strong>Entrées à inclure</strong> et appuyez sur <strong>Dupliquer</strong>.',
+        help_step_9_title: '5. Enregistrer une sauvegarde',
+        help_step_9_desc: 'Depuis le menu d\'outils du projet, appuyez sur <strong>Enregistrer sauvegarde</strong> (ou <strong>Enregistrer sauvegardes</strong> dans le menu d\'accueil) pour télécharger le fichier de sauvegarde complet.',
+        help_step_10_title: '6. Exporter en PDF',
+        help_step_10_desc: 'Sélectionnez <strong>Exporter rapport PDF</strong> dans le menu du projet pour ajuster la langue, les scènes, la taille des polices et des photos dans l\'aperçu, puis appuyez sur <strong>Générer le PDF</strong>.',
         batch_title_default: 'CHOISIR LES PROJETS',
         batch_title_pin: 'ÉPINGLER LES PROJETS',
         batch_title_complete: 'TERMINER LES PROJETS',
@@ -7164,6 +7493,8 @@
       renderPdfLangSelectorUI();
       if (typeof refreshBackupFolderLabel === 'function') refreshBackupFolderLabel();
       if (typeof updateCloudAccountUI === 'function') updateCloudAccountUI();
+      if (typeof updateLoginInstallBannerUI === 'function') updateLoginInstallBannerUI();
+      if (typeof renderPwaInstallModalBody === 'function') renderPwaInstallModalBody();
       if (typeof renderHelpTourStep === 'function' && typeof helpTourModal !== 'undefined' && helpTourModal && !helpTourModal.classList.contains('hidden')) {
         renderHelpTourStep(helpTourIndex);
       }
@@ -7249,10 +7580,107 @@
       return strA.localeCompare(strB, undefined, { numeric: true, sensitivity: 'base' });
     }
 
+    let deferredInstallPrompt = null;
+    let pwaBannerDismissedThisLoad = false;
+    let pwaAppInstalledThisLoad = false;
+
     function isMobileTouchDevice() {
       const ua = navigator.userAgent || '';
       const isTouchMac = /Macintosh/i.test(ua) && navigator.maxTouchPoints > 1;
       return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua) || isTouchMac;
+    }
+
+    function isIOSOrIPadOSDevice() {
+      const ua = navigator.userAgent || '';
+      return /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
+    }
+
+    function isAndroidDevice() {
+      return /Android/i.test(navigator.userAgent || '');
+    }
+
+    function isInstalledStandaloneApp() {
+      if (window.navigator && window.navigator.standalone === true) return true;
+      if (typeof window.matchMedia === 'function') {
+        if (
+          window.matchMedia('(display-mode: standalone)').matches ||
+          window.matchMedia('(display-mode: fullscreen)').matches ||
+          window.matchMedia('(display-mode: minimal-ui)').matches
+        ) {
+          return true;
+        }
+      }
+      return typeof document !== 'undefined' && (document.referrer || '').startsWith('android-app://');
+    }
+
+    function getDetectedInstallPlatform() {
+      if (!isMobileTouchDevice()) return null;
+      if (isIOSOrIPadOSDevice()) return 'ios';
+      if (isAndroidDevice()) return 'android';
+      return null;
+    }
+
+    function shouldShowLoginInstallBanner() {
+      if (pwaBannerDismissedThisLoad || pwaAppInstalledThisLoad) return false;
+      if (!isMobileTouchDevice()) return false;
+      if (isInstalledStandaloneApp()) return false;
+      return true;
+    }
+
+    function buildInstallInstructionsHtml({ compact = false } = {}) {
+      const detected = getDetectedInstallPlatform();
+      const shareSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m8 7 4-4 4 4"/><path d="M4 14v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/></svg>';
+      const addBoxSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>';
+      const menuDotsSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.4" fill="currentColor"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="19" r="1.4" fill="currentColor"/></svg>';
+      const downloadSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>';
+      const phoneSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>';
+
+      const platforms = [
+        {
+          id: 'ios',
+          headingKey: 'pwa_ios_heading',
+          steps: [
+            { icon: shareSvg, key: 'pwa_ios_step_1' },
+            { icon: addBoxSvg, key: 'pwa_ios_step_2' }
+          ],
+          tipKey: compact ? '' : 'pwa_ios_inapp_tip'
+        },
+        {
+          id: 'android',
+          headingKey: 'pwa_android_heading',
+          steps: [
+            { icon: menuDotsSvg, key: 'pwa_android_step_1' },
+            { icon: downloadSvg, key: 'pwa_android_step_2' }
+          ],
+          tipKey: ''
+        }
+      ];
+
+      if (detected === 'android') platforms.reverse();
+
+      const cardsHtml = platforms.map((p) => {
+        const isCurrent = detected === p.id;
+        const badgeHtml = isCurrent ? `<span class="pwa-guide-device-pill">${t('pwa_device_badge')}</span>` : '';
+        const stepsHtml = p.steps.map((s) => `
+          <div class="pwa-guide-step-row">
+            <span class="pwa-guide-step-icon" aria-hidden="true">${s.icon}</span>
+            <span>${t(s.key)}</span>
+          </div>
+        `).join('');
+        const tipHtml = p.tipKey ? `<p class="pwa-guide-tip">${t(p.tipKey)}</p>` : '';
+        return `
+          <div class="pwa-guide-card${isCurrent ? ' is-current-device' : ''}">
+            <div class="pwa-guide-card-head">
+              <span class="pwa-guide-card-os">${phoneSvg}<span>${t(p.headingKey)}</span></span>
+              ${badgeHtml}
+            </div>
+            <div class="pwa-guide-steps">${stepsHtml}</div>
+            ${tipHtml}
+          </div>
+        `;
+      }).join('');
+
+      return `<div class="pwa-guide-cards">${cardsHtml}</div>`;
     }
 
     function openDBConnection(version, dbName = getDBNameForScope(activeStorageScope)) {
@@ -9142,7 +9570,22 @@
 
     function getHelpTourSteps() {
       return [
-        // 1. Inicio de sesión y sincronización de proyectos
+        // 1. Instalar SetBible como app (iOS / Android)
+        {
+          bg: buildTourHomeBg(),
+          vAlign: 'flex-start',
+          padTop: '14px',
+          popoverPos: 'below-target',
+          caretDir: 'caret-up',
+          caretAlign: 'pos-center',
+          spotAlign: 'center',
+          spotHtml: `
+            <div class="tour-spotlight-box" style="width:100%; max-width:390px; padding:10px;">
+              ${buildInstallInstructionsHtml({ compact: true })}
+            </div>
+          `
+        },
+        // 2. Inicio de sesión y sincronización de proyectos
         {
           bg: buildTourHomeBg(),
           vAlign: 'flex-start',
@@ -9450,7 +9893,7 @@
     if (projectMenuOptHelp) {
       projectMenuOptHelp.addEventListener('click', () => {
         closeProjectMenu();
-        openHelpTour(3); // Abre directo en "1. Importar guion" dentro de proyecto, permitiendo ir atrás/adelante
+        openHelpTour(4); // Abre directo en "1. Importar guion" dentro de proyecto, permitiendo ir atrás/adelante
       });
     }
 
@@ -15553,6 +15996,92 @@
     const authScreenProfileStep = document.getElementById('auth-screen-profile-step');
     const screenProfileName = document.getElementById('screen-profile-name');
     const screenProfileDept = document.getElementById('screen-profile-dept');
+    const pwaInstallBanner = document.getElementById('pwa-install-banner');
+    const btnPwaInstallAction = document.getElementById('btn-pwa-install-action');
+    const btnDismissPwaBanner = document.getElementById('btn-dismiss-pwa-banner');
+    const pwaInstallModal = document.getElementById('pwa-install-modal');
+    const pwaInstallGuideBody = document.getElementById('pwa-install-guide-body');
+
+    function renderPwaInstallModalBody() {
+      if (pwaInstallGuideBody) {
+        pwaInstallGuideBody.innerHTML = buildInstallInstructionsHtml({ compact: false });
+      }
+    }
+
+    function openPwaInstallModal() {
+      renderPwaInstallModalBody();
+      pwaInstallModal?.classList.remove('hidden');
+    }
+
+    function closePwaInstallModal() {
+      pwaInstallModal?.classList.add('hidden');
+    }
+
+    function updateLoginInstallBannerUI() {
+      if (!pwaInstallBanner || !viewAuth) return;
+      const onLoginView = !viewAuth.classList.contains('hidden');
+      const onLoginStep = !authScreenLoginStep || !authScreenLoginStep.classList.contains('hidden');
+      const shouldShow = onLoginView && onLoginStep && shouldShowLoginInstallBanner();
+
+      pwaInstallBanner.classList.toggle('hidden', !shouldShow);
+      viewAuth.classList.toggle('has-install-banner', shouldShow);
+      pwaInstallBanner.setAttribute('aria-label', t('pwa_banner_title'));
+
+      if (btnPwaInstallAction) {
+        btnPwaInstallAction.textContent = deferredInstallPrompt ? t('pwa_btn_install') : t('pwa_btn_how');
+      }
+    }
+
+    async function handlePwaBannerActionClick() {
+      if (deferredInstallPrompt) {
+        const promptEvent = deferredInstallPrompt;
+        deferredInstallPrompt = null;
+        try {
+          await promptEvent.prompt();
+          const choice = await promptEvent.userChoice;
+          if (choice && choice.outcome === 'accepted') {
+            pwaAppInstalledThisLoad = true;
+          }
+        } catch (err) {
+          console.warn('PWA prompt warning:', err);
+        } finally {
+          updateLoginInstallBannerUI();
+        }
+        return;
+      }
+      openPwaInstallModal();
+    }
+
+    btnPwaInstallAction?.addEventListener('click', handlePwaBannerActionClick);
+    btnDismissPwaBanner?.addEventListener('click', () => {
+      pwaBannerDismissedThisLoad = true;
+      updateLoginInstallBannerUI();
+    });
+    document.getElementById('btn-close-pwa-install-modal')?.addEventListener('click', closePwaInstallModal);
+    document.getElementById('btn-understood-pwa-install-modal')?.addEventListener('click', closePwaInstallModal);
+    pwaInstallModal?.addEventListener('click', (e) => {
+      if (e.target === pwaInstallModal) closePwaInstallModal();
+    });
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredInstallPrompt = e;
+      updateLoginInstallBannerUI();
+    });
+
+    window.addEventListener('appinstalled', () => {
+      deferredInstallPrompt = null;
+      pwaAppInstalledThisLoad = true;
+      closePwaInstallModal();
+      updateLoginInstallBannerUI();
+    });
+
+    if (typeof window.matchMedia === 'function') {
+      const standaloneMql = window.matchMedia('(display-mode: standalone)');
+      if (typeof standaloneMql.addEventListener === 'function') {
+        standaloneMql.addEventListener('change', updateLoginInstallBannerUI);
+      }
+    }
 
     function showAuthScreen(step = 'login') {
       viewProjects?.classList.add('hidden');
@@ -15568,10 +16097,12 @@
         authScreenProfileStep?.classList.add('hidden');
         authScreenLoginStep?.classList.remove('hidden');
       }
+      updateLoginInstallBannerUI();
     }
 
     async function enterAppFromAuth() {
       viewAuth?.classList.add('hidden');
+      updateLoginInstallBannerUI();
       if (viewTakes && !activeProjectId) {
         await showProjectsView();
       } else if (viewProjects && viewTakes.classList.contains('hidden')) {
