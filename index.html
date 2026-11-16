@@ -107,11 +107,14 @@
       color: var(--text-main);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       overflow: hidden;
+      -webkit-user-select: none;
       user-select: none;
+      -webkit-touch-callout: none;
       font-size: 16px;
     }
 
     input, textarea, select {
+      -webkit-user-select: text;
       user-select: text;
       font-family: inherit;
     }
@@ -375,8 +378,28 @@
       justify-content: space-between;
       gap: 12px;
       cursor: pointer;
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
       transition: border-color 0.15s, opacity 0.2s, transform 0.15s, box-shadow 0.15s;
+    }
+
+    #projects-list,
+    #projects-list .project-card,
+    #projects-list .project-card *,
+    #projects-list .list-section-header,
+    #projects-list .list-section-header * {
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+    }
+
+    body.is-project-dragging,
+    body.is-project-dragging * {
+      -webkit-user-select: none !important;
+      user-select: none !important;
+      -webkit-touch-callout: none !important;
     }
 
     #projects-list .project-card {
@@ -1212,6 +1235,11 @@
       touch-action: none;
       user-select: none;
       -webkit-user-select: none;
+      -webkit-touch-callout: none;
+    }
+
+    .project-drag-handle svg {
+      pointer-events: none;
     }
 
     .project-drag-handle:active {
@@ -4767,7 +4795,7 @@
         <div style="width:100%; border-top:1px solid var(--border-700); padding-top:14px; display:flex; flex-direction:column; gap:6px; font-size:13px; color:var(--text-muted);">
           <div>
             <span data-i18n="app_info_version_label">Versión</span>:
-            <strong id="app-info-version-val" style="color:#fff;">1.21</strong>
+            <strong id="app-info-version-val" style="color:#fff;">1.22</strong>
           </div>
           <div>
             <span data-i18n="app_info_created_by">Creado por</span>:
@@ -9129,6 +9157,20 @@
       return projectOrderSaveQueue;
     }
 
+    function clearActiveTextSelection() {
+      try {
+        const sel = window.getSelection ? window.getSelection() : null;
+        if (sel && sel.rangeCount > 0) sel.removeAllRanges();
+      } catch (err) {}
+    }
+
+    projectsList.addEventListener('touchstart', (e) => {
+      const handle = e.target.closest('[data-action="drag-project"]');
+      if (!handle) return;
+      e.preventDefault();
+      clearActiveTextSelection();
+    }, { passive: false });
+
     projectsList.addEventListener('pointerdown', (e) => {
       const handle = e.target.closest('[data-action="drag-project"]');
       if (!handle) return;
@@ -9140,6 +9182,8 @@
 
       if (projectDragState) finishProjectDrag();
       settleProjectDragAnimationsSync();
+      document.body.classList.add('is-project-dragging');
+      clearActiveTextSelection();
 
       if (projectClickSuppressTimer) {
         clearTimeout(projectClickSuppressTimer);
@@ -9198,6 +9242,7 @@
     function onProjectDragMove(e) {
       if (!projectDragState || e.pointerId !== projectDragState.pointerId) return;
       e.preventDefault();
+      clearActiveTextSelection();
 
       projectDragState.lastClientY = e.clientY;
       const dy = e.clientY - projectDragState.startClientY;
@@ -9236,6 +9281,8 @@
         card.removeEventListener('transitionend', onTransitionEnd);
         if (followPill) followPill.remove();
 
+        document.body.classList.remove('is-project-dragging');
+        clearActiveTextSelection();
         card.classList.remove('is-dragging', 'is-dropping', 'is-will-pin', 'is-will-unpin');
         card.setAttribute('data-pinned', finalPinned ? '1' : '0');
         card.classList.toggle('is-pinned', finalPinned);
@@ -9277,6 +9324,31 @@
       card.style.transform = `translate3d(0, ${dyFinal}px, 0) scale(1)`;
       timerId = setTimeout(finalizeDrop, PROJECT_DRAG_ANIM_MS + 50);
     }
+
+    window.addEventListener('touchmove', (e) => {
+      if (!projectDragState) return;
+      e.preventDefault();
+      clearActiveTextSelection();
+    }, { passive: false });
+
+    document.addEventListener('selectstart', (e) => {
+      if (projectDragState || document.body.classList.contains('is-project-dragging') || e.target?.closest?.('[data-action="drag-project"]')) {
+        e.preventDefault();
+        clearActiveTextSelection();
+      }
+    });
+
+    document.addEventListener('selectionchange', () => {
+      if (projectDragState || document.body.classList.contains('is-project-dragging')) {
+        clearActiveTextSelection();
+      }
+    });
+
+    document.addEventListener('contextmenu', (e) => {
+      if (projectDragState || document.body.classList.contains('is-project-dragging') || e.target?.closest?.('[data-action="drag-project"]')) {
+        e.preventDefault();
+      }
+    });
 
     window.addEventListener('pointermove', onProjectDragMove, { passive: false });
     window.addEventListener('pointerup', finishProjectDrag);
@@ -16298,6 +16370,12 @@
     function resetSessionRuntimeState() {
       clearTimeout(cloudSyncDebounceTimer);
       clearTimeout(remotePullTimer);
+      if (typeof document !== 'undefined' && document.body) {
+        document.body.classList.remove('is-project-dragging');
+      }
+      if (typeof clearActiveTextSelection === 'function') {
+        clearActiveTextSelection();
+      }
       isCloudSyncPending = false;
       lastCloudSyncError = false;
       activeProjectId = null;
