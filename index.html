@@ -2720,44 +2720,39 @@
       flex-shrink: 0;
     }
 
-    .header-avatar-btn {
+    .menu-account-avatar-wrap {
       position: relative;
-      width: 44px;
-      height: 44px;
-      min-width: 44px;
-      min-height: 44px;
-      padding: 2px;
+      width: 34px;
+      height: 34px;
+      min-width: 34px;
+      min-height: 34px;
+      padding: 1.5px;
       border-radius: 50%;
       background: linear-gradient(135deg, rgba(245, 158, 11, 0.85), rgba(217, 119, 6, 0.3));
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.48), 0 0 0 1px rgba(245, 158, 11, 0.22);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(245, 158, 11, 0.22);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      transition: transform 0.14s ease, box-shadow 0.22s ease;
     }
 
-    .header-avatar-btn:hover {
-      box-shadow: 0 6px 18px rgba(245, 158, 11, 0.24), 0 0 0 1px rgba(245, 158, 11, 0.5);
+    .menu-account-avatar-wrap.hidden {
+      display: none !important;
     }
 
-    .header-avatar-btn:active {
-      transform: scale(0.93);
-    }
-
-    .header-avatar-inner {
+    .menu-account-avatar-inner {
       width: 100%;
       height: 100%;
       border-radius: 50%;
       overflow: hidden;
       background: linear-gradient(135deg, var(--bg-800), var(--bg-850));
-      border: 2px solid var(--bg-850);
+      border: 1.5px solid var(--bg-850);
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .header-avatar-img {
+    .menu-account-avatar-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -2765,8 +2760,12 @@
       border-radius: 50%;
     }
 
-    .header-avatar-fallback {
-      font-size: 15px;
+    .menu-account-avatar-img.hidden {
+      display: none !important;
+    }
+
+    .menu-account-avatar-fallback {
+      font-size: 13px;
       font-weight: 900;
       color: var(--amber);
       letter-spacing: 0.3px;
@@ -2774,15 +2773,19 @@
       text-transform: uppercase;
     }
 
+    .menu-account-avatar-fallback.hidden {
+      display: none !important;
+    }
+
     .header-avatar-status-dot {
       position: absolute;
       bottom: -1px;
       right: -1px;
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
       background: var(--emerald);
-      border: 2.2px solid var(--bg-850);
+      border: 2px solid var(--bg-850);
       box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
       pointer-events: none;
     }
@@ -2796,6 +2799,48 @@
     .header-avatar-status-dot.is-offline {
       background: #6b7280;
       box-shadow: none;
+    }
+
+    .auth-profile-hero {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .auth-profile-hero.hidden {
+      display: none !important;
+    }
+
+    .auth-profile-avatar {
+      position: relative;
+      width: 78px;
+      height: 78px;
+      min-width: 78px;
+      min-height: 78px;
+      padding: 2.5px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.9), rgba(217, 119, 6, 0.35));
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.52), 0 0 0 1px rgba(245, 158, 11, 0.28);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .auth-profile-avatar .menu-account-avatar-inner {
+      border-width: 2.5px;
+    }
+
+    .auth-profile-avatar .menu-account-avatar-fallback {
+      font-size: 26px;
+    }
+
+    .auth-profile-avatar .header-avatar-status-dot {
+      width: 15px;
+      height: 15px;
+      bottom: 2px;
+      right: 2px;
+      border-width: 2.5px;
     }
 
     @keyframes helpCardSwapUp {
@@ -3407,13 +3452,6 @@
       <div id="home-menu-backdrop" class="menu-backdrop"></div>
 
       <div class="header-actions">
-        <button type="button" id="btn-home-avatar" class="header-avatar-btn hidden" title="Nube / Cuenta" data-i18n-title="menu_cloud_account" aria-label="Nube / Cuenta">
-          <span class="header-avatar-inner">
-            <img class="header-avatar-img hidden" alt="" referrerpolicy="no-referrer">
-            <span class="header-avatar-fallback hidden">?</span>
-          </span>
-          <span class="header-avatar-status-dot" aria-hidden="true"></span>
-        </button>
         <button type="button" id="btn-home-menu-toggle" class="btn-icon" title="Menú de Proyectos" data-i18n-title="home_menu_title">
           <span class="menu-icon-stage">
             <svg class="icon-wrench" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -3434,6 +3472,13 @@
           <div style="display:flex; justify-content:space-between; align-items:center; flex:1; gap:8px; min-width:0;">
             <span id="home-menu-account-label" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" data-i18n="menu_cloud_account">Nube / Cuenta</span>
             <span id="home-menu-account-status" style="color:var(--amber); font-size:11px; font-weight:900; flex-shrink:0;" data-i18n="cloud_status_offline_short">Sin sesión</span>
+            <span id="home-menu-account-avatar" class="menu-account-avatar-wrap hidden">
+              <span class="menu-account-avatar-inner">
+                <img class="menu-account-avatar-img hidden" alt="" referrerpolicy="no-referrer">
+                <span class="menu-account-avatar-fallback hidden">?</span>
+              </span>
+              <span class="header-avatar-status-dot" aria-hidden="true"></span>
+            </span>
           </div>
         </button>
 
@@ -3588,13 +3633,6 @@
       <div id="project-menu-backdrop" class="menu-backdrop"></div>
 
       <div class="header-actions">
-        <button type="button" id="btn-project-avatar" class="header-avatar-btn hidden" title="Nube / Cuenta" data-i18n-title="menu_cloud_account" aria-label="Nube / Cuenta">
-          <span class="header-avatar-inner">
-            <img class="header-avatar-img hidden" alt="" referrerpolicy="no-referrer">
-            <span class="header-avatar-fallback hidden">?</span>
-          </span>
-          <span class="header-avatar-status-dot" aria-hidden="true"></span>
-        </button>
         <button type="button" id="btn-project-menu-toggle" class="btn-icon" title="Herramientas del Proyecto" data-i18n-title="project_tools_title">
           <span class="menu-icon-stage">
             <svg class="icon-wrench" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -3617,6 +3655,13 @@
           <div style="display:flex; justify-content:space-between; align-items:center; flex:1; gap:8px; min-width:0;">
             <span id="project-menu-account-label" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" data-i18n="menu_cloud_account">Nube / Cuenta</span>
             <span id="project-menu-account-status" style="color:var(--amber); font-size:11px; font-weight:900; flex-shrink:0;" data-i18n="cloud_status_offline_short">Sin sesión</span>
+            <span id="project-menu-account-avatar" class="menu-account-avatar-wrap hidden">
+              <span class="menu-account-avatar-inner">
+                <img class="menu-account-avatar-img hidden" alt="" referrerpolicy="no-referrer">
+                <span class="menu-account-avatar-fallback hidden">?</span>
+              </span>
+              <span class="header-avatar-status-dot" aria-hidden="true"></span>
+            </span>
           </div>
         </button>
 
@@ -4609,6 +4654,16 @@
         </div>
 
         <div id="auth-logged-in-view" class="hidden">
+          <div id="auth-profile-hero" class="auth-profile-hero hidden">
+            <div id="auth-profile-avatar" class="auth-profile-avatar">
+              <span class="menu-account-avatar-inner">
+                <img class="menu-account-avatar-img hidden" alt="" referrerpolicy="no-referrer">
+                <span class="menu-account-avatar-fallback hidden">?</span>
+              </span>
+              <span class="header-avatar-status-dot" aria-hidden="true"></span>
+            </div>
+          </div>
+
           <div style="background:var(--bg-800); border:1px solid var(--border-700); border-radius:12px; padding:12px; margin-bottom:14px; display:flex; align-items:center; justify-content:space-between; gap:10px;">
             <div style="min-width:0;">
               <div style="font-size:11px; font-weight:800; color:var(--text-muted); text-transform:uppercase;" data-i18n="auth_signed_in_as">Sesión iniciada</div>
@@ -4634,7 +4689,9 @@
           </div>
 
           <button type="button" id="btn-save-profile" class="btn-primary" style="width:100%; margin-bottom:10px;" data-i18n="profile_btn_save">Guardar perfil</button>
-          <button type="button" id="btn-sync-now" class="btn-secondary" style="width:100%; margin-bottom:10px; border-color:rgba(249,115,22,0.5); color:#fdba74;" data-i18n="cloud_btn_sync_now">Sincronizar ahora con la nube</button>
+          <div id="auth-offline-sync-notice" class="hidden" style="background:rgba(148,163,184,0.1); border:1px solid rgba(148,163,184,0.28); color:#cbd5e1; border-radius:10px; padding:10px 12px; font-size:12.5px; line-height:1.4; font-weight:700; margin-bottom:10px;" data-i18n="cloud_offline_sync_notice">Sin conexión. Tus cambios se guardan localmente en este dispositivo y se sincronizarán automáticamente cuando recuperes la señal.</div>
+          <div id="auth-sync-error-notice" class="hidden" style="background:rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.35); color:#fca5a5; border-radius:10px; padding:10px 12px; font-size:12.5px; line-height:1.4; font-weight:700; margin-bottom:10px;" data-i18n="cloud_sync_error_notice">No se pudo completar la sincronización. Puedes intentarlo de nuevo cuando estés listo.</div>
+          <button type="button" id="btn-sync-now" class="btn-secondary hidden" style="width:100%; margin-bottom:10px; border-color:rgba(249,115,22,0.5); color:#fdba74;" data-i18n="cloud_btn_sync_now">Sincronizar ahora con la nube</button>
           <button type="button" id="btn-auth-logout" class="btn-secondary" style="width:100%; color:#f87171; border-color:rgba(239,68,68,0.35);" data-i18n="auth_btn_logout">Cerrar sesión</button>
         </div>
       </div>
@@ -4710,7 +4767,7 @@
         <div style="width:100%; border-top:1px solid var(--border-700); padding-top:14px; display:flex; flex-direction:column; gap:6px; font-size:13px; color:var(--text-muted);">
           <div>
             <span data-i18n="app_info_version_label">Versión</span>:
-            <strong id="app-info-version-val" style="color:#fff;">1.20</strong>
+            <strong id="app-info-version-val" style="color:#fff;">1.21</strong>
           </div>
           <div>
             <span data-i18n="app_info_created_by">Creado por</span>:
@@ -5199,6 +5256,8 @@
         dept_art: 'Arte',
         profile_btn_save: 'Guardar perfil',
         cloud_btn_sync_now: 'Sincronizar ahora con la nube',
+        cloud_offline_sync_notice: 'Sin conexión. Tus cambios se guardan localmente en este dispositivo y se sincronizarán automáticamente cuando recuperes la señal.',
+        cloud_sync_error_notice: 'No se pudo completar la sincronización. Puedes intentarlo de nuevo cuando estés listo.',
         auth_btn_logout: 'Cerrar sesión',
         auth_skip_local: 'Continuar sin cuenta (solo en este dispositivo)',
         auth_profile_onboarding_desc: 'Completa tus datos para identificar tus reportes PDF.',
@@ -5653,6 +5712,8 @@
         dept_art: 'Art',
         profile_btn_save: 'Save profile',
         cloud_btn_sync_now: 'Sync with cloud now',
+        cloud_offline_sync_notice: 'Offline. Your changes are saved locally on this device and will sync automatically when signal returns.',
+        cloud_sync_error_notice: 'Could not complete sync. You can try again when ready.',
         auth_btn_logout: 'Sign out',
         auth_skip_local: 'Continue without account (this device only)',
         auth_profile_onboarding_desc: 'Complete your details to identify your PDF reports.',
@@ -6121,6 +6182,8 @@
         dept_art: 'Arte',
         profile_btn_save: 'Salvar perfil',
         cloud_btn_sync_now: 'Sincronizar com a nuvem agora',
+        cloud_offline_sync_notice: 'Sem conexão. Suas alterações são salvas localmente neste dispositivo e serão sincronizadas automaticamente quando o sinal voltar.',
+        cloud_sync_error_notice: 'Não foi possível concluir a sincronização. Você pode tentar novamente quando estiver pronto.',
         auth_btn_logout: 'Sair',
         auth_skip_local: 'Continuar sem conta (apenas neste dispositivo)',
         auth_profile_onboarding_desc: 'Complete seus dados para identificar seus relatórios em PDF.',
@@ -6575,6 +6638,8 @@
         dept_art: 'Scenografia',
         profile_btn_save: 'Salva profilo',
         cloud_btn_sync_now: 'Sincronizza ora con il cloud',
+        cloud_offline_sync_notice: 'Senza connessione. Le tue modifiche sono salvate localmente su questo dispositivo e verranno sincronizzate automaticamente al ritorno del segnale.',
+        cloud_sync_error_notice: 'Impossibile completare la sincronizzazione. Puoi riprovare quando sei pronto.',
         auth_btn_logout: 'Esci',
         auth_skip_local: 'Continua senza account (solo su questo dispositivo)',
         auth_profile_onboarding_desc: 'Completa i tuoi dati per identificare i report PDF.',
@@ -7029,6 +7094,8 @@
         dept_art: 'Szenenbild',
         profile_btn_save: 'Profil speichern',
         cloud_btn_sync_now: 'Jetzt mit der Cloud synchronisieren',
+        cloud_offline_sync_notice: 'Keine Verbindung. Deine Änderungen werden lokal auf diesem Gerät gespeichert und automatisch synchronisiert, sobald wieder Signal besteht.',
+        cloud_sync_error_notice: 'Synchronisierung konnte nicht abgeschlossen werden. Du kannst es erneut versuchen, wenn du bereit bist.',
         auth_btn_logout: 'Abmelden',
         auth_skip_local: 'Ohne Konto fortfahren (nur dieses Gerät)',
         auth_profile_onboarding_desc: 'Vervollständige deine Daten zur Kennzeichnung deiner PDF-Berichte.',
@@ -7483,6 +7550,8 @@
         dept_art: 'Décors',
         profile_btn_save: 'Enregistrer le profil',
         cloud_btn_sync_now: 'Synchroniser maintenant avec le cloud',
+        cloud_offline_sync_notice: 'Hors ligne. Vos modifications sont enregistrées localement sur cet appareil et seront synchronisées automatiquement dès le retour du signal.',
+        cloud_sync_error_notice: 'Impossible de terminer la synchronisation. Vous pouvez réessayer quand vous êtes prêt.',
         auth_btn_logout: 'Se déconnecter',
         auth_skip_local: 'Continuer sans compte (cet appareil uniquement)',
         auth_profile_onboarding_desc: 'Complétez vos informations pour identifier vos rapports PDF.',
@@ -8699,7 +8768,7 @@
               ${shouldShowDirtyCloudIndicators() && isProjectModifiedSinceBackup(proj) ? `<span class="project-dirty-badge" title="${t('dirty_project_title')}">${t('menu_dirty_backup_badge')}</span>` : ''}
             </div>
             <p class="project-card-meta">
-              ${prodValue ? escapeHtml(prodValue) + ' • ' : ''}${t('created_label')}: ${new Date(proj.createdAt).toLocaleDateString(currentAppLang === 'es' ? 'es-ES' : currentAppLang)} • <span style="color:var(--amber); font-weight:700; font-size:12.5px; white-space:nowrap;"><span class="takes-count-short">${takesCount} ${t('unit_continuity_abbr')}</span><span class="takes-count-full">${takesLabel}</span></span>
+              ${prodValue ? escapeHtml(prodValue) + ' • ' : ''}<span style="color:var(--amber); font-weight:700; font-size:12.5px; white-space:nowrap;"><span class="takes-count-short">${takesCount} ${t('unit_continuity_abbr')}</span><span class="takes-count-full">${takesLabel}</span></span>
             </p>
           </div>
           <button type="button" class="btn-edit-square" data-action="edit-project" data-id="${proj.id}" title="${t('edit_project_title')}">
@@ -12408,8 +12477,13 @@
       document.getElementById('summary-modal-project-name').textContent = activeProjectData.name || '';
       const prodEl = document.getElementById('summary-modal-producer');
       const prodVal = (activeProjectData.producer || activeProjectData.director || '').trim();
-      if (prodVal) {
-        prodEl.textContent = prodVal;
+      const createdDateStr = activeProjectData.createdAt
+        ? new Date(activeProjectData.createdAt).toLocaleDateString(currentAppLang === 'es' ? 'es-ES' : currentAppLang)
+        : '';
+      const createdLabelStr = createdDateStr ? `${t('created_label')}: ${createdDateStr}` : '';
+      const summaryMetaParts = [prodVal, createdLabelStr].filter(Boolean);
+      if (summaryMetaParts.length) {
+        prodEl.textContent = summaryMetaParts.join(' • ');
         prodEl.classList.remove('hidden');
       } else {
         prodEl.textContent = '';
@@ -15877,78 +15951,101 @@
       return raw ? raw.charAt(0).toUpperCase() : '?';
     }
 
-    function updateHeaderAvatars({ show = false, photoUrl = '', initial = '?', tooltip = '', isSyncActive = false, isOffline = false } = {}) {
-      ['btn-home-avatar', 'btn-project-avatar'].forEach((btnId) => {
-        const btn = document.getElementById(btnId);
-        if (!btn) return;
-        const img = btn.querySelector('.header-avatar-img');
-        const fallback = btn.querySelector('.header-avatar-fallback');
-        const dot = btn.querySelector('.header-avatar-status-dot');
+    let lastCloudSyncError = false;
 
-        if (!show) {
-          btn.classList.add('hidden');
-          if (img) {
-            img.dataset.loadedUrl = '';
-            img.dataset.failedUrl = '';
-            img.removeAttribute('src');
-            img.classList.add('hidden');
-          }
-          fallback?.classList.add('hidden');
-          return;
+    function hasPendingCloudSyncChanges() {
+      if (isCloudSyncPending || lastCloudSyncError || cloudConnectionFailed) return true;
+      const backupMap = (typeof getBackupStateMap === 'function') ? getBackupStateMap() : {};
+      if (Object.values(backupMap || {}).some(st => st && Number(st.lastModifiedAt || 0) > Number(st.lastCloudSyncAt || 0))) {
+        return true;
+      }
+      if (typeof getCloudDeletes === 'function' && getCloudDeletes().length > 0) return true;
+      try {
+        if (currentCloudUser && typeof getScopedStorageKey === 'function' && localStorage.getItem(getScopedStorageKey('sb_profile_dirty')) === '1') {
+          return true;
         }
+      } catch (e) {}
+      return false;
+    }
 
-        btn.classList.remove('hidden');
-        btn.title = tooltip || t('menu_cloud_account');
-        btn.setAttribute('aria-label', btn.title);
-        if (fallback) fallback.textContent = initial || '?';
+    function applyGoogleAvatarContent(wrapEl, { show = false, photoUrl = '', initial = '?', isSyncActive = false, isOffline = false } = {}, containerEl = wrapEl) {
+      if (!wrapEl) return;
+      const targetVisibilityEl = containerEl || wrapEl;
+      const img = wrapEl.querySelector('.menu-account-avatar-img');
+      const fallback = wrapEl.querySelector('.menu-account-avatar-fallback');
+      const dot = wrapEl.querySelector('.header-avatar-status-dot');
 
+      if (!show) {
+        targetVisibilityEl.classList.add('hidden');
+        if (img) {
+          img.dataset.loadedUrl = '';
+          img.dataset.failedUrl = '';
+          img.removeAttribute('src');
+          img.classList.add('hidden');
+        }
+        fallback?.classList.add('hidden');
         if (dot) {
-          dot.classList.toggle('is-syncing', Boolean(isSyncActive));
-          dot.classList.toggle('is-offline', Boolean(!isSyncActive && isOffline));
+          dot.classList.remove('is-syncing', 'is-offline');
         }
+        return;
+      }
 
-        if (img && photoUrl) {
-          if (!isOffline && img.dataset.failedUrl === photoUrl) {
-            img.dataset.loadedUrl = '';
-            img.dataset.failedUrl = '';
-          }
-          if (img.dataset.loadedUrl !== photoUrl) {
-            img.dataset.loadedUrl = photoUrl;
-            img.dataset.failedUrl = '';
-            img.classList.add('hidden');
-            fallback?.classList.remove('hidden');
-            img.onload = () => {
-              if (img.dataset.loadedUrl === photoUrl) {
-                img.dataset.failedUrl = '';
-                img.classList.remove('hidden');
-                fallback?.classList.add('hidden');
-              }
-            };
-            img.onerror = () => {
-              if (img.dataset.loadedUrl === photoUrl) {
-                img.dataset.failedUrl = photoUrl;
-                img.classList.add('hidden');
-                fallback?.classList.remove('hidden');
-              }
-            };
-            img.src = photoUrl;
-            if (img.complete && img.naturalWidth > 0) {
+      targetVisibilityEl.classList.remove('hidden');
+      if (fallback) fallback.textContent = initial || '?';
+
+      if (dot) {
+        dot.classList.toggle('is-syncing', Boolean(isSyncActive));
+        dot.classList.toggle('is-offline', Boolean(!isSyncActive && isOffline));
+      }
+
+      if (img && photoUrl) {
+        if (!isOffline && img.dataset.failedUrl === photoUrl) {
+          img.dataset.loadedUrl = '';
+          img.dataset.failedUrl = '';
+        }
+        if (img.dataset.loadedUrl !== photoUrl) {
+          img.dataset.loadedUrl = photoUrl;
+          img.dataset.failedUrl = '';
+          img.classList.add('hidden');
+          fallback?.classList.remove('hidden');
+          img.onload = () => {
+            if (img.dataset.loadedUrl === photoUrl) {
+              img.dataset.failedUrl = '';
               img.classList.remove('hidden');
               fallback?.classList.add('hidden');
             }
-          } else if (img.dataset.failedUrl !== photoUrl && img.complete && img.naturalWidth > 0) {
+          };
+          img.onerror = () => {
+            if (img.dataset.loadedUrl === photoUrl) {
+              img.dataset.failedUrl = photoUrl;
+              img.classList.add('hidden');
+              fallback?.classList.remove('hidden');
+            }
+          };
+          img.src = photoUrl;
+          if (img.complete && img.naturalWidth > 0) {
             img.classList.remove('hidden');
             fallback?.classList.add('hidden');
           }
-        } else {
-          if (img) {
-            img.dataset.loadedUrl = '';
-            img.dataset.failedUrl = '';
-            img.removeAttribute('src');
-            img.classList.add('hidden');
-          }
-          fallback?.classList.remove('hidden');
+        } else if (img.dataset.failedUrl !== photoUrl && img.complete && img.naturalWidth > 0) {
+          img.classList.remove('hidden');
+          fallback?.classList.add('hidden');
         }
+      } else {
+        if (img) {
+          img.dataset.loadedUrl = '';
+          img.dataset.failedUrl = '';
+          img.removeAttribute('src');
+          img.classList.add('hidden');
+        }
+        fallback?.classList.remove('hidden');
+      }
+    }
+
+    function updateMenuAccountAvatars(avatarOpts = {}) {
+      ['home-menu-account-avatar', 'project-menu-account-avatar'].forEach((wrapId) => {
+        const wrap = document.getElementById(wrapId);
+        if (wrap) applyGoogleAvatarContent(wrap, avatarOpts, wrap);
       });
     }
 
@@ -15957,6 +16054,14 @@
       updateCloudSyncingPill();
       refreshProjectMenuBackupIndicator();
       const profile = getLocalUserProfile();
+      const homeMenuStatusEl = document.getElementById('home-menu-account-status');
+      const projectMenuStatusEl = document.getElementById('project-menu-account-status');
+      const authProfileHeroEl = document.getElementById('auth-profile-hero');
+      const authProfileAvatarEl = document.getElementById('auth-profile-avatar');
+      const offlineSyncNoticeEl = document.getElementById('auth-offline-sync-notice');
+      const syncErrorNoticeEl = document.getElementById('auth-sync-error-notice');
+      const btnSyncNowEl = document.getElementById('btn-sync-now');
+
       if (currentCloudUser) {
         authLoggedOutView?.classList.add('hidden');
         authLoggedInView?.classList.remove('hidden');
@@ -15966,31 +16071,101 @@
 
         const displayName = profile.name || currentCloudUser.displayName || currentCloudUser.email || t('menu_cloud_account');
         const isSyncActive = Boolean(isCloudSyncing || isCloudSyncPending);
-        const isOffline = !navigator.onLine || cloudConnectionFailed;
-        const statusText = isSyncActive
-          ? t('cloud_syncing_status')
-          : (isOffline ? t('cloud_status_no_signal') : t('cloud_status_online'));
-        const statusColor = isSyncActive ? '#fb923c' : (isOffline ? '#9ca3af' : '#6ee7b7');
-        setAccountMenusDisplay(displayName, statusText, statusColor);
+        const isDeviceOffline = !navigator.onLine;
+        const isOfflineState = isDeviceOffline || cloudConnectionFailed;
+        const hasPending = hasPendingCloudSyncChanges();
 
-        if (authSyncPillEl) {
-          authSyncPillEl.textContent = statusText;
-        }
+        const menuStatusText = isSyncActive
+          ? t('cloud_syncing_status')
+          : (isOfflineState ? t('cloud_status_no_signal') : t('cloud_status_online'));
+        const menuStatusColor = isSyncActive ? '#fb923c' : (isOfflineState ? '#9ca3af' : '#6ee7b7');
+        setAccountMenusDisplay(displayName, menuStatusText, menuStatusColor);
 
         const showGoogleAvatar = isGoogleSignedInUser(currentCloudUser);
-        updateHeaderAvatars({
+        if (homeMenuStatusEl) homeMenuStatusEl.classList.toggle('hidden', showGoogleAvatar);
+        if (projectMenuStatusEl) projectMenuStatusEl.classList.toggle('hidden', showGoogleAvatar);
+
+        const avatarPayload = {
           show: showGoogleAvatar,
           photoUrl: showGoogleAvatar ? getCloudUserGooglePhoto(currentCloudUser) : '',
           initial: getAvatarInitial(displayName, currentCloudUser.email),
-          tooltip: `${displayName} · ${statusText}`,
           isSyncActive,
-          isOffline
-        });
+          isOffline: isOfflineState
+        };
+        updateMenuAccountAvatars(avatarPayload);
+        if (authProfileAvatarEl) {
+          applyGoogleAvatarContent(authProfileAvatarEl, avatarPayload, authProfileHeroEl || authProfileAvatarEl);
+        }
+
+        if (authSyncPillEl) {
+          if (isSyncActive) {
+            authSyncPillEl.textContent = t('cloud_syncing_status');
+            authSyncPillEl.style.background = 'rgba(249,115,22,0.16)';
+            authSyncPillEl.style.color = '#fdba74';
+            authSyncPillEl.style.borderColor = 'rgba(249,115,22,0.4)';
+          } else if (isDeviceOffline) {
+            authSyncPillEl.textContent = t('cloud_status_no_signal');
+            authSyncPillEl.style.background = 'rgba(148,163,184,0.16)';
+            authSyncPillEl.style.color = '#cbd5e1';
+            authSyncPillEl.style.borderColor = 'rgba(148,163,184,0.38)';
+          } else if (lastCloudSyncError) {
+            authSyncPillEl.textContent = t('summary_cloud_pending');
+            authSyncPillEl.style.background = 'rgba(239,68,68,0.16)';
+            authSyncPillEl.style.color = '#fca5a5';
+            authSyncPillEl.style.borderColor = 'rgba(239,68,68,0.4)';
+          } else if (hasPending) {
+            authSyncPillEl.textContent = t('summary_cloud_pending');
+            authSyncPillEl.style.background = 'rgba(245,158,11,0.16)';
+            authSyncPillEl.style.color = '#fcd34d';
+            authSyncPillEl.style.borderColor = 'rgba(245,158,11,0.4)';
+          } else {
+            authSyncPillEl.textContent = t('summary_cloud_synced');
+            authSyncPillEl.style.background = 'rgba(16,185,129,0.16)';
+            authSyncPillEl.style.color = '#6ee7b7';
+            authSyncPillEl.style.borderColor = 'rgba(16,185,129,0.4)';
+          }
+        }
+
+        if (offlineSyncNoticeEl) {
+          offlineSyncNoticeEl.classList.toggle('hidden', !isDeviceOffline);
+        }
+        if (syncErrorNoticeEl) {
+          syncErrorNoticeEl.classList.toggle('hidden', isDeviceOffline || isSyncActive || !lastCloudSyncError);
+        }
+        if (btnSyncNowEl) {
+          const showSyncBtn = !isDeviceOffline && (isSyncActive || hasPending);
+          btnSyncNowEl.classList.toggle('hidden', !showSyncBtn);
+          if (showSyncBtn && isCloudSyncing) {
+            btnSyncNowEl.disabled = true;
+            btnSyncNowEl.textContent = t('cloud_syncing_status');
+            btnSyncNowEl.style.opacity = '0.72';
+            btnSyncNowEl.style.cursor = 'wait';
+          } else {
+            btnSyncNowEl.disabled = false;
+            btnSyncNowEl.textContent = t('cloud_btn_sync_now');
+            btnSyncNowEl.style.opacity = '';
+            btnSyncNowEl.style.cursor = '';
+          }
+        }
       } else {
         authLoggedOutView?.classList.remove('hidden');
         authLoggedInView?.classList.add('hidden');
         setAccountMenusDisplay(t('menu_cloud_account'), t('cloud_status_offline_short'), 'var(--amber)');
-        updateHeaderAvatars({ show: false });
+        if (homeMenuStatusEl) homeMenuStatusEl.classList.remove('hidden');
+        if (projectMenuStatusEl) projectMenuStatusEl.classList.remove('hidden');
+        updateMenuAccountAvatars({ show: false });
+        if (authProfileAvatarEl) {
+          applyGoogleAvatarContent(authProfileAvatarEl, { show: false }, authProfileHeroEl || authProfileAvatarEl);
+        }
+        offlineSyncNoticeEl?.classList.add('hidden');
+        syncErrorNoticeEl?.classList.add('hidden');
+        if (btnSyncNowEl) {
+          btnSyncNowEl.classList.add('hidden');
+          btnSyncNowEl.disabled = false;
+          btnSyncNowEl.textContent = t('cloud_btn_sync_now');
+          btnSyncNowEl.style.opacity = '';
+          btnSyncNowEl.style.cursor = '';
+        }
       }
     }
 
@@ -16001,9 +16176,7 @@
 
     [
       { id: 'home-menu-opt-account', closeFn: closeHomeMenu },
-      { id: 'project-menu-opt-account', closeFn: closeProjectMenu },
-      { id: 'btn-home-avatar', closeFn: closeHomeMenu },
-      { id: 'btn-project-avatar', closeFn: closeProjectMenu }
+      { id: 'project-menu-opt-account', closeFn: closeProjectMenu }
     ].forEach(({ id, closeFn }) => {
       document.getElementById(id)?.addEventListener('click', () => {
         if (typeof closeFn === 'function') closeFn();
@@ -16126,6 +16299,7 @@
       clearTimeout(cloudSyncDebounceTimer);
       clearTimeout(remotePullTimer);
       isCloudSyncPending = false;
+      lastCloudSyncError = false;
       activeProjectId = null;
       activeProjectData = null;
       currentPhotoItems = [];
@@ -16731,12 +16905,23 @@
         updatedAt: Date.now()
       };
       saveLocalUserProfile(nextProfile);
+      const profileDirtyKey = getScopedStorageKey('sb_profile_dirty');
+      if (currentCloudUser) {
+        try { localStorage.setItem(profileDirtyKey, '1'); } catch (e) {}
+      }
       updateCloudAccountUI();
       if (currentCloudUser && firebaseDb && navigator.onLine) {
         try {
           lastCloudWriteTs = Date.now();
           await firebaseDb.collection('users').doc(currentCloudUser.uid).collection('profile').doc('main').set(nextProfile, { merge: true });
-        } catch (e) {}
+          try { localStorage.removeItem(profileDirtyKey); } catch (e) {}
+          cloudConnectionFailed = false;
+          lastCloudSyncError = false;
+        } catch (e) {
+          cloudConnectionFailed = true;
+          lastCloudSyncError = true;
+        }
+        updateCloudAccountUI();
       }
       showToast(t('toast_profile_saved'));
     });
@@ -16837,6 +17022,7 @@
 
       isCloudSyncing = true;
       isCloudSyncPending = false;
+      lastCloudSyncError = false;
       updateCloudAccountUI();
       const userRef = firebaseDb.collection('users').doc(syncUid);
 
@@ -17397,12 +17583,16 @@
         } else if (!viewProjects.classList.contains('hidden')) {
           await renderProjects();
         }
-        if (!silent) showToast(t('toast_cloud_synced'));
-        cloudConnectionFailed = false;
+        try { localStorage.removeItem(getScopedStorageKey('sb_profile_dirty', expectedScope)); } catch (e) {}
+        const hasSyncLeftovers = remainingDeletes.length > 0;
+        cloudConnectionFailed = hasSyncLeftovers;
+        lastCloudSyncError = hasSyncLeftovers;
+        if (!silent) showToast(t(hasSyncLeftovers ? 'toast_cloud_sync_error' : 'toast_cloud_synced'));
       } catch (err) {
         if (!isSameActiveSession()) return;
         console.error('Cloud sync error:', err);
         cloudConnectionFailed = true;
+        lastCloudSyncError = true;
         isCloudSyncPending = false;
         refreshProjectMenuBackupIndicator();
         if (!viewProjects.classList.contains('hidden')) {
