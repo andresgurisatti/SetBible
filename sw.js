@@ -1,8 +1,13 @@
-const CACHE_NAME = 'setbible-v1.3.0';
+const CACHE_NAME = 'setbible-v1.3.1';
 const LOCAL_ASSETS = [
   './',
   './index.html',
   './manifest.json',
+  './favicon.svg',
+  './favicon-16x16.png',
+  './favicon-32x32.png',
+  './favicon-48x48.png',
+  './favicon.ico',
   './apple-touch-icon.png',
   './icon-192.png',
   './icon-512.png'
@@ -50,6 +55,9 @@ self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
   const url = new URL(event.request.url);
+  if (url.origin === self.location.origin && url.pathname.endsWith('/sw.js')) {
+    return;
+  }
   if (
     url.hostname.includes('googleapis.com') ||
     url.hostname.includes('firebaseio.com') ||
