@@ -50,6 +50,9 @@
       --sky-soft: #7dd3fc;
       --emerald: #10b981;
       --emerald-soft: #6ee7b7;
+      --rose: #c96b8b;
+      --rose-soft: #e295b0;
+      --rose-pale: #edd2dc;
       --red: #ef4444;
       --text-main: #f9fafb;
       --text-muted: #9ca3af;
@@ -949,6 +952,14 @@
     .dropdown-item.is-chars > div > span:first-child { color: var(--emerald-soft); }
     .dropdown-item.is-chars:active { background: rgba(16, 185, 129, 0.24); color: var(--emerald-soft); }
 
+    .dropdown-item.is-days {
+      border-color: rgba(201, 107, 139, 0.36);
+      background: linear-gradient(135deg, rgba(201, 107, 139, 0.11), var(--bg-800));
+    }
+    .dropdown-item.is-days svg,
+    .dropdown-item.is-days > div > span:first-child { color: var(--rose-soft); }
+    .dropdown-item.is-days:active { background: rgba(201, 107, 139, 0.22); color: var(--rose-soft); }
+
     .count-pill {
       font-size: 13px;
       font-weight: 900;
@@ -959,6 +970,7 @@
     .count-pill.is-scenes { color: var(--violet-soft); background: rgba(139, 92, 246, 0.18); }
     .count-pill.is-sets { color: var(--sky-soft); background: rgba(56, 189, 248, 0.18); }
     .count-pill.is-chars { color: var(--emerald-soft); background: rgba(16, 185, 129, 0.18); }
+    .count-pill.is-days { color: var(--rose-soft); background: rgba(201, 107, 139, 0.16); }
 
     .dropdown-hint-box {
       background: rgba(245, 158, 11, 0.07);
@@ -2529,6 +2541,210 @@
       color: var(--mgr-accent);
     }
 
+    #story-days-modal {
+      --mgr-accent: var(--rose-soft);
+      --mgr-accent-bg: rgba(201, 107, 139, 0.13);
+      --mgr-accent-border: rgba(201, 107, 139, 0.34);
+    }
+
+    #story-days-modal .modal-card {
+      height: 100%;
+      max-height: 100%;
+      border-color: var(--mgr-accent-border);
+    }
+
+    #story-days-modal .modal-header {
+      padding: 8px 14px;
+      background: linear-gradient(135deg, var(--mgr-accent-bg), var(--bg-800));
+      border-bottom-color: var(--mgr-accent-border);
+    }
+
+    #story-days-modal .modal-title {
+      color: var(--mgr-accent);
+    }
+
+    #story-days-modal .modal-body {
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #story-days-list {
+      flex: 1;
+      min-height: 180px;
+      max-height: none !important;
+      overflow-y: auto;
+      margin-bottom: 10px;
+    }
+
+    #story-days-modal .manager-item {
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      min-height: 64px;
+      gap: 10px;
+    }
+
+    .unassigned-scenes-banner {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+      border-radius: 12px;
+      background: rgba(201, 107, 139, 0.09);
+      border: 1px solid rgba(201, 107, 139, 0.32);
+      color: var(--rose-pale);
+      text-align: left;
+      flex-shrink: 0;
+      transition: transform 0.1s, background 0.15s;
+    }
+
+    .unassigned-scenes-banner:active {
+      transform: scale(0.985);
+      background: rgba(201, 107, 139, 0.16);
+    }
+
+    .unassigned-scenes-banner.is-zero {
+      background: rgba(16, 185, 129, 0.1);
+      border-color: rgba(16, 185, 129, 0.36);
+      color: var(--emerald-soft);
+    }
+
+    .unassigned-count-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      height: 28px;
+      padding: 0 8px;
+      border-radius: 8px;
+      background: rgba(201, 107, 139, 0.2);
+      color: #fff;
+      font-size: 13.5px;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    .unassigned-scenes-banner.is-zero .unassigned-count-badge {
+      background: rgba(16, 185, 129, 0.24);
+    }
+
+    #story-day-modal .modal-card {
+      border-color: rgba(201, 107, 139, 0.36);
+    }
+
+    #story-day-modal .modal-header {
+      background: linear-gradient(135deg, rgba(201, 107, 139, 0.13), var(--bg-800));
+      border-bottom-color: rgba(201, 107, 139, 0.32);
+    }
+
+    #story-day-modal .form-control:focus {
+      border-color: var(--rose-soft);
+    }
+
+    #story-day-modal select.form-control {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23e295b0' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    }
+
+    .story-day-type-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .story-day-type-btn {
+      min-height: 44px;
+      padding: 8px 6px;
+      border-radius: 10px;
+      background: var(--bg-800);
+      border: 1px solid var(--border-700);
+      color: var(--text-muted);
+      font-size: 12.5px;
+      font-weight: 800;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
+    }
+
+    .story-day-type-btn:active {
+      transform: scale(0.96);
+    }
+
+    .story-day-type-btn .type-code-hint {
+      font-size: 10px;
+      font-weight: 900;
+      opacity: 0.72;
+      letter-spacing: 0.04em;
+    }
+
+    .story-day-type-btn.active {
+      background: rgba(201, 107, 139, 0.18);
+      border-color: var(--rose-soft);
+      color: #fff;
+    }
+
+    .story-day-type-btn.active .type-code-hint {
+      color: var(--rose-soft);
+      opacity: 1;
+    }
+
+    .story-day-code-row {
+      display: flex;
+      align-items: stretch;
+      gap: 8px;
+    }
+
+    .story-day-prefix-input {
+      width: 78px;
+      flex-shrink: 0;
+      text-align: center;
+      font-weight: 900;
+      font-size: 17px;
+      color: var(--rose-soft);
+      background: rgba(201, 107, 139, 0.1);
+      border-color: rgba(201, 107, 139, 0.34);
+      letter-spacing: 0.04em;
+    }
+
+    .story-day-prefix-input[readonly] {
+      cursor: default;
+      opacity: 0.95;
+    }
+
+    .story-day-prefix-input:not([readonly]) {
+      background: var(--bg-800);
+      border-color: var(--border-600);
+      color: #fff;
+    }
+
+    .story-day-range-feedback {
+      margin-top: 8px;
+      padding: 8px 11px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.35;
+      background: rgba(201, 107, 139, 0.09);
+      border: 1px solid rgba(201, 107, 139, 0.28);
+      color: var(--rose-pale);
+    }
+
+    .story-day-range-feedback.is-error {
+      background: rgba(239, 68, 68, 0.14);
+      border-color: rgba(239, 68, 68, 0.5);
+      color: #fca5a5;
+    }
+
+    .summary-progress-fill.is-days {
+      background: linear-gradient(90deg, var(--rose-soft), var(--rose));
+    }
+
     .header-title-clickable {
       flex: 1;
       min-width: 0;
@@ -3986,10 +4202,15 @@
       font-weight: 800;
       padding: 2.5px 8.5px;
       border-radius: 999px;
-      background: rgba(245, 158, 11, 0.15);
-      border: 1px solid rgba(245, 158, 11, 0.45);
-      color: #fcd34d;
+      background: rgba(201, 107, 139, 0.13);
+      border: 1px solid rgba(201, 107, 139, 0.36);
+      color: var(--rose-pale);
       line-height: 1.2;
+    }
+
+    .story-day-chip svg {
+      color: var(--rose-soft);
+      flex-shrink: 0;
     }
 
     .story-day-chip.is-empty {
@@ -3998,68 +4219,118 @@
       color: var(--text-dim);
     }
 
-    .day-suggest-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 7px;
+    .story-day-chip.is-empty svg {
+      color: var(--text-dim);
     }
 
-    .day-suggest-pill {
+    .day-quick-filter-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 7px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+    }
+
+    .day-quick-filter-row::-webkit-scrollbar {
+      display: none;
+    }
+
+    .day-quick-filter-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10.5px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--rose-soft);
+      flex-shrink: 0;
+      margin-right: 2px;
+    }
+
+    .day-filter-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
       font-size: 11.5px;
       font-weight: 800;
       padding: 4px 10px;
       border-radius: 999px;
       background: var(--bg-800);
-      border: 1px solid rgba(245, 158, 11, 0.4);
-      color: #fcd34d;
-      cursor: pointer;
+      border: 1px solid var(--border-700);
+      color: var(--text-muted);
+      flex-shrink: 0;
+      white-space: nowrap;
+      transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
     }
 
-    .day-suggest-pill.is-selected {
-      background: var(--amber);
-      border-color: var(--amber);
-      color: #000;
+    .day-filter-pill:active {
+      transform: scale(0.95);
     }
 
-    .type-filter-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 8px;
+    .day-filter-pill.is-day-item {
+      border-color: rgba(201, 107, 139, 0.28);
+      color: var(--rose-pale);
+      background: rgba(201, 107, 139, 0.08);
     }
 
-    .type-filter-pill {
+    .day-filter-pill.active {
+      background: rgba(201, 107, 139, 0.2);
+      border-color: var(--rose-soft);
+      color: #fff;
+    }
+
+    .day-filter-pill[data-filter-day="__none__"].active {
+      background: rgba(148, 163, 184, 0.22);
+      border-color: #cbd5e1;
+      color: #fff;
+    }
+
+    .btn-day-filter-toggle {
+      min-height: 40px;
+      height: 40px;
+      padding: 0 11px;
+      border-radius: var(--btn-radius);
+      background: var(--bg-800);
+      border: 1px solid rgba(201, 107, 139, 0.34);
+      color: var(--rose-pale);
+      font-size: 12.5px;
+      font-weight: 800;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-size: 12px;
-      font-weight: 800;
-      padding: 5px 11px;
-      border-radius: 999px;
-      background: var(--bg-800);
-      border: 1px solid var(--border-700);
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: background 0.15s, border-color 0.15s, color 0.15s;
+      flex-shrink: 0;
+      white-space: nowrap;
+      transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
     }
 
-    .type-filter-pill.active {
-      background: rgba(245, 158, 11, 0.16);
-      border-color: var(--amber);
-      color: #fcd34d;
+    .btn-day-filter-toggle svg {
+      color: var(--rose-soft);
+      flex-shrink: 0;
     }
 
-    .type-filter-pill[data-filter-type="character"].active {
-      background: rgba(16, 185, 129, 0.16);
-      border-color: var(--emerald);
-      color: var(--emerald-soft);
+    .btn-day-filter-toggle:active {
+      transform: scale(0.95);
     }
 
-    .type-filter-pill[data-filter-type="set"].active {
-      background: rgba(56, 189, 248, 0.16);
-      border-color: var(--sky);
-      color: var(--sky-soft);
+    .btn-day-filter-toggle.is-open,
+    .btn-day-filter-toggle.has-active-day {
+      background: rgba(201, 107, 139, 0.18);
+      border-color: var(--rose-soft);
+      color: #fff;
+    }
+
+    .btn-day-filter-chevron {
+      font-size: 10px;
+      color: var(--rose-soft);
+      transition: transform 0.18s ease;
+    }
+
+    .btn-day-filter-toggle.is-open .btn-day-filter-chevron {
+      transform: rotate(180deg);
     }
 
     .continuity-entries-box {
@@ -5330,30 +5601,46 @@
             <span id="menu-count-characters" class="hidden count-pill is-chars">0</span>
           </div>
         </button>
-        <div class="dropdown-divider"></div>
-        <button type="button" class="dropdown-item" id="menu-opt-export-pdf">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-          <span data-i18n="menu_export_pdf">Exportar Reporte PDF</span>
-        </button>
-        <button type="button" class="dropdown-item" id="project-menu-opt-cloud-sync">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
-          <div style="display:flex; justify-content:space-between; align-items:center; flex:1; gap:8px;">
-            <span data-i18n="menu_cloud_sync">Subir a la nube</span>
-            <span id="menu-dirty-backup-badge" class="project-dirty-badge"></span>
+        <button type="button" class="dropdown-item is-days" id="menu-opt-story-days">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <div style="display:flex; justify-content:space-between; align-items:center; flex:1;">
+            <span data-i18n="menu_story_days">Días dramáticos</span>
+            <span id="menu-count-story-days" class="hidden count-pill is-days">0</span>
           </div>
         </button>
-        <button type="button" class="dropdown-item" id="menu-opt-export-json">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
-            <polyline points="17 21 17 13 7 13 7 21"/>
-            <polyline points="7 3 7 8 15 8"/>
-          </svg>
-          <span data-i18n="menu_save_backup">Guardar Respaldo</span>
+        <div class="dropdown-divider"></div>
+        <button type="button" class="dropdown-item" id="menu-opt-export-backup-group">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <div style="display:flex; justify-content:space-between; align-items:center; flex:1; gap:8px;">
+            <span data-i18n="menu_export_backup_group">Exportar / Respaldo</span>
+            <span id="menu-export-backup-chevron" style="color:var(--amber); font-size:12px; font-weight:900;">▼</span>
+          </div>
         </button>
-        <button type="button" class="dropdown-item sub-option hidden" id="menu-opt-change-json-folder">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>
-          <span data-i18n="menu_change_backup_folder">Cambiar carpeta de respaldo</span>
-        </button>
+        <div id="menu-export-backup-suboptions" class="sort-suboptions-box hidden">
+          <button type="button" class="dropdown-item" id="menu-opt-export-pdf">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            <span data-i18n="menu_export_pdf">Exportar Reporte PDF</span>
+          </button>
+          <button type="button" class="dropdown-item" id="project-menu-opt-cloud-sync">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+            <div style="display:flex; justify-content:space-between; align-items:center; flex:1; gap:8px;">
+              <span data-i18n="menu_cloud_sync">Subir a la nube</span>
+              <span id="menu-dirty-backup-badge" class="project-dirty-badge"></span>
+            </div>
+          </button>
+          <button type="button" class="dropdown-item" id="menu-opt-export-json">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+              <polyline points="17 21 17 13 7 13 7 21"/>
+              <polyline points="7 3 7 8 15 8"/>
+            </svg>
+            <span data-i18n="menu_save_backup">Guardar Respaldo</span>
+          </button>
+          <button type="button" class="dropdown-item sub-option hidden" id="menu-opt-change-json-folder">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>
+            <span data-i18n="menu_change_backup_folder">Cambiar carpeta de respaldo</span>
+          </button>
+        </div>
         <div class="dropdown-divider"></div>
         <button type="button" class="dropdown-item" id="menu-opt-lang">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -5380,15 +5667,16 @@
           <input type="text" id="search-input" class="search-input" placeholder="Buscar escena o nota..." data-i18n-placeholder="search_takes_placeholder">
           <span id="badge-total-items" class="search-inline-counter hidden">0 continuidades</span>
         </div>
+        <button type="button" id="btn-toggle-day-filter" class="btn-day-filter-toggle hidden" title="Asignar o cambiar Día dramático" data-i18n-title="viewer_day_title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span id="btn-toggle-day-filter-label" data-i18n="story_day_type_day">Día</span>
+          <span class="btn-day-filter-chevron">▼</span>
+        </button>
         <button type="button" id="btn-reset-filters" class="btn-icon btn-reset-search-sm hidden" title="Limpiar búsqueda" data-i18n-title="search_clean_title">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.3"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
         </button>
       </div>
-      <div class="type-filter-bar hidden" id="main-entry-type-filter">
-        <button type="button" class="type-filter-pill active" data-filter-type="all" data-i18n="filter_type_all">Todas las escenas</button>
-        <button type="button" class="type-filter-pill" data-filter-type="character" data-i18n="filter_type_char">Personaje</button>
-        <button type="button" class="type-filter-pill" data-filter-type="set" data-i18n="filter_type_set">Set / Locación</button>
-      </div>
+      <div class="day-quick-filter-row hidden" id="main-day-filter-bar"></div>
     </section>
 
     <main class="scroll-area">
@@ -5587,11 +5875,18 @@
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
             </span>
           </button>
-          <button type="button" id="summary-btn-open-characters" class="summary-kpi-card is-clickable" style="grid-column: 1 / -1;">
+          <button type="button" id="summary-btn-open-characters" class="summary-kpi-card is-clickable">
             <span class="summary-kpi-value" id="summary-count-characters" style="color:var(--emerald-soft);">0</span>
             <span class="summary-kpi-label">
               <span data-i18n="summary_characters">Personajes</span>
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+            </span>
+          </button>
+          <button type="button" id="summary-btn-open-story-days" class="summary-kpi-card is-clickable">
+            <span class="summary-kpi-value" id="summary-count-story-days" style="color:var(--rose-soft);">0</span>
+            <span class="summary-kpi-label">
+              <span data-i18n="summary_story_days">Días dramáticos</span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--rose-soft)" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
             </span>
           </button>
         </div>
@@ -5605,6 +5900,22 @@
           <div class="summary-progress-track">
             <div id="summary-coverage-bar" class="summary-progress-fill" style="width:0%;"></div>
           </div>
+        </div>
+
+        <div class="summary-section-card">
+          <h3 class="summary-section-title" style="color:var(--rose-soft);" data-i18n="summary_days_coverage_title">Cobertura de días dramáticos</h3>
+          <div style="display:flex; justify-content:space-between; align-items:baseline; gap:8px;">
+            <span id="summary-days-coverage-text" style="font-size:14px; font-weight:800; color:#fff;">0 / 0</span>
+            <span id="summary-days-coverage-pct" style="font-size:14px; font-weight:900; color:var(--rose-soft);">0%</span>
+          </div>
+          <div class="summary-progress-track">
+            <div id="summary-days-coverage-bar" class="summary-progress-fill is-days" style="width:0%;"></div>
+          </div>
+          <div class="summary-top-row" style="margin-top:8px; padding-bottom:0;">
+            <span class="summary-row-label" data-i18n="summary_unassigned_days_label">Escenas sin día dramático</span>
+            <span id="summary-unassigned-days-count" class="summary-row-value" style="color:var(--rose-soft);">0</span>
+          </div>
+          <div id="summary-days-breakdown" style="display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;"></div>
         </div>
 
         <div class="summary-section-card" style="margin-bottom:0;">
@@ -5657,8 +5968,7 @@
               <input type="text" id="new-scene-desc" placeholder="INT. COCINA - DÍA" class="form-control" style="flex:1;" data-i18n-placeholder="placeholder_scene_desc">
             </div>
             <div>
-              <input type="text" id="new-scene-day" placeholder="Día dramático (Ej: Día 1)" class="form-control" style="font-weight:800; color:#fcd34d;" data-i18n-placeholder="placeholder_story_day">
-              <div id="scene-modal-day-suggestions" class="day-suggest-pills"></div>
+              <input type="text" id="new-scene-day" placeholder="Día dramático (Ej: D1)" class="form-control" style="font-weight:800; color:var(--rose-pale);" data-i18n-placeholder="placeholder_story_day">
             </div>
             <div style="display:flex; gap:8px;">
               <button type="button" id="btn-cancel-edit-scene" class="btn-secondary" style="flex:1;" data-i18n="btn_cancel">Cancelar</button>
@@ -5741,13 +6051,68 @@
     </div>
   </div>
 
-  <!-- MODAL: ASIGNAR DÍA DRAMÁTICO (#story-day-modal) -->
+  <!-- ========================================== -->
+  <!-- MODAL: GESTIÓN DE DÍAS DRAMÁTICOS          -->
+  <!-- ========================================== -->
+  <div id="story-days-modal" class="modal-backdrop hidden" style="z-index: 68;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="story-days-modal-title" class="modal-title">
+          <span data-i18n="menu_story_days_upper">DÍAS DRAMÁTICOS</span>
+          <span id="modal-count-story-days" class="count-pill is-days">0</span>
+        </h2>
+        <div style="display:flex; align-items:center; gap:6px;">
+          <button type="button" id="btn-close-story-days-modal" class="btn-close-touch" title="Cerrar" data-i18n-title="close_title">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <button type="button" id="btn-unassigned-scenes-count" class="unassigned-scenes-banner">
+          <div style="display:flex; align-items:center; gap:10px; min-width:0;">
+            <span id="unassigned-scenes-badge" class="unassigned-count-badge">0</span>
+            <div style="min-width:0;">
+              <div id="unassigned-scenes-title" style="font-size:13.5px; font-weight:900;" data-i18n="summary_unassigned_days_label">Escenas sin día dramático</div>
+              <div id="unassigned-scenes-sub" style="font-size:11.5px; opacity:0.85;" data-i18n="unassigned_scenes_tap_sub">Pulsa para ver el listado</div>
+            </div>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0;"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+
+        <div id="story-days-list" style="overflow-y:auto;"></div>
+
+        <div class="manager-form-dock">
+          <button type="button" id="btn-show-add-story-day" class="btn-primary" style="width:100%;" data-i18n="btn_add_story_day_plus">+ Añadir Día Dramático</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: ESCENAS SIN DÍA DRAMÁTICO           -->
+  <!-- ========================================== -->
+  <div id="unassigned-scenes-modal" class="modal-backdrop hidden" style="z-index: 82;">
+    <div class="modal-card" style="max-width:460px;">
+      <div class="modal-header" style="background:linear-gradient(135deg, rgba(201,107,139,0.13), var(--bg-800)); border-bottom-color:rgba(201,107,139,0.34);">
+        <h2 class="modal-title" style="color:var(--rose-soft);">
+          <span data-i18n="modal_unassigned_scenes_title">ESCENAS SIN DÍA DRAMÁTICO</span>
+          <span id="unassigned-modal-count" class="count-pill is-days">0</span>
+        </h2>
+        <button type="button" id="btn-close-unassigned-scenes-modal" class="btn-close-touch" title="Cerrar" data-i18n-title="close_title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div id="unassigned-scenes-list-body" class="modal-body" style="padding:12px;"></div>
+    </div>
+  </div>
+
+  <!-- MODAL: AÑADIR / EDITAR DÍA DRAMÁTICO (#story-day-modal) -->
   <div id="story-day-modal" class="modal-backdrop hidden" style="z-index: 96;">
-    <div class="modal-card" style="max-width:420px;">
+    <div class="modal-card" style="max-width:440px;">
       <div class="modal-header">
         <div>
-          <h2 class="modal-title" style="color:#fcd34d;" data-i18n="modal_assign_story_day">ASIGNAR DÍA DRAMÁTICO</h2>
-          <p id="story-day-modal-scene-label" style="margin:2px 0 0 0; font-size:12.5px; font-weight:800; color:var(--violet-soft);">Escena</p>
+          <h2 id="story-day-modal-title" class="modal-title" style="color:var(--rose-soft);" data-i18n="modal_add_story_day">AÑADIR DÍA DRAMÁTICO</h2>
+          <p id="story-day-modal-scene-label" class="hidden" style="margin:2px 0 0 0; font-size:12.5px; font-weight:800; color:var(--violet-soft);"></p>
         </div>
         <button type="button" id="btn-close-story-day-modal" class="btn-close-touch" title="Cerrar" data-i18n-title="close_title">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -5756,15 +6121,48 @@
       <form id="story-day-form" class="modal-form-wrapper">
         <div class="modal-body" style="display:flex; flex-direction:column; gap:12px;">
           <div>
-            <label class="form-label" for="input-story-day-modal" data-i18n="label_story_day">Día dramático</label>
-            <input type="text" id="input-story-day-modal" class="form-control" style="font-weight:800; color:#fcd34d;" placeholder="Ej: Día 1, Día 2, N1..." data-i18n-placeholder="placeholder_story_day_short">
-            <p style="margin:6px 0 0 0; font-size:11.5px; color:var(--text-dim);" data-i18n="story_day_helper">Usa valores como Día 1, Día 2, N1 o texto libre (ej: Flashback 1998).</p>
+            <span class="form-label" data-i18n="story_day_type_label">Tipo de día dramático</span>
+            <div id="story-day-type-selector" class="story-day-type-grid">
+              <button type="button" class="story-day-type-btn active" data-day-type="day">
+                <span data-i18n="story_day_type_day">Día</span>
+                <span class="type-code-hint">D + N°</span>
+              </button>
+              <button type="button" class="story-day-type-btn" data-day-type="night">
+                <span data-i18n="story_day_type_night">Noche</span>
+                <span class="type-code-hint">N + N°</span>
+              </button>
+              <button type="button" class="story-day-type-btn" data-day-type="flashback">
+                <span data-i18n="story_day_type_flashback">Flashback</span>
+                <span class="type-code-hint">FB + N°</span>
+              </button>
+              <button type="button" class="story-day-type-btn" data-day-type="other">
+                <span data-i18n="story_day_type_other">Otros</span>
+                <span class="type-code-hint">+</span>
+              </button>
+            </div>
           </div>
+
           <div>
-            <span class="form-label" style="margin-bottom:4px;" data-i18n="quick_suggestions_label">Sugerencias rápidas</span>
-            <div id="story-day-modal-suggestions" class="day-suggest-pills"></div>
+            <label class="form-label" for="input-story-day-modal" id="story-day-value-label" data-i18n="story_day_number_label">Número de día dramático *</label>
+            <div class="story-day-code-row">
+              <input type="text" id="story-day-prefix-input" class="form-control story-day-prefix-input" value="D" maxlength="10" readonly>
+              <input type="text" id="input-story-day-modal" class="form-control" inputmode="numeric" pattern="[0-9]*" style="flex:1; font-weight:900; color:var(--rose-pale);" placeholder="1" data-i18n-placeholder="placeholder_story_day_short">
+            </div>
+            <p id="story-day-input-helper" style="margin:6px 0 0 0; font-size:11.5px; color:var(--text-dim);" data-i18n="story_day_num_helper">Solo números para Día, Noche y Flashback. Elige "Otros" para texto libre.</p>
           </div>
-          <button type="button" id="btn-clear-story-day-modal" class="btn-danger-soft" data-i18n="btn_clear_story_day">Quitar día dramático</button>
+
+          <div>
+            <label class="form-label" for="story-day-from-scene" data-i18n="story_day_from_scene_label">Desde escena *</label>
+            <select id="story-day-from-scene" class="form-control" style="font-weight:800; color:var(--violet-soft);"></select>
+          </div>
+
+          <div>
+            <label class="form-label" for="story-day-to-scene" data-i18n="story_day_to_scene_label">Hasta escena *</label>
+            <select id="story-day-to-scene" class="form-control" style="font-weight:800; color:var(--violet-soft);"></select>
+            <div id="story-day-range-feedback" class="story-day-range-feedback hidden"></div>
+          </div>
+
+          <button type="button" id="btn-clear-story-day-modal" class="btn-danger-soft hidden" data-i18n="btn_clear_story_day">Quitar día dramático</button>
         </div>
         <div class="modal-footer">
           <button type="button" id="btn-cancel-story-day-modal" class="btn-secondary" style="flex:1;" data-i18n="btn_cancel">Cancelar</button>
@@ -5876,8 +6274,7 @@
 
           <div class="form-group">
             <label class="form-label" for="input-continuity-story-day" data-i18n="label_story_day">Día dramático</label>
-            <input type="text" id="input-continuity-story-day" class="form-control" style="font-weight:800; color:#fcd34d;" placeholder="Ej: Día 1, Día 2, N1..." data-i18n-placeholder="placeholder_story_day_short">
-            <div id="continuity-day-suggestions" class="day-suggest-pills"></div>
+            <input type="text" id="input-continuity-story-day" class="form-control" style="font-weight:800; color:var(--rose-pale);" placeholder="Ej: D1, N1, FB1..." data-i18n-placeholder="placeholder_story_day_short">
           </div>
 
           <div class="form-group">
@@ -6594,7 +6991,7 @@
         <div style="width:100%; border-top:1px solid var(--border-700); padding-top:14px; display:flex; flex-direction:column; gap:6px; font-size:13px; color:var(--text-muted);">
           <div>
             <span data-i18n="app_info_version_label">Versión</span>:
-            <strong id="app-info-version-val" style="color:#fff;">1.3.1</strong>
+            <strong id="app-info-version-val" style="color:#fff;">1.4.0</strong>
           </div>
           <div>
             <span data-i18n="app_info_created_by">Creado por</span>:
@@ -7188,6 +7585,45 @@
         toast_story_day_updated: 'Escena {scene}: {day}',
         toast_story_day_cleared: 'Escena {scene}: sin día dramático',
         story_day_prefix: 'Día',
+        menu_story_days: 'Días dramáticos',
+        menu_story_days_upper: 'DÍAS DRAMÁTICOS',
+        menu_export_backup_group: 'Exportar / Respaldo',
+        summary_story_days: 'Días dramáticos',
+        summary_days_coverage_title: 'Cobertura de días dramáticos',
+        summary_days_coverage_sub: '{assigned} / {total} escenas con día',
+        summary_unassigned_days_label: 'Escenas sin día dramático',
+        btn_add_story_day_plus: '+ Añadir Día Dramático',
+        empty_story_days_msg: 'Aún no hay días dramáticos asignados.',
+        unassigned_scenes_zero_title: 'Todas las escenas tienen día dramático',
+        unassigned_scenes_one_title: '1 escena sin día dramático',
+        unassigned_scenes_many_title: '{count} escenas sin día dramático',
+        unassigned_scenes_tap_sub: 'Pulsa para ver el listado',
+        modal_unassigned_scenes_title: 'ESCENAS SIN DÍA DRAMÁTICO',
+        btn_assign_short: '+ Asignar',
+        modal_add_story_day: 'AÑADIR DÍA DRAMÁTICO',
+        modal_edit_story_day: 'EDITAR DÍA DRAMÁTICO',
+        story_day_type_label: 'Tipo de día dramático',
+        story_day_type_day: 'Día',
+        story_day_type_night: 'Noche',
+        story_day_type_flashback: 'Flashback',
+        story_day_type_other: 'Otros',
+        story_day_number_label: 'Número de día dramático *',
+        story_day_text_label: 'Texto de día dramático *',
+        story_day_num_helper: 'Solo números para Día, Noche y Flashback. Elige "Otros" para texto libre.',
+        story_day_other_helper: 'Puedes editar el prefijo (opcional) e ingresar cualquier texto.',
+        story_day_from_scene_label: 'Desde escena *',
+        story_day_to_scene_label: 'Hasta escena *',
+        story_day_already_has: 'ya tiene: {day}',
+        story_day_range_selected_one: '1 escena seleccionada: {scenes}',
+        story_day_range_selected_many: '{count} escenas seleccionadas: {scenes}',
+        story_day_conflict_msg: 'No se permiten escenas con doble día dramático. En conflicto: {scenes}',
+        toast_story_day_range_saved: '{day} guardado en {count} escenas',
+        toast_story_day_enter_val: 'Ingresa el valor del día dramático',
+        filter_day_label: 'Día:',
+        filter_day_all: 'Todos',
+        filter_day_none: 'Sin día ({count})',
+        scenes_count_one: '1 escena',
+        scenes_count_many: '{count} escenas',
         script_sets_detected_title: 'Sets / Locaciones detectados',
         script_sets_detected_desc: 'Toca un set para incluirlo o excluirlo del catálogo del proyecto:',
         script_sets_minor_label: 'Descartados por defecto (toca si deseas incluirlos):',
@@ -7716,6 +8152,45 @@
         toast_story_day_updated: 'Scene {scene}: {day}',
         toast_story_day_cleared: 'Scene {scene}: no story day',
         story_day_prefix: 'Day',
+        menu_story_days: 'Story Days',
+        menu_story_days_upper: 'STORY DAYS',
+        menu_export_backup_group: 'Export / Backup',
+        summary_story_days: 'Story Days',
+        summary_days_coverage_title: 'Story days coverage',
+        summary_days_coverage_sub: '{assigned} / {total} scenes with day',
+        summary_unassigned_days_label: 'Scenes without story day',
+        btn_add_story_day_plus: '+ Add Story Day',
+        empty_story_days_msg: 'No story days assigned yet.',
+        unassigned_scenes_zero_title: 'All scenes have a story day',
+        unassigned_scenes_one_title: '1 scene without story day',
+        unassigned_scenes_many_title: '{count} scenes without story day',
+        unassigned_scenes_tap_sub: 'Tap to view list',
+        modal_unassigned_scenes_title: 'SCENES WITHOUT STORY DAY',
+        btn_assign_short: '+ Assign',
+        modal_add_story_day: 'ADD STORY DAY',
+        modal_edit_story_day: 'EDIT STORY DAY',
+        story_day_type_label: 'Story day type',
+        story_day_type_day: 'Day',
+        story_day_type_night: 'Night',
+        story_day_type_flashback: 'Flashback',
+        story_day_type_other: 'Other',
+        story_day_number_label: 'Story day number *',
+        story_day_text_label: 'Story day text *',
+        story_day_num_helper: 'Numbers only for Day, Night, and Flashback. Choose "Other" for custom text.',
+        story_day_other_helper: 'You can edit the prefix (optional) and enter any text.',
+        story_day_from_scene_label: 'From scene *',
+        story_day_to_scene_label: 'To scene *',
+        story_day_already_has: 'already has: {day}',
+        story_day_range_selected_one: '1 scene selected: {scenes}',
+        story_day_range_selected_many: '{count} scenes selected: {scenes}',
+        story_day_conflict_msg: 'Scenes cannot have two story days. Conflict: {scenes}',
+        toast_story_day_range_saved: '{day} saved to {count} scenes',
+        toast_story_day_enter_val: 'Enter a story day value',
+        filter_day_label: 'Day:',
+        filter_day_all: 'All',
+        filter_day_none: 'No day ({count})',
+        scenes_count_one: '1 scene',
+        scenes_count_many: '{count} scenes',
         script_sets_detected_title: 'Detected Sets / Locations',
         script_sets_detected_desc: 'Tap a set to include or exclude it from the project catalog:',
         script_sets_minor_label: 'Excluded by default (tap to include):',
@@ -8244,6 +8719,45 @@
         toast_story_day_updated: 'Cena {scene}: {day}',
         toast_story_day_cleared: 'Cena {scene}: sem dia dramático',
         story_day_prefix: 'Dia',
+        menu_story_days: 'Dias dramáticos',
+        menu_story_days_upper: 'DIAS DRAMÁTICOS',
+        menu_export_backup_group: 'Exportar / Backup',
+        summary_story_days: 'Dias dramáticos',
+        summary_days_coverage_title: 'Cobertura de dias dramáticos',
+        summary_days_coverage_sub: '{assigned} / {total} cenas com dia',
+        summary_unassigned_days_label: 'Cenas sem dia dramático',
+        btn_add_story_day_plus: '+ Adicionar Dia Dramático',
+        empty_story_days_msg: 'Ainda não há dias dramáticos atribuídos.',
+        unassigned_scenes_zero_title: 'Todas as cenas têm dia dramático',
+        unassigned_scenes_one_title: '1 cena sem dia dramático',
+        unassigned_scenes_many_title: '{count} cenas sem dia dramático',
+        unassigned_scenes_tap_sub: 'Toque para ver a lista',
+        modal_unassigned_scenes_title: 'CENAS SEM DIA DRAMÁTICO',
+        btn_assign_short: '+ Atribuir',
+        modal_add_story_day: 'ADICIONAR DIA DRAMÁTICO',
+        modal_edit_story_day: 'EDITAR DIA DRAMÁTICO',
+        story_day_type_label: 'Tipo de dia dramático',
+        story_day_type_day: 'Dia',
+        story_day_type_night: 'Noite',
+        story_day_type_flashback: 'Flashback',
+        story_day_type_other: 'Outros',
+        story_day_number_label: 'Número do dia dramático *',
+        story_day_text_label: 'Texto do dia dramático *',
+        story_day_num_helper: 'Apenas números para Dia, Noite e Flashback. Escolha "Outros" para texto livre.',
+        story_day_other_helper: 'Você pode editar o prefixo (opcional) e inserir qualquer texto.',
+        story_day_from_scene_label: 'Da cena *',
+        story_day_to_scene_label: 'Até a cena *',
+        story_day_already_has: 'já tem: {day}',
+        story_day_range_selected_one: '1 cena selecionada: {scenes}',
+        story_day_range_selected_many: '{count} cenas selecionadas: {scenes}',
+        story_day_conflict_msg: 'Não são permitidas cenas com duplo dia dramático. Conflito: {scenes}',
+        toast_story_day_range_saved: '{day} salvo em {count} cenas',
+        toast_story_day_enter_val: 'Insira o valor do dia dramático',
+        filter_day_label: 'Dia:',
+        filter_day_all: 'Todos',
+        filter_day_none: 'Sem dia ({count})',
+        scenes_count_one: '1 cena',
+        scenes_count_many: '{count} cenas',
         script_sets_detected_title: 'Sets / Locações detectados',
         script_sets_detected_desc: 'Toque em um set para incluí-lo ou excluí-lo do catálogo:',
         script_sets_minor_label: 'Descartados por padrão (toque para incluir):',
@@ -8772,6 +9286,45 @@
         toast_story_day_updated: 'Scena {scene}: {day}',
         toast_story_day_cleared: 'Scena {scene}: nessun giorno narrativo',
         story_day_prefix: 'Giorno',
+        menu_story_days: 'Giorni narrativi',
+        menu_story_days_upper: 'GIORNI NARRATIVI',
+        menu_export_backup_group: 'Esporta / Backup',
+        summary_story_days: 'Giorni narrativi',
+        summary_days_coverage_title: 'Copertura giorni narrativi',
+        summary_days_coverage_sub: '{assigned} / {total} scene con giorno',
+        summary_unassigned_days_label: 'Scene senza giorno narrativo',
+        btn_add_story_day_plus: '+ Aggiungi Giorno Narrativo',
+        empty_story_days_msg: 'Nessun giorno narrativo assegnato.',
+        unassigned_scenes_zero_title: 'Tutte le scene hanno un giorno narrativo',
+        unassigned_scenes_one_title: '1 scena senza giorno narrativo',
+        unassigned_scenes_many_title: '{count} scene senza giorno narrativo',
+        unassigned_scenes_tap_sub: 'Tocca per vedere l\'elenco',
+        modal_unassigned_scenes_title: 'SCENE SENZA GIORNO NARRATIVO',
+        btn_assign_short: '+ Assegna',
+        modal_add_story_day: 'AGGIUNGI GIORNO NARRATIVO',
+        modal_edit_story_day: 'MODIFICA GIORNO NARRATIVO',
+        story_day_type_label: 'Tipo di giorno narrativo',
+        story_day_type_day: 'Giorno',
+        story_day_type_night: 'Notte',
+        story_day_type_flashback: 'Flashback',
+        story_day_type_other: 'Altro',
+        story_day_number_label: 'Numero giorno narrativo *',
+        story_day_text_label: 'Testo giorno narrativo *',
+        story_day_num_helper: 'Solo numeri per Giorno, Notte e Flashback. Scegli "Altro" per testo libero.',
+        story_day_other_helper: 'Puoi modificare il prefisso (opzionale) e inserire qualsiasi testo.',
+        story_day_from_scene_label: 'Dalla scena *',
+        story_day_to_scene_label: 'Alla scena *',
+        story_day_already_has: 'ha già: {day}',
+        story_day_range_selected_one: '1 scena selezionata: {scenes}',
+        story_day_range_selected_many: '{count} scene selezionate: {scenes}',
+        story_day_conflict_msg: 'Non sono consentite scene con doppio giorno narrativo. Conflitto: {scenes}',
+        toast_story_day_range_saved: '{day} salvato in {count} scene',
+        toast_story_day_enter_val: 'Inserisci il valore del giorno narrativo',
+        filter_day_label: 'Giorno:',
+        filter_day_all: 'Tutti',
+        filter_day_none: 'Senza giorno ({count})',
+        scenes_count_one: '1 scena',
+        scenes_count_many: '{count} scene',
         script_sets_detected_title: 'Set / Location rilevati',
         script_sets_detected_desc: 'Tocca un set per includerlo o escluderlo dal catalogo:',
         script_sets_minor_label: 'Esclusi per impostazione predefinita (tocca per includere):',
@@ -9300,6 +9853,45 @@
         toast_story_day_updated: 'Szene {scene}: {day}',
         toast_story_day_cleared: 'Szene {scene}: kein Handlungstag',
         story_day_prefix: 'Tag',
+        menu_story_days: 'Handlungstage',
+        menu_story_days_upper: 'HANDLUNGSTAGE',
+        menu_export_backup_group: 'Export / Backup',
+        summary_story_days: 'Handlungstage',
+        summary_days_coverage_title: 'Abdeckung Handlungstage',
+        summary_days_coverage_sub: '{assigned} / {total} Szenen mit Tag',
+        summary_unassigned_days_label: 'Szenen ohne Handlungstag',
+        btn_add_story_day_plus: '+ Handlungstag hinzufügen',
+        empty_story_days_msg: 'Noch keine Handlungstage zugewiesen.',
+        unassigned_scenes_zero_title: 'Alle Szenen haben einen Handlungstag',
+        unassigned_scenes_one_title: '1 Szene ohne Handlungstag',
+        unassigned_scenes_many_title: '{count} Szenen ohne Handlungstag',
+        unassigned_scenes_tap_sub: 'Tippen, um die Liste zu sehen',
+        modal_unassigned_scenes_title: 'SZENEN OHNE HANDLUNGSTAG',
+        btn_assign_short: '+ Zuweisen',
+        modal_add_story_day: 'HANDLUNGSTAG HINZUFÜGEN',
+        modal_edit_story_day: 'HANDLUNGSTAG BEARBEITEN',
+        story_day_type_label: 'Art des Handlungstags',
+        story_day_type_day: 'Tag',
+        story_day_type_night: 'Nacht',
+        story_day_type_flashback: 'Flashback',
+        story_day_type_other: 'Andere',
+        story_day_number_label: 'Handlungstag-Nummer *',
+        story_day_text_label: 'Handlungstag-Text *',
+        story_day_num_helper: 'Nur Zahlen für Tag, Nacht und Flashback. Wähle "Andere" für Freitext.',
+        story_day_other_helper: 'Du kannst das Präfix (optional) bearbeiten und beliebigen Text eingeben.',
+        story_day_from_scene_label: 'Von Szene *',
+        story_day_to_scene_label: 'Bis Szene *',
+        story_day_already_has: 'hat bereits: {day}',
+        story_day_range_selected_one: '1 Szene ausgewählt: {scenes}',
+        story_day_range_selected_many: '{count} Szenen ausgewählt: {scenes}',
+        story_day_conflict_msg: 'Szenen dürfen keinen doppelten Handlungstag haben. Konflikt: {scenes}',
+        toast_story_day_range_saved: '{day} in {count} Szenen gespeichert',
+        toast_story_day_enter_val: 'Gib einen Wert für den Handlungstag ein',
+        filter_day_label: 'Tag:',
+        filter_day_all: 'Alle',
+        filter_day_none: 'Ohne Tag ({count})',
+        scenes_count_one: '1 Szene',
+        scenes_count_many: '{count} Szenen',
         script_sets_detected_title: 'Erkannte Sets / Drehorte',
         script_sets_detected_desc: 'Tippe auf ein Set, um es ein- oder auszuschließen:',
         script_sets_minor_label: 'Standardmäßig ausgeschlossen (antippen zum Hinzufügen):',
@@ -9828,6 +10420,45 @@
         toast_story_day_updated: 'Scène {scene} : {day}',
         toast_story_day_cleared: 'Scène {scene} : aucun jour dramatique',
         story_day_prefix: 'Jour',
+        menu_story_days: 'Jours dramatiques',
+        menu_story_days_upper: 'JOURS DRAMATIQUES',
+        menu_export_backup_group: 'Exporter / Sauvegarde',
+        summary_story_days: 'Jours dramatiques',
+        summary_days_coverage_title: 'Couverture des jours dramatiques',
+        summary_days_coverage_sub: '{assigned} / {total} scènes avec jour',
+        summary_unassigned_days_label: 'Scènes sans jour dramatique',
+        btn_add_story_day_plus: '+ Ajouter un Jour Dramatique',
+        empty_story_days_msg: 'Aucun jour dramatique attribué pour le moment.',
+        unassigned_scenes_zero_title: 'Toutes les scènes ont un jour dramatique',
+        unassigned_scenes_one_title: '1 scène sans jour dramatique',
+        unassigned_scenes_many_title: '{count} scènes sans jour dramatique',
+        unassigned_scenes_tap_sub: 'Touchez pour voir la liste',
+        modal_unassigned_scenes_title: 'SCÈNES SANS JOUR DRAMATIQUE',
+        btn_assign_short: '+ Assigner',
+        modal_add_story_day: 'AJOUTER UN JOUR DRAMATIQUE',
+        modal_edit_story_day: 'MODIFIER LE JOUR DRAMATIQUE',
+        story_day_type_label: 'Type de jour dramatique',
+        story_day_type_day: 'Jour',
+        story_day_type_night: 'Nuit',
+        story_day_type_flashback: 'Flashback',
+        story_day_type_other: 'Autre',
+        story_day_number_label: 'Numéro du jour dramatique *',
+        story_day_text_label: 'Texte du jour dramatique *',
+        story_day_num_helper: 'Chiffres uniquement pour Jour, Nuit et Flashback. Choisissez "Autre" pour du texte libre.',
+        story_day_other_helper: 'Vous pouvez modifier le préfixe (facultatif) et saisir n\'importe quel texte.',
+        story_day_from_scene_label: 'De la scène *',
+        story_day_to_scene_label: 'À la scène *',
+        story_day_already_has: 'a déjà : {day}',
+        story_day_range_selected_one: '1 scène sélectionnée : {scenes}',
+        story_day_range_selected_many: '{count} scènes sélectionnées : {scenes}',
+        story_day_conflict_msg: 'Les scènes ne peuvent pas avoir deux jours dramatiques. Conflit : {scenes}',
+        toast_story_day_range_saved: '{day} enregistré dans {count} scènes',
+        toast_story_day_enter_val: 'Saisissez la valeur du jour dramatique',
+        filter_day_label: 'Jour :',
+        filter_day_all: 'Tous',
+        filter_day_none: 'Sans jour ({count})',
+        scenes_count_one: '1 scène',
+        scenes_count_many: '{count} scènes',
         script_sets_detected_title: 'Décors / Lieux détectés',
         script_sets_detected_desc: 'Touchez un décor pour l\'inclure ou l\'exclure du catalogue :',
         script_sets_minor_label: 'Exclus par défaut (touchez pour inclure) :',
@@ -10047,7 +10678,8 @@
     let currentQuickActorPhotoBase64 = null;
     let searchProjectsQuery = '';
     let searchQuery = '';
-    let activeTypeFilter = 'all';
+    let activeDayFilter = 'all';
+    let isDayFilterDrawerOpen = false;
     let pendingConfirmAction = null;
     let cachedScenesForProject = [];
     let cachedCharactersForProject = [];
@@ -10998,17 +11630,40 @@
     function normalizeStoryDayValue(raw) {
       const s = String(raw || '').trim().replace(/\s+/g, ' ');
       if (!s) return '';
-      const prefix = t('story_day_prefix') || 'Día';
-      if (/^\d+$/.test(s)) return `${prefix} ${parseInt(s, 10)}`;
+      if (/^\d+$/.test(s)) return `D${parseInt(s, 10)}`;
       const dm = s.match(/^d\s*(\d+)$/i);
-      if (dm) return `${prefix} ${parseInt(dm[1], 10)}`;
+      if (dm) return `D${parseInt(dm[1], 10)}`;
+      const nm = s.match(/^(?:n|noche|night|noite|notte|nacht|nuit)\s*(\d+)$/i);
+      if (nm) return `N${parseInt(nm[1], 10)}`;
+      const fbm = s.match(/^(?:fb|flashback)\s*(\d+)$/i);
+      if (fbm) return `FB${parseInt(fbm[1], 10)}`;
       const diam = s.match(/^d[ií]a\s*(\d+)$/i);
       if (diam) return `Día ${parseInt(diam[1], 10)}`;
       return s;
     }
 
     function normalizeStoryDayKey(raw) {
-      return normAccentUpper(normalizeStoryDayValue(raw));
+      const clean = normalizeStoryDayValue(raw);
+      if (!clean) return '';
+      const dm = clean.match(/^(?:d|d[ií]a|day|tag|giorno|jour)\s*(\d+)$/i);
+      if (dm) return `D${parseInt(dm[1], 10)}`;
+      const nm = clean.match(/^(?:n|noche|night|noite|notte|nacht|nuit)\s*(\d+)$/i);
+      if (nm) return `N${parseInt(nm[1], 10)}`;
+      const fbm = clean.match(/^(?:fb|flashback)\s*(\d+)$/i);
+      if (fbm) return `FB${parseInt(fbm[1], 10)}`;
+      return normAccentUpper(clean).replace(/\s+/g, ' ');
+    }
+
+    function parseStoryDayFields(raw) {
+      const clean = normalizeStoryDayValue(raw);
+      if (!clean) return { type: 'day', prefix: 'D', value: '' };
+      const dm = clean.match(/^(?:d|d[ií]a|day|tag|giorno|jour)\s*(\d+)$/i);
+      if (dm) return { type: 'day', prefix: 'D', value: String(parseInt(dm[1], 10)) };
+      const nm = clean.match(/^(?:n|noche|night|noite|notte|nacht|nuit)\s*(\d+)$/i);
+      if (nm) return { type: 'night', prefix: 'N', value: String(parseInt(nm[1], 10)) };
+      const fbm = clean.match(/^(?:fb|flashback)\s*(\d+)$/i);
+      if (fbm) return { type: 'flashback', prefix: 'FB', value: String(parseInt(fbm[1], 10)) };
+      return { type: 'other', prefix: '', value: clean };
     }
 
     function renderStoryDayChipHtml(sc) {
@@ -11245,12 +11900,10 @@
       viewTakes.classList.remove('hidden');
 
       searchQuery = '';
-      activeTypeFilter = 'all';
+      activeDayFilter = 'all';
+      isDayFilterDrawerOpen = false;
       document.getElementById('search-input').value = '';
       if (btnResetFilters) btnResetFilters.classList.add('hidden');
-      document.querySelectorAll('#main-entry-type-filter .type-filter-pill').forEach(btn => {
-        btn.classList.toggle('active', btn.getAttribute('data-filter-type') === 'all');
-      });
 
       await updateCatalogCaches();
       await refreshBackupFolderLabel();
@@ -12602,19 +13255,35 @@
     const dropdownMenu = document.getElementById('project-dropdown-menu');
     const btnMenuToggle = document.getElementById('btn-project-menu-toggle');
     const projectMenuBackdrop = document.getElementById('project-menu-backdrop');
+    const exportBackupSuboptions = document.getElementById('menu-export-backup-suboptions');
+    const exportBackupChevron = document.getElementById('menu-export-backup-chevron');
 
     function toggleProjectMenu() {
       const willOpen = !dropdownMenu.classList.contains('is-open');
       dropdownMenu.classList.toggle('is-open', willOpen);
       btnMenuToggle.classList.toggle('is-open', willOpen);
       projectMenuBackdrop.classList.toggle('is-open', willOpen);
+      if (!willOpen) {
+        exportBackupSuboptions?.classList.add('hidden');
+        if (exportBackupChevron) exportBackupChevron.textContent = '▼';
+      }
     }
 
     function closeProjectMenu() {
       dropdownMenu.classList.remove('is-open');
       btnMenuToggle.classList.remove('is-open');
       projectMenuBackdrop.classList.remove('is-open');
+      exportBackupSuboptions?.classList.add('hidden');
+      if (exportBackupChevron) exportBackupChevron.textContent = '▼';
     }
+
+    document.getElementById('menu-opt-export-backup-group')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!exportBackupSuboptions) return;
+      const willShow = exportBackupSuboptions.classList.contains('hidden');
+      exportBackupSuboptions.classList.toggle('hidden', !willShow);
+      if (exportBackupChevron) exportBackupChevron.textContent = willShow ? '▲' : '▼';
+    });
 
     btnMenuToggle.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -15832,7 +16501,6 @@
       document.getElementById('new-scene-desc').value = '';
       const sceneDayInput = document.getElementById('new-scene-day');
       if (sceneDayInput) sceneDayInput.value = '';
-      renderDaySuggestionPills('scene-modal-day-suggestions', '');
       btnSaveScene.textContent = t('btn_save_scene');
       if (sceneEditFloatingTitle) sceneEditFloatingTitle.classList.add('hidden');
       if (deleteSceneContainer) deleteSceneContainer.classList.add('hidden');
@@ -15848,8 +16516,6 @@
       document.getElementById('new-scene-desc').value = '';
       const sceneDayInput = document.getElementById('new-scene-day');
       if (sceneDayInput) sceneDayInput.value = '';
-      const sceneSugBox = document.getElementById('scene-modal-day-suggestions');
-      if (sceneSugBox) sceneSugBox.innerHTML = '';
       btnSaveScene.textContent = t('btn_save');
       if (sceneEditFloatingTitle) sceneEditFloatingTitle.classList.add('hidden');
       if (deleteSceneContainer) deleteSceneContainer.classList.add('hidden');
@@ -15857,18 +16523,6 @@
       btnShowAddScene.classList.remove('hidden');
       setSceneEditingLock(false);
     }
-
-    document.getElementById('new-scene-day')?.addEventListener('input', (e) => {
-      renderDaySuggestionPills('scene-modal-day-suggestions', e.target.value);
-    });
-    document.getElementById('scene-modal-day-suggestions')?.addEventListener('click', (e) => {
-      const pill = e.target.closest('[data-pick-story-day]');
-      if (!pill) return;
-      const val = pill.getAttribute('data-pick-story-day') || '';
-      const inp = document.getElementById('new-scene-day');
-      if (inp) inp.value = val;
-      renderDaySuggestionPills('scene-modal-day-suggestions', val);
-    });
 
     btnCancelEditScene.addEventListener('click', resetSceneForm);
 
@@ -15879,6 +16533,22 @@
     const summaryBtnOpenScenes = document.getElementById('summary-btn-open-scenes');
     const summaryBtnOpenSets = document.getElementById('summary-btn-open-sets');
     const summaryBtnOpenCharacters = document.getElementById('summary-btn-open-characters');
+    const summaryBtnOpenStoryDays = document.getElementById('summary-btn-open-story-days');
+
+    function buildStoryDayGroupsFromScenes(scenesList = []) {
+      const sorted = [...(scenesList || [])].sort((a, b) => compareSceneNumbers(a.sceneNum, b.sceneNum));
+      const map = new Map();
+      for (const sc of sorted) {
+        const clean = normalizeStoryDayValue(sc.storyDay || '');
+        if (!clean) continue;
+        const key = normalizeStoryDayKey(clean);
+        if (!map.has(key)) {
+          map.set(key, { key, label: clean, scenes: [] });
+        }
+        map.get(key).scenes.push(sc);
+      }
+      return Array.from(map.values()).sort((a, b) => compareStoryDayValues(a.label, b.label));
+    }
 
     async function openProjectSummaryModal() {
       if (!activeProjectId || !activeProjectData || !projectSummaryModal) return;
@@ -15919,12 +16589,19 @@
         }
       });
 
+      const storyDayGroups = buildStoryDayGroupsFromScenes(scenes);
+      const unassignedScenesCount = scenes.filter(s => !normalizeStoryDayValue(s.storyDay || '')).length;
+      const assignedScenesCount = scenes.length - unassignedScenesCount;
+      const daysCoveragePct = scenes.length > 0 ? Math.min(100, Math.round((assignedScenesCount / scenes.length) * 100)) : 0;
+
       document.getElementById('summary-count-takes').textContent = takes.length;
       document.getElementById('summary-count-photos').textContent = totalPhotos;
       document.getElementById('summary-count-scenes').textContent = scenes.length;
       const summaryCountSetsEl = document.getElementById('summary-count-sets');
       if (summaryCountSetsEl) summaryCountSetsEl.textContent = sets.length;
       document.getElementById('summary-count-characters').textContent = chars.length;
+      const summaryCountDaysEl = document.getElementById('summary-count-story-days');
+      if (summaryCountDaysEl) summaryCountDaysEl.textContent = storyDayGroups.length;
 
       const totalScenesForCoverage = Math.max(scenes.length, coveredSceneSet.size);
       const coveredCount = coveredSceneSet.size;
@@ -15934,6 +16611,23 @@
         .replace('{total}', totalScenesForCoverage);
       document.getElementById('summary-coverage-pct').textContent = `${pct}%`;
       document.getElementById('summary-coverage-bar').style.width = `${pct}%`;
+
+      const daysCovTextEl = document.getElementById('summary-days-coverage-text');
+      if (daysCovTextEl) {
+        daysCovTextEl.textContent = t('summary_days_coverage_sub', { assigned: assignedScenesCount, total: scenes.length });
+      }
+      const daysCovPctEl = document.getElementById('summary-days-coverage-pct');
+      if (daysCovPctEl) daysCovPctEl.textContent = `${daysCoveragePct}%`;
+      const daysCovBarEl = document.getElementById('summary-days-coverage-bar');
+      if (daysCovBarEl) daysCovBarEl.style.width = `${daysCoveragePct}%`;
+      const unassignedCountEl = document.getElementById('summary-unassigned-days-count');
+      if (unassignedCountEl) unassignedCountEl.textContent = String(unassignedScenesCount);
+      const daysBreakdownEl = document.getElementById('summary-days-breakdown');
+      if (daysBreakdownEl) {
+        daysBreakdownEl.innerHTML = storyDayGroups.map(g => `
+          <span class="story-day-chip">${ICON_DAY_SVG}<span>${escapeHtml(g.label)} (${g.scenes.length})</span></span>
+        `).join('');
+      }
 
       const backupMap = getBackupStateMap();
       const projBackupState = backupMap[activeProjectId] || {};
@@ -16014,6 +16708,12 @@
       summaryBtnOpenCharacters.addEventListener('click', async () => {
         projectSummaryModal.classList.add('hidden');
         await openCharactersManager();
+      });
+    }
+    if (summaryBtnOpenStoryDays) {
+      summaryBtnOpenStoryDays.addEventListener('click', async () => {
+        projectSummaryModal.classList.add('hidden');
+        await openStoryDaysManager();
       });
     }
 
@@ -16132,7 +16832,6 @@
       document.getElementById('new-scene-desc').value = target.desc || '';
       const sceneDayInput = document.getElementById('new-scene-day');
       if (sceneDayInput) sceneDayInput.value = target.storyDay || '';
-      renderDaySuggestionPills('scene-modal-day-suggestions', target.storyDay || '');
       btnSaveScene.textContent = t('btn_save_changes');
       if (sceneEditFloatingTitle) {
         sceneEditFloatingTitle.textContent = t('floating_edit_scene', { num: target.sceneNum });
@@ -16172,10 +16871,22 @@
     };
 
     /* ==========================================================================
-       DÍA DRAMÁTICO (SUGERENCIAS + EDICIÓN RÁPIDA EN VISOR)
+       GESTIÓN DE DÍAS DRAMÁTICOS Y EDICIÓN POR RANGO DE ESCENAS (V1.4.0)
        ========================================================================== */
+    const storyDaysModal = document.getElementById('story-days-modal');
+    const storyDaysListContainer = document.getElementById('story-days-list');
+    const unassignedScenesModal = document.getElementById('unassigned-scenes-modal');
     const storyDayModal = document.getElementById('story-day-modal');
+    const storyDayPrefixInput = document.getElementById('story-day-prefix-input');
+    const storyDayValueInput = document.getElementById('input-story-day-modal');
+    const storyDayFromSelect = document.getElementById('story-day-from-scene');
+    const storyDayToSelect = document.getElementById('story-day-to-scene');
+    const storyDayRangeFeedback = document.getElementById('story-day-range-feedback');
+
     let activeStoryDaySceneNum = null;
+    let storyDayModalMode = 'add';
+    let storyDaySelectedType = 'day';
+    let editingSourceSceneKeys = new Set();
 
     function parseStoryDaySortKey(raw) {
       const clean = normalizeStoryDayValue(raw);
@@ -16185,15 +16896,16 @@
         const pref = stripAccentsUpper(dm[1] || 'D');
         const isPrimaryDay = pref === 'D' || pref === 'DIA' || pref === 'DAY' || pref === 'TAG' || pref === 'GIORNO' || pref === 'JOUR';
         const isNight = pref === 'N' || pref === 'NOCHE' || pref === 'NIGHT' || pref === 'NOITE' || pref === 'NOTTE' || pref === 'NACHT' || pref === 'NUIT';
+        const isFlashback = pref === 'FB' || pref === 'FLASHBACK';
         return {
-          bucket: isPrimaryDay ? 0 : (isNight ? 1 : 2),
-          prefix: isPrimaryDay ? 'D' : (isNight ? 'N' : pref),
+          bucket: isPrimaryDay ? 0 : (isNight ? 1 : (isFlashback ? 2 : 3)),
+          prefix: isPrimaryDay ? 'D' : (isNight ? 'N' : (isFlashback ? 'FB' : pref)),
           num: parseInt(dm[2], 10),
           tail: stripAccentsUpper(dm[3] || ''),
           text: stripAccentsUpper(clean)
         };
       }
-      return { bucket: 3, prefix: '', num: Number.MAX_SAFE_INTEGER, tail: '', text: stripAccentsUpper(clean) };
+      return { bucket: 4, prefix: '', num: Number.MAX_SAFE_INTEGER, tail: '', text: stripAccentsUpper(clean) };
     }
 
     function compareStoryDayValues(a, b) {
@@ -16217,27 +16929,8 @@
       return Array.from(map.values()).sort(compareStoryDayValues);
     }
 
-    function renderDaySuggestionPills(containerId, activeDayValue = '') {
-      const box = document.getElementById(containerId);
-      if (!box) return;
-      const existing = getExistingStoryDays();
-      const prefix = t('story_day_prefix') || 'Día';
-      const presets = ['1', '2', '3', '4', '5'].map(n => `${prefix} ${n}`);
-      const merged = [...existing];
-      const seen = new Set(merged.map(normalizeStoryDayKey));
-      for (const p of presets) {
-        const pk = normalizeStoryDayKey(p);
-        if (!seen.has(pk)) {
-          seen.add(pk);
-          merged.push(p);
-        }
-      }
-      merged.sort(compareStoryDayValues);
-      const activeKey = normalizeStoryDayKey(activeDayValue);
-      box.innerHTML = merged.map(d => {
-        const isSel = activeKey && normalizeStoryDayKey(d) === activeKey;
-        return `<button type="button" class="day-suggest-pill${isSel ? ' is-selected' : ''}" data-pick-story-day="${escapeHtml(d)}">${escapeHtml(d)}</button>`;
-      }).join('');
+    function renderDaySuggestionPills() {
+      // Eliminadas las sugerencias rápidas en V1.4.0
     }
 
     async function setSceneStoryDay(sceneNum, rawDay) {
@@ -16258,67 +16951,514 @@
       return true;
     }
 
-    async function openStoryDayModal(sceneNum) {
-      if (!storyDayModal || !activeProjectId) return;
-      const scenes = await getEntitiesForProject(STORE_SCENES, activeProjectId);
-      const sc = scenes.find(s => normalizeSceneKey(s.sceneNum) === normalizeSceneKey(sceneNum));
-      if (!sc) return;
-      activeStoryDaySceneNum = sc.sceneNum;
-      const labelEl = document.getElementById('story-day-modal-scene-label');
-      if (labelEl) {
-        labelEl.textContent = `${t('scene_abbr')} ${sc.sceneNum}${sc.desc ? ' — ' + sc.desc : ''}`;
-      }
-      const inp = document.getElementById('input-story-day-modal');
-      if (inp) inp.value = sc.storyDay || '';
-      renderDaySuggestionPills('story-day-modal-suggestions', inp ? inp.value : '');
-      const clearBtn = document.getElementById('btn-clear-story-day-modal');
-      if (clearBtn) clearBtn.classList.toggle('hidden', !sc.storyDay);
-      storyDayModal.classList.remove('hidden');
-      if (inp) inp.focus();
+    async function openStoryDaysManager() {
+      if (!storyDaysModal || !activeProjectId) return;
+      await renderStoryDaysList();
+      storyDaysModal.classList.remove('hidden');
     }
 
-    async function saveStoryDayFromModal(rawVal) {
-      const targetSceneNum = activeStoryDaySceneNum;
-      activeStoryDaySceneNum = null;
-      if (storyDayModal) storyDayModal.classList.add('hidden');
-      if (!targetSceneNum) return;
+    async function renderStoryDaysList() {
+      if (!activeProjectId || !storyDaysListContainer) return;
+      const scenes = await getEntitiesForProject(STORE_SCENES, activeProjectId);
+      scenes.sort((a, b) => compareSceneNumbers(a.sceneNum, b.sceneNum));
 
-      const updated = await setSceneStoryDay(targetSceneNum, rawVal);
-      if (!updated) return;
+      const groups = buildStoryDayGroupsFromScenes(scenes);
+      const unassigned = scenes.filter(s => !normalizeStoryDayValue(s.storyDay || ''));
+
+      const modalCountEl = document.getElementById('modal-count-story-days');
+      if (modalCountEl) modalCountEl.textContent = groups.length;
+
+      const banner = document.getElementById('btn-unassigned-scenes-count');
+      const badge = document.getElementById('unassigned-scenes-badge');
+      const titleEl = document.getElementById('unassigned-scenes-title');
+      const subEl = document.getElementById('unassigned-scenes-sub');
+
+      if (badge) badge.textContent = unassigned.length;
+      if (banner && titleEl && subEl) {
+        if (unassigned.length === 0) {
+          banner.classList.add('is-zero');
+          titleEl.textContent = t('unassigned_scenes_zero_title');
+          subEl.textContent = t('unassigned_scenes_tap_sub');
+        } else {
+          banner.classList.remove('is-zero');
+          titleEl.textContent = unassigned.length === 1
+            ? t('unassigned_scenes_one_title')
+            : t('unassigned_scenes_many_title', { count: unassigned.length });
+          subEl.textContent = t('unassigned_scenes_tap_sub');
+        }
+      }
+
+      if (groups.length === 0) {
+        storyDaysListContainer.innerHTML = `<p style="color:var(--text-muted); font-size:14px; text-align:center; padding:14px;">${t('empty_story_days_msg')}</p>`;
+        return;
+      }
+
+      storyDaysListContainer.innerHTML = groups.map(g => {
+        const sceneNumsText = g.scenes.map(s => `${t('scene_abbr')} ${s.sceneNum}`).join(', ');
+        const countLabel = g.scenes.length === 1
+          ? t('scenes_count_one')
+          : t('scenes_count_many', { count: g.scenes.length });
+        const shortThumb = g.label.length <= 4 ? escapeHtml(g.label) : ICON_DAY_SVG;
+        return `
+          <div class="manager-item" data-day-key="${escapeHtml(g.key)}">
+            <div style="display:flex; align-items:center; gap:10px; min-width:0; flex:1;">
+              <div class="manager-thumb-box" style="font-size:12px; font-weight:900; padding:0 4px;">${shortThumb}</div>
+              <div style="min-width:0; flex:1;">
+                <div style="display:flex; align-items:center; flex-wrap:wrap; gap:6px;">
+                  <strong style="color:var(--rose-soft); font-size:15px; font-weight:800;">${escapeHtml(g.label)}</strong>
+                  <span class="count-pill is-days" style="font-size:11px; padding:2px 7px;">${escapeHtml(countLabel)}</span>
+                </div>
+                <div style="color:#d1d5db; font-size:13px; line-height:1.3; margin-top:2px;">${escapeHtml(sceneNumsText)}</div>
+              </div>
+            </div>
+            <button type="button" class="btn-action-small edit" onclick="startEditStoryDayGroup('${escapeHtml(g.key)}')" title="${t('btn_edit_title')}">${ICON_EDIT_SVG}</button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function openUnassignedScenesModal() {
+      if (!unassignedScenesModal || !activeProjectId) return;
+      const scenes = await getEntitiesForProject(STORE_SCENES, activeProjectId);
+      scenes.sort((a, b) => compareSceneNumbers(a.sceneNum, b.sceneNum));
+      const unassigned = scenes.filter(s => !normalizeStoryDayValue(s.storyDay || ''));
+
+      const countEl = document.getElementById('unassigned-modal-count');
+      if (countEl) countEl.textContent = unassigned.length;
+
+      const body = document.getElementById('unassigned-scenes-list-body');
+      if (body) {
+        if (unassigned.length === 0) {
+          body.innerHTML = `<p style="color:var(--emerald-soft); font-size:14px; font-weight:800; text-align:center; padding:18px 10px;">${t('unassigned_scenes_zero_title')}</p>`;
+        } else {
+          body.innerHTML = unassigned.map(sc => `
+            <div class="manager-item" style="min-height:56px;">
+              <div style="display:flex; align-items:center; gap:10px; min-width:0; flex:1;">
+                <div class="manager-thumb-box" style="color:var(--violet-soft); border-color:rgba(139,92,246,0.38);">${ICON_SCENE_SVG}</div>
+                <div style="min-width:0; flex:1;">
+                  <strong style="color:var(--violet-soft); font-size:14.5px; font-weight:800;">${t('scene_abbr')} ${escapeHtml(sc.sceneNum)}</strong>
+                  ${sc.desc ? `<div style="color:#d1d5db; font-size:12.5px; line-height:1.3; margin-top:2px;">${escapeHtml(sc.desc)}</div>` : ''}
+                </div>
+              </div>
+              <button type="button" class="day-filter-pill is-day-item" data-assign-unassigned-scene="${escapeHtml(sc.sceneNum)}" style="padding:7px 11px; font-weight:900;">${escapeHtml(t('btn_assign_short'))}</button>
+            </div>
+          `).join('');
+        }
+      }
+      unassignedScenesModal.classList.remove('hidden');
+    }
+
+    function applyStoryDayTypeUI(type, { preserveValue = true } = {}) {
+      storyDaySelectedType = type || 'day';
+      const selector = document.getElementById('story-day-type-selector');
+      if (selector && typeof selector.querySelectorAll === 'function') {
+        selector.querySelectorAll('.story-day-type-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.getAttribute('data-day-type') === storyDaySelectedType);
+        });
+      }
+
+      const labelEl = document.getElementById('story-day-value-label');
+      const helperEl = document.getElementById('story-day-input-helper');
+      if (!storyDayPrefixInput || !storyDayValueInput) return;
+
+      if (storyDaySelectedType === 'other') {
+        storyDayPrefixInput.readOnly = false;
+        storyDayPrefixInput.placeholder = '';
+        if (['D', 'N', 'FB'].includes(String(storyDayPrefixInput.value || '').trim().toUpperCase())) {
+          storyDayPrefixInput.value = '';
+        }
+        storyDayValueInput.inputMode = 'text';
+        storyDayValueInput.removeAttribute('pattern');
+        storyDayValueInput.placeholder = t('placeholder_story_day_short');
+        if (labelEl) labelEl.textContent = t('story_day_text_label');
+        if (helperEl) helperEl.textContent = t('story_day_other_helper');
+      } else {
+        const prefixMap = { day: 'D', night: 'N', flashback: 'FB' };
+        storyDayPrefixInput.value = prefixMap[storyDaySelectedType] || 'D';
+        storyDayPrefixInput.readOnly = true;
+        storyDayPrefixInput.placeholder = '';
+        storyDayValueInput.inputMode = 'numeric';
+        storyDayValueInput.setAttribute('pattern', '[0-9]*');
+        storyDayValueInput.placeholder = '1';
+        if (labelEl) labelEl.textContent = t('story_day_number_label');
+        if (helperEl) helperEl.textContent = t('story_day_num_helper');
+        if (preserveValue) {
+          storyDayValueInput.value = String(storyDayValueInput.value || '').replace(/\D+/g, '');
+        }
+      }
+    }
+
+    function isSceneBlockedByOtherStoryDay(sc) {
+      const existing = normalizeStoryDayValue(sc?.storyDay || '');
+      if (!existing) return false;
+      const scKey = normalizeSceneKey(sc.sceneNum);
+      if (editingSourceSceneKeys.has(scKey)) return false;
+      return true;
+    }
+
+    function populateStoryDayFromSelect(scenesList, preselectNum = '') {
+      if (!storyDayFromSelect) return;
+      storyDayFromSelect.innerHTML = `<option value="">${t('form_select_scene')}</option>` +
+        scenesList.map(sc => {
+          const existing = normalizeStoryDayValue(sc.storyDay || '');
+          const blocked = isSceneBlockedByOtherStoryDay(sc);
+          const suffix = blocked ? ` (${t('story_day_already_has', { day: existing })})` : '';
+          return `<option value="${escapeHtml(sc.sceneNum)}" ${blocked ? 'disabled' : ''}>${t('scene_abbr')} ${escapeHtml(sc.sceneNum)}${sc.desc ? ' — ' + escapeHtml(sc.desc) : ''}${escapeHtml(suffix)}</option>`;
+        }).join('');
+
+      if (preselectNum) {
+        const target = scenesList.find(s => normalizeSceneKey(s.sceneNum) === normalizeSceneKey(preselectNum));
+        if (target && !isSceneBlockedByOtherStoryDay(target)) {
+          storyDayFromSelect.value = target.sceneNum;
+        }
+      }
+    }
+
+    function populateStoryDayToSelect(scenesList, preferredToNum = '') {
+      if (!storyDayToSelect || !storyDayFromSelect) return;
+      const fromKey = normalizeSceneKey(storyDayFromSelect.value);
+      const fromIdx = fromKey ? scenesList.findIndex(s => normalizeSceneKey(s.sceneNum) === fromKey) : -1;
+
+      storyDayToSelect.innerHTML = `<option value="">${t('form_select_scene')}</option>` +
+        scenesList.map((sc, idx) => {
+          const existing = normalizeStoryDayValue(sc.storyDay || '');
+          const isBeforeFrom = fromIdx >= 0 && idx < fromIdx;
+          const isOtherDay = isSceneBlockedByOtherStoryDay(sc);
+          const blocked = isBeforeFrom || isOtherDay;
+          let suffix = '';
+          if (isOtherDay) suffix = ` (${t('story_day_already_has', { day: existing })})`;
+          return `<option value="${escapeHtml(sc.sceneNum)}" ${blocked ? 'disabled' : ''}>${t('scene_abbr')} ${escapeHtml(sc.sceneNum)}${sc.desc ? ' — ' + escapeHtml(sc.desc) : ''}${escapeHtml(suffix)}</option>`;
+        }).join('');
+
+      if (fromIdx < 0) {
+        storyDayToSelect.value = '';
+        updateStoryDayRangeFeedback(scenesList);
+        return;
+      }
+
+      const prefKey = normalizeSceneKey(preferredToNum);
+      const prefIdx = prefKey ? scenesList.findIndex(s => normalizeSceneKey(s.sceneNum) === prefKey) : -1;
+      if (prefIdx >= fromIdx && !isSceneBlockedByOtherStoryDay(scenesList[prefIdx])) {
+        storyDayToSelect.value = scenesList[prefIdx].sceneNum;
+      } else {
+        storyDayToSelect.value = scenesList[fromIdx].sceneNum;
+      }
+      updateStoryDayRangeFeedback(scenesList);
+    }
+
+    function computeStoryDayRangeSelection(scenesList) {
+      const fromKey = normalizeSceneKey(storyDayFromSelect?.value || '');
+      const toKey = normalizeSceneKey(storyDayToSelect?.value || '');
+      const fromIdx = fromKey ? scenesList.findIndex(s => normalizeSceneKey(s.sceneNum) === fromKey) : -1;
+      const toIdx = toKey ? scenesList.findIndex(s => normalizeSceneKey(s.sceneNum) === toKey) : -1;
+      if (fromIdx < 0 || toIdx < 0) return { valid: false, reason: 'incomplete', slice: [], conflicts: [] };
+      if (toIdx < fromIdx) return { valid: false, reason: 'order', slice: [], conflicts: [] };
+      const slice = scenesList.slice(fromIdx, toIdx + 1);
+      const conflicts = slice.filter(sc => isSceneBlockedByOtherStoryDay(sc));
+      return {
+        valid: conflicts.length === 0,
+        reason: conflicts.length > 0 ? 'conflict' : 'ok',
+        slice,
+        conflicts
+      };
+    }
+
+    function updateStoryDayRangeFeedback(scenesList = cachedScenesForProject || []) {
+      if (!storyDayRangeFeedback) return;
+      const res = computeStoryDayRangeSelection(scenesList);
+      if (res.reason === 'incomplete') {
+        storyDayRangeFeedback.classList.add('hidden');
+        storyDayRangeFeedback.classList.remove('is-error');
+        storyDayRangeFeedback.textContent = '';
+        return;
+      }
+      storyDayRangeFeedback.classList.remove('hidden');
+      if (res.conflicts.length > 0) {
+        storyDayRangeFeedback.classList.add('is-error');
+        const list = res.conflicts.map(c => `${t('scene_abbr')} ${c.sceneNum} (${normalizeStoryDayValue(c.storyDay)})`).join(', ');
+        storyDayRangeFeedback.textContent = t('story_day_conflict_msg', { scenes: list });
+        return;
+      }
+      storyDayRangeFeedback.classList.remove('is-error');
+      const labels = res.slice.map(s => `${t('scene_abbr')} ${s.sceneNum}`).join(', ');
+      storyDayRangeFeedback.textContent = res.slice.length === 1
+        ? t('story_day_range_selected_one', { scenes: labels })
+        : t('story_day_range_selected_many', { count: res.slice.length, scenes: labels });
+    }
+
+    function buildFinalStoryDayFromModalInputs() {
+      const val = String(storyDayValueInput?.value || '').trim();
+      if (storyDaySelectedType === 'other') {
+        const pref = String(storyDayPrefixInput?.value || '').trim();
+        if (!pref && !val) return '';
+        if (pref && val) return normalizeStoryDayValue(`${pref}${/^\d+$/.test(val) ? '' : ' '}${val}`);
+        return normalizeStoryDayValue(pref || val);
+      }
+      const digits = val.replace(/\D+/g, '');
+      if (!digits) return '';
+      const prefixMap = { day: 'D', night: 'N', flashback: 'FB' };
+      return `${prefixMap[storyDaySelectedType] || 'D'}${parseInt(digits, 10)}`;
+    }
+
+    async function openStoryDayModal(arg = {}) {
+      if (!storyDayModal || !activeProjectId) return;
+      const scenes = await getEntitiesForProject(STORE_SCENES, activeProjectId);
+      scenes.sort((a, b) => compareSceneNumbers(a.sceneNum, b.sceneNum));
+      cachedScenesForProject = scenes;
+
+      let opts = {};
+      if (typeof arg === 'string') {
+        opts = { mode: 'edit_scene', prefillFromScene: arg, prefillToScene: arg };
+      } else if (arg && typeof arg === 'object') {
+        opts = arg;
+      }
+
+      storyDayModalMode = opts.mode || 'add';
+      editingSourceSceneKeys = new Set();
+      activeStoryDaySceneNum = null;
+
+      const titleEl = document.getElementById('story-day-modal-title');
+      const labelEl = document.getElementById('story-day-modal-scene-label');
+      const clearBtn = document.getElementById('btn-clear-story-day-modal');
+
+      let parsed = { type: 'day', prefix: 'D', value: '' };
+      let fromNum = opts.prefillFromScene || '';
+      let toNum = opts.prefillToScene || fromNum;
+
+      if (storyDayModalMode === 'edit_group' && opts.dayKey) {
+        const group = buildStoryDayGroupsFromScenes(scenes).find(g => g.key === opts.dayKey);
+        if (!group) return;
+        group.scenes.forEach(s => editingSourceSceneKeys.add(normalizeSceneKey(s.sceneNum)));
+        parsed = parseStoryDayFields(group.label);
+        fromNum = group.scenes[0]?.sceneNum || '';
+        toNum = group.scenes[group.scenes.length - 1]?.sceneNum || fromNum;
+        if (titleEl) titleEl.textContent = t('modal_edit_story_day');
+        if (labelEl) {
+          const countLabel = group.scenes.length === 1 ? t('scenes_count_one') : t('scenes_count_many', { count: group.scenes.length });
+          labelEl.textContent = `${group.label} · ${countLabel}`;
+          labelEl.classList.remove('hidden');
+        }
+        if (clearBtn) clearBtn.classList.remove('hidden');
+      } else if (storyDayModalMode === 'edit_scene' && fromNum) {
+        const sc = scenes.find(s => normalizeSceneKey(s.sceneNum) === normalizeSceneKey(fromNum));
+        if (!sc) return;
+        activeStoryDaySceneNum = sc.sceneNum;
+        fromNum = sc.sceneNum;
+        toNum = sc.sceneNum;
+        if (sc.storyDay) {
+          editingSourceSceneKeys.add(normalizeSceneKey(sc.sceneNum));
+          parsed = parseStoryDayFields(sc.storyDay);
+          if (titleEl) titleEl.textContent = t('modal_edit_story_day');
+          if (clearBtn) clearBtn.classList.remove('hidden');
+        } else {
+          if (titleEl) titleEl.textContent = t('modal_add_story_day');
+          if (clearBtn) clearBtn.classList.add('hidden');
+        }
+        if (labelEl) {
+          labelEl.textContent = `${t('scene_abbr')} ${sc.sceneNum}${sc.desc ? ' — ' + sc.desc : ''}`;
+          labelEl.classList.remove('hidden');
+        }
+      } else {
+        if (titleEl) titleEl.textContent = t('modal_add_story_day');
+        if (labelEl) {
+          labelEl.textContent = '';
+          labelEl.classList.add('hidden');
+        }
+        if (clearBtn) clearBtn.classList.add('hidden');
+      }
+
+      if (storyDayPrefixInput) storyDayPrefixInput.value = parsed.prefix;
+      if (storyDayValueInput) storyDayValueInput.value = parsed.value;
+      applyStoryDayTypeUI(parsed.type, { preserveValue: false });
+
+      populateStoryDayFromSelect(scenes, fromNum);
+      populateStoryDayToSelect(scenes, toNum);
+      storyDayModal.classList.remove('hidden');
+      storyDayValueInput?.focus();
+    }
+
+    window.startEditStoryDayGroup = function(dayKey) {
+      openStoryDayModal({ mode: 'edit_group', dayKey });
+    };
+
+    async function saveStoryDayFromModal(rawOverride = null) {
+      if (!activeProjectId) return;
+      const scenes = await getEntitiesForProject(STORE_SCENES, activeProjectId);
+      scenes.sort((a, b) => compareSceneNumbers(a.sceneNum, b.sceneNum));
+
+      if (rawOverride === '') {
+        const keysToClear = editingSourceSceneKeys.size > 0
+          ? editingSourceSceneKeys
+          : (activeStoryDaySceneNum ? new Set([normalizeSceneKey(activeStoryDaySceneNum)]) : new Set());
+        if (keysToClear.size === 0) {
+          storyDayModal?.classList.add('hidden');
+          return;
+        }
+        const now = Date.now();
+        let lastSceneNum = activeStoryDaySceneNum || '';
+        for (const sc of scenes) {
+          if (keysToClear.has(normalizeSceneKey(sc.sceneNum))) {
+            lastSceneNum = sc.sceneNum;
+            await saveEntityToDB(STORE_SCENES, {
+              ...sc,
+              storyDay: '',
+              updatedAt: Math.max(now, (Number(sc.updatedAt) || 0) + 1)
+            });
+          }
+        }
+        activeStoryDaySceneNum = null;
+        editingSourceSceneKeys = new Set();
+        storyDayModal?.classList.add('hidden');
+        await updateCatalogCaches();
+        await renderTakes();
+        if (storyDaysModal && !storyDaysModal.classList.contains('hidden')) await renderStoryDaysList();
+        if (scenesModal && !scenesModal.classList.contains('hidden')) await renderScenesList();
+        if (typeof viewerModal !== 'undefined' && viewerModal && !viewerModal.classList.contains('hidden') && activeViewerTakeId) {
+          await openContinuityViewer(activeViewerTakeId);
+        }
+        showToast(t('toast_story_day_cleared', { scene: lastSceneNum }));
+        return;
+      }
+
+      const finalDay = rawOverride !== null ? normalizeStoryDayValue(rawOverride) : buildFinalStoryDayFromModalInputs();
+      if (!finalDay) {
+        showToast(t('toast_story_day_enter_val'));
+        storyDayValueInput?.focus();
+        return;
+      }
+
+      if (!storyDayFromSelect?.value || !storyDayToSelect?.value) {
+        showToast(t('toast_select_scene'));
+        return;
+      }
+
+      const rangeRes = computeStoryDayRangeSelection(scenes);
+      if (!rangeRes.valid) {
+        if (rangeRes.conflicts.length > 0) {
+          const list = rangeRes.conflicts.map(c => `${t('scene_abbr')} ${c.sceneNum} (${normalizeStoryDayValue(c.storyDay)})`).join(', ');
+          showToast(t('story_day_conflict_msg', { scenes: list }));
+        } else {
+          showToast(t('toast_select_scene'));
+        }
+        return;
+      }
+
+      for (const sc of rangeRes.slice) {
+        if (isSceneBlockedByOtherStoryDay(sc)) {
+          const list = `${t('scene_abbr')} ${sc.sceneNum} (${normalizeStoryDayValue(sc.storyDay)})`;
+          showToast(t('story_day_conflict_msg', { scenes: list }));
+          return;
+        }
+      }
+
+      const selectedKeys = new Set(rangeRes.slice.map(s => normalizeSceneKey(s.sceneNum)));
+      const now = Date.now();
+
+      for (const oldKey of editingSourceSceneKeys) {
+        if (!selectedKeys.has(oldKey)) {
+          const oldSc = scenes.find(s => normalizeSceneKey(s.sceneNum) === oldKey);
+          if (oldSc) {
+            await saveEntityToDB(STORE_SCENES, {
+              ...oldSc,
+              storyDay: '',
+              updatedAt: Math.max(now, (Number(oldSc.updatedAt) || 0) + 1)
+            });
+          }
+        }
+      }
+
+      for (const sc of rangeRes.slice) {
+        await saveEntityToDB(STORE_SCENES, {
+          ...sc,
+          storyDay: finalDay,
+          updatedAt: Math.max(now, (Number(sc.updatedAt) || 0) + 1)
+        });
+      }
+
+      activeStoryDaySceneNum = null;
+      editingSourceSceneKeys = new Set();
+      storyDayModal?.classList.add('hidden');
+      await updateCatalogCaches();
       await renderTakes();
+      if (storyDaysModal && !storyDaysModal.classList.contains('hidden')) await renderStoryDaysList();
+      if (scenesModal && !scenesModal.classList.contains('hidden')) await renderScenesList();
       if (typeof viewerModal !== 'undefined' && viewerModal && !viewerModal.classList.contains('hidden') && activeViewerTakeId) {
         await openContinuityViewer(activeViewerTakeId);
       }
-      const clean = normalizeStoryDayValue(rawVal);
-      showToast(clean ? t('toast_story_day_updated', { scene: targetSceneNum, day: clean }) : t('toast_story_day_cleared', { scene: targetSceneNum }));
+
+      if (rangeRes.slice.length === 1) {
+        showToast(t('toast_story_day_updated', { scene: rangeRes.slice[0].sceneNum, day: finalDay }));
+      } else {
+        showToast(t('toast_story_day_range_saved', { day: finalDay, count: rangeRes.slice.length }));
+      }
     }
+
+    document.getElementById('menu-opt-story-days')?.addEventListener('click', () => {
+      closeProjectMenu();
+      openStoryDaysManager();
+    });
+    document.getElementById('btn-close-story-days-modal')?.addEventListener('click', () => {
+      storyDaysModal?.classList.add('hidden');
+    });
+    storyDaysModal?.addEventListener('click', (e) => {
+      if (e.target === storyDaysModal) storyDaysModal.classList.add('hidden');
+    });
+    document.getElementById('btn-show-add-story-day')?.addEventListener('click', () => {
+      openStoryDayModal({ mode: 'add' });
+    });
+
+    document.getElementById('btn-unassigned-scenes-count')?.addEventListener('click', () => {
+      openUnassignedScenesModal();
+    });
+    document.getElementById('btn-close-unassigned-scenes-modal')?.addEventListener('click', () => {
+      unassignedScenesModal?.classList.add('hidden');
+    });
+    unassignedScenesModal?.addEventListener('click', (e) => {
+      if (e.target === unassignedScenesModal) unassignedScenesModal.classList.add('hidden');
+    });
+    document.getElementById('unassigned-scenes-list-body')?.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-assign-unassigned-scene]');
+      if (!btn) return;
+      const scNum = btn.getAttribute('data-assign-unassigned-scene') || '';
+      unassignedScenesModal?.classList.add('hidden');
+      openStoryDayModal({ mode: 'add', prefillFromScene: scNum, prefillToScene: scNum });
+    });
 
     ['btn-close-story-day-modal', 'btn-cancel-story-day-modal'].forEach(id => {
       document.getElementById(id)?.addEventListener('click', () => {
         activeStoryDaySceneNum = null;
-        if (storyDayModal) storyDayModal.classList.add('hidden');
+        editingSourceSceneKeys = new Set();
+        storyDayModal?.classList.add('hidden');
       });
     });
     storyDayModal?.addEventListener('click', (e) => {
       if (e.target === storyDayModal) {
         activeStoryDaySceneNum = null;
+        editingSourceSceneKeys = new Set();
         storyDayModal.classList.add('hidden');
       }
     });
-    document.getElementById('input-story-day-modal')?.addEventListener('input', (e) => {
-      renderDaySuggestionPills('story-day-modal-suggestions', e.target.value);
+    document.getElementById('story-day-type-selector')?.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-day-type]');
+      if (!btn) return;
+      applyStoryDayTypeUI(btn.getAttribute('data-day-type') || 'day');
+      storyDayValueInput?.focus();
     });
-    document.getElementById('story-day-modal-suggestions')?.addEventListener('click', (e) => {
-      const pill = e.target.closest('[data-pick-story-day]');
-      if (!pill) return;
-      const val = pill.getAttribute('data-pick-story-day') || '';
-      const inp = document.getElementById('input-story-day-modal');
-      if (inp) inp.value = val;
-      renderDaySuggestionPills('story-day-modal-suggestions', val);
+    storyDayValueInput?.addEventListener('input', () => {
+      if (storyDaySelectedType !== 'other') {
+        const cleaned = String(storyDayValueInput.value || '').replace(/\D+/g, '');
+        if (storyDayValueInput.value !== cleaned) storyDayValueInput.value = cleaned;
+      }
+    });
+    storyDayFromSelect?.addEventListener('change', () => {
+      populateStoryDayToSelect(cachedScenesForProject || [], storyDayToSelect?.value || '');
+    });
+    storyDayToSelect?.addEventListener('change', () => {
+      updateStoryDayRangeFeedback(cachedScenesForProject || []);
     });
     document.getElementById('story-day-form')?.addEventListener('submit', (e) => {
       e.preventDefault();
-      saveStoryDayFromModal(document.getElementById('input-story-day-modal')?.value || '');
+      saveStoryDayFromModal(null);
     });
     document.getElementById('btn-clear-story-day-modal')?.addEventListener('click', () => {
       saveStoryDayFromModal('');
@@ -17332,6 +18472,17 @@
         countScenes.classList.remove('hidden');
       } else {
         countScenes.classList.add('hidden');
+      }
+
+      const countStoryDays = document.getElementById('menu-count-story-days');
+      if (countStoryDays) {
+        const dayGroups = buildStoryDayGroupsFromScenes(cachedScenesForProject);
+        if (dayGroups.length > 0) {
+          countStoryDays.textContent = dayGroups.length;
+          countStoryDays.classList.remove('hidden');
+        } else {
+          countStoryDays.classList.add('hidden');
+        }
       }
 
       await Promise.all([
@@ -18784,31 +19935,95 @@
     const badgeTotalItems = document.getElementById('badge-total-items');
     const searchInput = document.getElementById('search-input');
     const btnResetFilters = document.getElementById('btn-reset-filters');
+    const btnToggleDayFilter = document.getElementById('btn-toggle-day-filter');
+    const btnToggleDayFilterLabel = document.getElementById('btn-toggle-day-filter-label');
+    const mainDayFilterBar = document.getElementById('main-day-filter-bar');
 
     searchInput.addEventListener('input', (e) => {
       searchQuery = e.target.value;
-      btnResetFilters.classList.toggle('hidden', searchQuery.length === 0);
+      btnResetFilters.classList.toggle('hidden', !(searchQuery.length > 0 || activeDayFilter !== 'all'));
       renderTakes();
     });
 
     btnResetFilters.addEventListener('click', () => {
       searchQuery = '';
+      activeDayFilter = 'all';
+      isDayFilterDrawerOpen = false;
       searchInput.value = '';
       btnResetFilters.classList.add('hidden');
       renderTakes();
     });
 
-    const mainEntryTypeFilter = document.getElementById('main-entry-type-filter');
-    if (mainEntryTypeFilter) {
-      mainEntryTypeFilter.addEventListener('click', (e) => {
-        const pill = e.target.closest('[data-filter-type]');
+    if (btnToggleDayFilter) {
+      btnToggleDayFilter.addEventListener('click', () => {
+        isDayFilterDrawerOpen = !isDayFilterDrawerOpen;
+        renderDayQuickFilterBar(cachedScenesForProject || [], true);
+      });
+    }
+
+    if (mainDayFilterBar) {
+      mainDayFilterBar.addEventListener('click', (e) => {
+        const pill = e.target.closest('[data-filter-day]');
         if (!pill) return;
-        activeTypeFilter = pill.getAttribute('data-filter-type') || 'all';
-        mainEntryTypeFilter.querySelectorAll('.type-filter-pill').forEach(btn => {
-          btn.classList.toggle('active', btn === pill);
-        });
+        const nextDay = pill.getAttribute('data-filter-day') || 'all';
+        activeDayFilter = (activeDayFilter === nextDay && nextDay !== 'all') ? 'all' : nextDay;
+        isDayFilterDrawerOpen = false;
         renderTakes();
       });
+    }
+
+    function renderDayQuickFilterBar(scenesList = cachedScenesForProject || [], hasTakes = true) {
+      if (!mainDayFilterBar || !btnToggleDayFilter) return;
+      const groups = buildStoryDayGroupsFromScenes(scenesList);
+      const unassignedCount = (scenesList || []).filter(s => !normalizeStoryDayValue(s.storyDay || '')).length;
+
+      if (!hasTakes || groups.length === 0) {
+        btnToggleDayFilter.classList.add('hidden');
+        btnToggleDayFilter.classList.remove('is-open', 'has-active-day');
+        mainDayFilterBar.classList.add('hidden');
+        mainDayFilterBar.innerHTML = '';
+        isDayFilterDrawerOpen = false;
+        if (activeDayFilter !== 'all') activeDayFilter = 'all';
+        return;
+      }
+
+      if (activeDayFilter !== 'all' && activeDayFilter !== '__none__' && !groups.some(g => g.key === activeDayFilter)) {
+        activeDayFilter = 'all';
+      }
+
+      btnToggleDayFilter.classList.remove('hidden');
+      if (btnToggleDayFilterLabel) {
+        if (activeDayFilter === 'all') {
+          btnToggleDayFilterLabel.textContent = t('story_day_type_day');
+          btnToggleDayFilter.classList.remove('has-active-day');
+        } else if (activeDayFilter === '__none__') {
+          btnToggleDayFilterLabel.textContent = t('filter_day_none', { count: unassignedCount });
+          btnToggleDayFilter.classList.add('has-active-day');
+        } else {
+          const matched = groups.find(g => g.key === activeDayFilter);
+          btnToggleDayFilterLabel.textContent = matched ? matched.label : activeDayFilter;
+          btnToggleDayFilter.classList.add('has-active-day');
+        }
+      }
+      btnToggleDayFilter.classList.toggle('is-open', isDayFilterDrawerOpen);
+      mainDayFilterBar.classList.toggle('hidden', !isDayFilterDrawerOpen);
+
+      const dayPillsHtml = groups.map(g => `
+        <button type="button" class="day-filter-pill is-day-item${activeDayFilter === g.key ? ' active' : ''}" data-filter-day="${escapeHtml(g.key)}">
+          ${ICON_DAY_SVG}
+          <span>${escapeHtml(g.label)}</span>
+        </button>
+      `).join('');
+
+      const unassignedPillHtml = unassignedCount > 0
+        ? `<button type="button" class="day-filter-pill${activeDayFilter === '__none__' ? ' active' : ''}" data-filter-day="__none__">${escapeHtml(t('filter_day_none', { count: unassignedCount }))}</button>`
+        : '';
+
+      mainDayFilterBar.innerHTML = `
+        <button type="button" class="day-filter-pill${activeDayFilter === 'all' ? ' active' : ''}" data-filter-day="all">${escapeHtml(t('filter_day_all'))}</button>
+        ${dayPillsHtml}
+        ${unassignedPillHtml}
+      `;
     }
 
     function findMatchingSceneObjForTake(take, scenesList) {
@@ -18842,18 +20057,19 @@
       ]);
       allTakes.sort((a, b) => compareSceneNumbers(a.scene, b.scene));
 
-      if (mainEntryTypeFilter) {
-        mainEntryTypeFilter.classList.toggle('hidden', allTakes.length === 0);
-      }
+      renderDayQuickFilterBar(allScenes, allTakes.length > 0);
 
       const q = stripAccentsUpper(searchQuery || '');
       const filtered = allTakes.filter(take => {
         const entries = getNormalizedPhotos(take);
-        if (activeTypeFilter !== 'all') {
-          if (!entries.some(en => en.entryType === activeTypeFilter)) return false;
+        const sc = findMatchingSceneObjForTake(take, allScenes);
+        const dayKey = normalizeStoryDayKey(sc.storyDay || '');
+        if (activeDayFilter === '__none__') {
+          if (dayKey) return false;
+        } else if (activeDayFilter !== 'all') {
+          if (dayKey !== activeDayFilter) return false;
         }
         if (!q) return true;
-        const sc = findMatchingSceneObjForTake(take, allScenes);
         const matchedSet = findMatchingSetObjForScene(sc, allSets);
         const matchScene =
           stripAccentsUpper(take.scene || '').includes(q) ||
@@ -18869,7 +20085,11 @@
         return matchScene || matchNotes || matchEntries;
       });
 
-      if (searchQuery.trim() || activeTypeFilter !== 'all') {
+      const hasActiveFilters = Boolean(searchQuery.trim() || activeDayFilter !== 'all');
+      if (btnResetFilters) {
+        btnResetFilters.classList.toggle('hidden', !hasActiveFilters);
+      }
+      if (hasActiveFilters) {
         const unit = filtered.length === 1 ? t('unit_continuity_singular') : t('unit_continuity_plural');
         badgeTotalItems.textContent = `${filtered.length} ${unit}`;
         badgeTotalItems.classList.remove('hidden');
@@ -18909,7 +20129,7 @@
           : '';
 
         const entries = getNormalizedPhotos(take);
-        const visibleEntries = activeTypeFilter === 'all' ? entries : entries.filter(en => en.entryType === activeTypeFilter);
+        const visibleEntries = entries;
         const showRawDesc = !matchedSet && Boolean(sceneDescText);
         const hasGeneralNotes = Boolean(take.notes && take.notes.trim());
 
@@ -19605,23 +20825,11 @@
       const inp = document.getElementById('input-continuity-story-day');
       if (!inp) return;
       inp.value = sc?.storyDay || '';
-      renderDaySuggestionPills('continuity-day-suggestions', inp.value);
     }
 
     document.getElementById('select-scene')?.addEventListener('change', (e) => {
       updateEntrySceneSetHint(e.target.value);
       syncEntryModalStoryDay(e.target.value);
-    });
-    document.getElementById('input-continuity-story-day')?.addEventListener('input', (e) => {
-      renderDaySuggestionPills('continuity-day-suggestions', e.target.value);
-    });
-    document.getElementById('continuity-day-suggestions')?.addEventListener('click', (e) => {
-      const pill = e.target.closest('[data-pick-story-day]');
-      if (!pill) return;
-      const val = pill.getAttribute('data-pick-story-day') || '';
-      const inp = document.getElementById('input-continuity-story-day');
-      if (inp) inp.value = val;
-      renderDaySuggestionPills('continuity-day-suggestions', val);
     });
 
     document.getElementById('btn-add-entry').addEventListener('click', async () => {
@@ -19632,7 +20840,6 @@
       document.getElementById('input-notes').value = '';
       const dayInput = document.getElementById('input-continuity-story-day');
       if (dayInput) dayInput.value = '';
-      renderDaySuggestionPills('continuity-day-suggestions', '');
       updateEntrySceneSetHint('');
       deleteContinuityContainer.classList.add('hidden');
       entryModal.classList.remove('hidden');
@@ -22542,7 +23749,7 @@
       [
         'project-modal', 'entry-modal', 'take-modal', 'subentry-modal', 'subentry-quick-char-box', 'subentry-quick-set-box',
         'continuity-viewer-modal', 'characters-modal', 'character-edit-modal', 'scenes-modal', 'scene-edit-modal',
-        'sets-modal', 'story-day-modal', 'photo-markup-modal', 'script-review-modal', 'script-import-mode-modal',
+        'sets-modal', 'story-days-modal', 'unassigned-scenes-modal', 'story-day-modal', 'photo-markup-modal', 'script-review-modal', 'script-import-mode-modal',
         'duplicate-take-modal', 'batch-projects-modal', 'pdf-preview-modal', 'photo-lightbox-modal'
       ].forEach((mId) => {
         document.getElementById(mId)?.classList.add('hidden');
