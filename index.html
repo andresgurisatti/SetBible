@@ -1035,7 +1035,7 @@
     }
 
     .search-input.has-counter {
-      padding-right: 120px;
+      padding-right: 42px;
     }
 
     .search-inline-counter {
@@ -1046,16 +1046,20 @@
       z-index: 2;
       pointer-events: none;
       margin: 0 !important;
-      padding: 2px 8px;
+      min-width: 22px;
+      height: 22px;
+      padding: 0 7px;
       border-radius: 999px;
-      background: rgba(13, 15, 18, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: var(--text-400);
+      background: rgba(13, 15, 18, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #e5e7eb;
       font-size: 11px !important;
       font-weight: 800;
-      letter-spacing: 0.03em;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       white-space: nowrap;
-      line-height: 1.3;
+      line-height: 1;
     }
 
     .btn-reset-search-sm {
@@ -5471,7 +5475,7 @@
         <div class="search-box">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
           <input type="text" id="search-projects-input" class="search-input" placeholder="Buscar proyecto..." data-i18n-placeholder="search_projects_placeholder">
-          <h2 id="projects-title-counter" class="search-inline-counter hidden">PROYECTOS (0)</h2>
+          <h2 id="projects-title-counter" class="search-inline-counter hidden">0</h2>
         </div>
         <button type="button" id="btn-reset-project-search" class="btn-icon btn-reset-search-sm hidden" title="Limpiar búsqueda" data-i18n-title="search_clean_title">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.3"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
@@ -5665,7 +5669,7 @@
         <div class="search-box">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
           <input type="text" id="search-input" class="search-input" placeholder="Buscar escena o nota..." data-i18n-placeholder="search_takes_placeholder">
-          <span id="badge-total-items" class="search-inline-counter hidden">0 continuidades</span>
+          <span id="badge-total-items" class="search-inline-counter hidden">0</span>
         </div>
         <button type="button" id="btn-toggle-day-filter" class="btn-day-filter-toggle hidden" title="Asignar o cambiar Día dramático" data-i18n-title="viewer_day_title">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -12046,7 +12050,7 @@
       });
 
       if (q) {
-        projectsTitleCounter.textContent = `${t('projects_title')} (${filteredProjects.length})`;
+        projectsTitleCounter.textContent = String(filteredProjects.length);
         projectsTitleCounter.classList.remove('hidden');
         searchProjectsInput?.classList.add('has-counter');
       } else {
@@ -20090,8 +20094,7 @@
         btnResetFilters.classList.toggle('hidden', !hasActiveFilters);
       }
       if (hasActiveFilters) {
-        const unit = filtered.length === 1 ? t('unit_continuity_singular') : t('unit_continuity_plural');
-        badgeTotalItems.textContent = `${filtered.length} ${unit}`;
+        badgeTotalItems.textContent = String(filtered.length);
         badgeTotalItems.classList.remove('hidden');
         searchInput?.classList.add('has-counter');
       } else {
