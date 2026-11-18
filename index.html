@@ -1035,7 +1035,7 @@
     }
 
     .search-input.has-counter {
-      padding-right: 42px;
+      padding-right: 120px;
     }
 
     .search-inline-counter {
@@ -1048,18 +1048,34 @@
       margin: 0 !important;
       min-width: 22px;
       height: 22px;
-      padding: 0 7px;
+      padding: 0 8px;
       border-radius: 999px;
       background: rgba(13, 15, 18, 0.88);
       border: 1px solid rgba(255, 255, 255, 0.14);
       color: #e5e7eb;
       font-size: 11px !important;
       font-weight: 800;
+      letter-spacing: 0.03em;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       white-space: nowrap;
       line-height: 1;
+    }
+
+    @media (max-width: 768px) {
+      .search-input.has-counter {
+        padding-right: 42px;
+      }
+
+      .search-inline-counter {
+        padding: 0 7px;
+        letter-spacing: 0;
+      }
+
+      .search-counter-label {
+        display: none;
+      }
     }
 
     .btn-reset-search-sm {
@@ -12050,7 +12066,7 @@
       });
 
       if (q) {
-        projectsTitleCounter.textContent = String(filteredProjects.length);
+        projectsTitleCounter.innerHTML = `<span class="search-counter-label">${escapeHtml(t('projects_title'))} (</span><span>${filteredProjects.length}</span><span class="search-counter-label">)</span>`;
         projectsTitleCounter.classList.remove('hidden');
         searchProjectsInput?.classList.add('has-counter');
       } else {
@@ -20094,7 +20110,8 @@
         btnResetFilters.classList.toggle('hidden', !hasActiveFilters);
       }
       if (hasActiveFilters) {
-        badgeTotalItems.textContent = String(filtered.length);
+        const unit = filtered.length === 1 ? t('unit_continuity_singular') : t('unit_continuity_plural');
+        badgeTotalItems.innerHTML = `<span>${filtered.length}</span><span class="search-counter-label">&nbsp;${escapeHtml(unit)}</span>`;
         badgeTotalItems.classList.remove('hidden');
         searchInput?.classList.add('has-counter');
       } else {
