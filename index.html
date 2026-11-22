@@ -7011,7 +7011,7 @@
         <div style="width:100%; border-top:1px solid var(--border-700); padding-top:14px; display:flex; flex-direction:column; gap:6px; font-size:13px; color:var(--text-muted);">
           <div>
             <span data-i18n="app_info_version_label">Versión</span>:
-            <strong id="app-info-version-val" style="color:#fff;">1.4.0</strong>
+            <strong id="app-info-version-val" style="color:#fff;">1.4.1</strong>
           </div>
           <div>
             <span data-i18n="app_info_created_by">Creado por</span>:
@@ -12097,6 +12097,7 @@
       const takesCountMap = new Map();
       for (const tk of allTakes) {
         if (!tk || !tk.projectId) continue;
+        if (getNormalizedPhotos(tk).length === 0) continue;
         takesCountMap.set(tk.projectId, (takesCountMap.get(tk.projectId) || 0) + 1);
       }
 
@@ -16596,6 +16597,7 @@
       }
 
       let totalPhotos = 0;
+      let takesWithEntriesCount = 0;
       const coveredSceneSet = new Set();
 
       takes.forEach(take => {
@@ -16604,6 +16606,7 @@
           totalPhotos += getEntryPhotos(entry).length;
         });
         if (entries.length > 0) {
+          takesWithEntriesCount += 1;
           const sceneKey = String(take.scene || '').trim().toUpperCase();
           if (sceneKey) coveredSceneSet.add(sceneKey);
         }
@@ -16614,7 +16617,7 @@
       const assignedScenesCount = scenes.length - unassignedScenesCount;
       const daysCoveragePct = scenes.length > 0 ? Math.min(100, Math.round((assignedScenesCount / scenes.length) * 100)) : 0;
 
-      document.getElementById('summary-count-takes').textContent = takes.length;
+      document.getElementById('summary-count-takes').textContent = takesWithEntriesCount;
       document.getElementById('summary-count-photos').textContent = totalPhotos;
       document.getElementById('summary-count-scenes').textContent = scenes.length;
       const summaryCountSetsEl = document.getElementById('summary-count-sets');
